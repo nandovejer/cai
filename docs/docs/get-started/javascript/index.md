@@ -28,7 +28,9 @@ initTabs();
 
 #### Languages and the strings scripts write
 
-English is in the entry. Every other language LUZ ships is a small file, fetched at start for a page whose `<html lang>`, or any `lang` outside a link or an option, names it; a page in English makes no request. With the individual modules, call `loadLocales()` yourself, and `await loadLocales()` before `initHighlight()`, `initPlayers()` and `initThemeCycle()`. A file that cannot load is one console warning, and English.
+English is in the entry. Every other language LUZ ships is a small file, fetched at start for a page whose `<html lang>`, or any `lang` outside a link or an option, names it; a page in English makes no request.
+
+With the individual modules, call `loadLocales()` yourself, and `await loadLocales()` before `initHighlight()`, `initPlayers()` and `initThemeCycle()`. A file that cannot load is one console warning, and English.
 
 For a language LUZ does not ship, set `data-luz-label-*` once on `<html>` or `<body>`, or call `registerLocale()` before the scripts start.
 

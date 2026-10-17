@@ -43,7 +43,9 @@ A native [popover](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)
 Nothing changes: the popover is HTML. The actions that are buttons need your own script to do something, as any button does; the ones that are links work as they are.
 
 ### Keyboard and ARIA
-Enter or Space on the button opens the panel; the focus stays on the button, and the panel follows it in the tab order. Tab moves to the first action, then through the others, and Shift+Tab goes back. Escape closes the panel and returns the focus to the button.
+Enter or Space on the button opens the panel; the focus stays on the button, and the panel follows it in the tab order. Tab moves to the first action, then through the others, and Shift+Tab goes back.
+
+Escape closes the panel and returns the focus to the button.
 
 - Give the button a name that says what is inside: “Actions”, “More options for Ana”, not a bare “…”.
 - An unavailable action uses `aria-disabled="true"` and no `disabled`, so it stays reachable and a screen reader says it exists. Do not run its action when it is activated.

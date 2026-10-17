@@ -34,7 +34,9 @@ Auto color mode markup
 
 #### Script for the head
 
-This script, for `by="system"`, avoids the flash of the wrong mode: it sets `data-theme` before the first paint. It is recommended, not required. It takes the mode stored under `luz-theme`, then `prefers-contrast`, then `prefers-color-scheme`.
+This script, for `by="system"`, avoids the flash of the wrong mode: it sets `data-theme` before the first paint. It is recommended, not required.
+
+It takes the mode stored under `luz-theme`, then `prefers-contrast`, then `prefers-color-scheme`.
 
 Under a CSP without `'unsafe-inline'`, serve it as a classic file in the `<head>` or allow it by its `'sha256-…'` hash.
 
@@ -61,7 +63,9 @@ There are no variants. The attributes of `<luz-mode>`:
 - `light-attr`: The attribute that holds the phase of the day, `data-light` by default. Never `data-theme` or a `data-luz-*` attribute: they are not checked, and are the mode's and core's
 
 ### How it works
-CSS from `@luz-ds/site` for the element's box and `@luz-ds/site/mode`, which defines `<luz-mode>`. `site.min.js` loads it when idle, on a page with a `<luz-mode>`. The radios and labels are core's: the element writes no text.
+CSS from `@luz-ds/site` for the element's box and `@luz-ds/site/mode`, which defines `<luz-mode>`. `site.min.js` loads it when idle, on a page with a `<luz-mode>`.
+
+The radios and labels are core's: the element writes no text.
 
 - **Auto by the system:** `prefers-contrast: more` gives `high-contrast`; otherwise `prefers-color-scheme: dark` gives `dark`; otherwise `light`. It follows a change while the page is open.
 - **Auto by the clock:** `prefers-contrast: more` still wins. Otherwise the phase of the day decides: `dark` in the dark phases, `light` in the others, and it is written as `data-light`. It checks every minute and when the tab shows again.
@@ -105,7 +109,9 @@ A day look and a night look
 ```
 
 ### Without JavaScript
-The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light. The system and the clock are not followed, and nothing is remembered.
+The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light.
+
+The system and the clock are not followed, and nothing is remembered.
 
 ### Keyboard and ARIA
 - **Radios:** Tab reaches the group, the arrow keys choose Auto, Light, Dark or High contrast. With `luz.js`, the cycle button moves to the next of the four with Enter or Space.

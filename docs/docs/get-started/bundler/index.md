@@ -188,28 +188,38 @@ The rule in `site.css` sets the type knob to 1.125rem and wins over LUZ's defaul
 - Astro bundled the `<script>` with `import "@luz-ds/core"` into one module file and split the lazy chunks off it.
 - The fonts came out as hashed files, and the layers and your own rule came out in the order described above.
 
-The build output was inspected, and the built page was not opened in a browser. Astro with a view transition router (`<ClientRouter />`) was not tried, and neither was Windows. The `landing`, `cms` and `app` imports have the same shape as the ones above, and were not built.
+The build output was inspected, and the built page was not opened in a browser. Astro with a view transition router (`<ClientRouter />`) was not tried, and neither was Windows.
+
+The `landing`, `cms` and `app` imports have the same shape as the ones above, and were not built.
 
 ### Vite, Next, Nuxt and SvelteKit
 
-Only Astro was built for this page; Vite on its own, Next, Nuxt and SvelteKit were not built or tested. The imports are the same ones, in the root layout or the entry file of the app. Each tool's own documentation says where CSS from a package goes:
+Only Astro was built for this page; Vite on its own, Next, Nuxt and SvelteKit were not built or tested. The imports are the same ones, in the root layout or the entry file of the app.
+
+Each tool's own documentation says where CSS from a package goes:
 
 - [Vite documentation](https://vite.dev/guide/)
 - [Next.js documentation](https://nextjs.org/docs)
 - [Nuxt documentation](https://nuxt.com/docs)
 - [SvelteKit documentation](https://svelte.dev/docs/kit)
 
-One fact is the same for all of them. A LUZ module has no side effect when it is imported, until you call its `init` function, and `luz.js` and `site.js` check that `document` exists first. So a framework that renders on the server can import them. In plain Node, with no `document`, ten modules of core and site were imported with no error.
+One fact is the same for all of them. A LUZ module has no side effect when it is imported, until you call its `init` function, and `luz.js` and `site.js` check that `document` exists first.
+
+So a framework that renders on the server can import them. In plain Node, with no `document`, ten modules of core and site were imported with no error.
 
 ### Fonts and assets
 
 `@luz-ds/tokens/css` is `luz-tokens.css`, and its `@font-face` rules point at the ET Book files with `url()`. Your bundler resolves those paths: Astro emitted the files as hashed `woff2` assets.
 
-To skip ET Book, import `@luz-ds/tokens/tokens.css` instead. It has the same tokens and no `@font-face`, so no font is downloaded. Then set `--luz-font-body` to the font you use: [Make it yours](https://nandovejer.github.io/luz/docs/get-started/make-it-yours/) shows how.
+To skip ET Book, import `@luz-ds/tokens/tokens.css` instead. It has the same tokens and no `@font-face`, so no font is downloaded.
+
+Then set `--luz-font-body` to the font you use: [Make it yours](https://nandovejer.github.io/luz/docs/get-started/make-it-yours/) shows how.
 
 ### A CDN in a framework
 
-You can load LUZ from a CDN in a framework layout instead of importing it. In an Astro layout, a `<link rel="stylesheet">` in the `<head>` and a `<script type="module" src="https://…">`, each with `integrity` and `crossorigin`, stay as written. So does a script with `is:inline`. Astro only processes a `<script>` that has no attribute other than `src`.
+You can load LUZ from a CDN in a framework layout instead of importing it. In an Astro layout, a `<link rel="stylesheet">` in the `<head>` and a `<script type="module" src="https://…">`, each with `integrity` and `crossorigin`, stay as written.
+
+So does a script with `is:inline`. Astro only processes a `<script>` that has no attribute other than `src`.
 
 Use the CDN or the imports, not both: LUZ would load twice. [Choose your snippet](https://nandovejer.github.io/luz/docs/get-started/snippet/) gives the tags with their hashes.
 

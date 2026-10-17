@@ -15,8 +15,8 @@
   <script type="module" crossorigin src="../../../assets/reference-or9Ve1Dh.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CFwLTcYL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-BXzNEBss.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-BWHl3Jti.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-uPwpUGqG.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BSyRBnxb.css">
 </head>
 <body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -30,7 +30,7 @@
           <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.0.0 beta</span></a>
       <nav class="site-header__nav" aria-label="Site">
         <a href="../../../">Home</a>
         <a href="../../../docs/" aria-current="true">Docs</a>
@@ -252,6 +252,7 @@
   <div class="docs-body">
     <div class="docs-component" id="c-timeline">
           <h2 id="example">Example</h2>
+          <p>The releases of an app as a timeline, in its horizontal and its vertical layouts.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <p class="docs-demo__note">Horizontal, the default. Pick a date, or use Previous and Next, the arrow keys on the dates, or swipe.</p>
@@ -429,21 +430,22 @@
                   <tr><th scope="col">Attribute or class</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Attribute or class"><div><code>aria-label</code></div></td><td data-label="Effect"><div>The name of the timeline. Write it with <code>role="group"</code>: a name on an element without a role is not read. If you leave the role out, the script adds it</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>aria-label</span></code></div></td><td data-label="Effect"><div>The name of the timeline. Write it with <code>role="group"</code>: a name on an element without a role is not read. If you leave the role out, the script adds it</div></td></tr>
                   <tr><td data-label="Attribute or class"><div><code>layout="vertical"</code></div></td><td data-label="Effect"><div>Every item stays visible down a line. The item in the middle of the screen is active, the ones before it are past</div></td></tr>
                   <tr><td data-label="Attribute or class"><div><code>autoplay</code></div></td><td data-label="Effect"><div>Opts in to moving on by itself, with a visible Pause and Play button. Horizontal only; off unless you write it</div></td></tr>
                   <tr><td data-label="Attribute or class"><div><code>interval</code></div></td><td data-label="Effect"><div>Milliseconds between items with <code>autoplay</code>. The default is 5000; a value under 2000 is raised to 2000</div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>data-luz-label-previous</code>, <code>-next</code>, <code>-pause</code>, <code>-play</code></div></td><td data-label="Effect"><div>The names of the buttons, when LUZ does not ship the language of the page or you want other words</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>data-luz-label-previous</span></code>, <code>-next</code>, <code>-pause</code>, <code>-play</code></div></td><td data-label="Effect"><div>The names of the buttons, when LUZ does not ship the language of the page or you want other words</div></td></tr>
                   <tr><td data-label="Attribute or class"><div><code>--luz-timeline-paper</code></div></td><td data-label="Effect"><div>The colour behind the timeline, which the hump on the rail and the empty dots are painted with. The default is <code>--luz-surface-page</code>; on a card, set it on the element to the card's surface: <code>style="--luz-timeline-paper: var(--luz-surface)"</code></div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>.luz-timeline__date</code></div></td><td data-label="Effect"><div>A <code>&lt;time&gt;</code>. Its text is the label of the date button on the rail, so give each item a different one. Without it the button shows the item's number</div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>.luz-timeline__title</code></div></td><td data-label="Effect"><div>A <code>&lt;p&gt;</code>, or a heading of the level your page needs: the class stays the same</div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>.luz-timeline__text</code></div></td><td data-label="Effect"><div>One or two sentences; a link is allowed</div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>data-luz-state</code></div></td><td data-label="Effect"><div>Written by the script on the items of a vertical timeline: <code>active</code> or <code>past</code>. Do not set it yourself</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>.luz-timeline</span><wbr><span>__date</span></code></div></td><td data-label="Effect"><div>A <code>&lt;time&gt;</code>. Its text is the label of the date button on the rail, so give each item a different one. Without it the button shows the item's number</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>.luz-timeline</span><wbr><span>__title</span></code></div></td><td data-label="Effect"><div>A <code>&lt;p&gt;</code>, or a heading of the level your page needs: the class stays the same</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>.luz-timeline</span><wbr><span>__text</span></code></div></td><td data-label="Effect"><div>One or two sentences; a link is allowed</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>data-luz-state</span></code></div></td><td data-label="Effect"><div>Written by the script on the items of a vertical timeline: <code>active</code> or <code>past</code>. Do not set it yourself</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>A custom element around a native ordered list, with styles from <code>components/timeline.css</code> and a script, <code>timeline.js</code>. <code>luz.js</code> loads the script only on a page that has a <code>&lt;luz-timeline&gt;</code>. The element looks for the first <code>.luz-timeline</code> inside it; with none, it does nothing.</p>
+            <p>A custom element around a native ordered list, with styles from <code>components/timeline.css</code> and a script, <code>timeline.js</code>. <code>luz.js</code> loads the script only on a page that has a <code>&lt;luz-timeline&gt;</code>.</p>
+            <p>The element looks for the first <code>.luz-timeline</code> inside it; with none, it does nothing.</p>
             <ul>
               <li><strong>Horizontal.</strong> The script builds, with DOM methods only, Previous and Next at the sides of the card and a rail of dates under it: one button per item, with the text of its date. The cards share one grid cell, so the band is as tall as the longest card and nothing jumps when you change the item. The cards that are not current are <code>inert</code> and hidden. In the current card the date is hidden from sight, because the rail shows it.</li>
               <li><strong>Changing the item.</strong> Click a date, use Previous and Next, the arrow keys, Home and End on the rail, or swipe more than 40 px sideways with a finger or the mouse. Toward the start of the line is the next item. Past either end it wraps round. A swipe that ends on a link is not a click on it.</li>
@@ -453,7 +455,8 @@
               <li><strong>Text.</strong> "Previous", "Next", "Pause" and "Play" are in the language of the page when LUZ ships it (English, Spanish), chosen by the nearest <code>lang</code>, or yours through <code>registerLocale()</code> and <code>data-luz-label-*</code>. They travel with the script, so <code>@luz-ds/core/timeline</code> works on its own. With <code>luz.js</code> on the page, a language you add with <code>registerLocale()</code> reaches them too. See <a href="../../../docs/get-started/javascript/">the JavaScript modules</a>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does. Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.</p>
+            <p>An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does.</p>
+            <p>Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab reaches, in this order: Previous, the links in the current card, Next, the current date on the rail and the Pause or Play button. The other dates are not in the Tab order: the arrow keys move between them.</p>
             <ul>
@@ -626,7 +629,7 @@
 
   <footer class="docs-footer luz-landing-footer" id="site-footer">
     <div class="o-container o-container--inline o-row">
-      <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
+      <p class="u-text-muted">LUZ Design System · v0.0.0 · Beta · MIT License</p>
       <nav class="o-actions" aria-label="Project links">
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../">Home</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>

@@ -57,7 +57,9 @@ Not styled, on purpose: `checkbox`, `radio`, `range`, `color`, `file` and `hidde
 
 ### Space between blocks
 
-LUZ's reset removes every margin, so a Markdown article would run together. Inside the zone, a paragraph, list, quotation, figure, preformatted block, table, rule, `details`, `fieldset`, `form` or address starts one step (`--luz-space-md`) below the block before it. A heading starts further down (`--luz-space-xl`), and the block that follows it sits closer (`--luz-space-sm`), so each heading belongs to what it introduces.
+LUZ's reset removes every margin, so a Markdown article would run together. Inside the zone, a paragraph, list, quotation, figure, preformatted block, table, rule, `details`, `fieldset`, `form` or address starts one step (`--luz-space-md`) below the block before it.
+
+A heading starts further down (`--luz-space-xl`), and the block that follows it sits closer (`--luz-space-sm`), so each heading belongs to what it introduces.
 
 - The first child of its parent has no margin above it, so the zone does not push itself away from its container.
 - `div`, `span` and inline elements are left alone: their layout is yours. For a column of blocks you build yourself, use [`.o-stack`](https://nandovejer.github.io/luz/docs/components/layout/).

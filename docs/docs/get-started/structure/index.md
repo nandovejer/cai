@@ -60,7 +60,9 @@ Which package holds each part of a page
 
 ### CSS layers
 
-Core's CSS comes in native cascade layers (`@layer`), in ITCSS order, inside one container layer called `luz`. The six below are the ones that hold its rules; [the layers page](https://nandovejer.github.io/luz/docs/get-started/layers/) lists them all, with tokens, site and print. A later layer wins over an earlier one, and any CSS of yours that is not in a layer wins over all of LUZ, with no `!important`. [How to order and override them](https://nandovejer.github.io/luz/docs/get-started/layers/).
+Core's CSS comes in native cascade layers (`@layer`), in ITCSS order, inside one container layer called `luz`. The six below are the ones that hold its rules; [the layers page](https://nandovejer.github.io/luz/docs/get-started/layers/) lists them all, with tokens, site and print.
+
+A later layer wins over an earlier one, and any CSS of yours that is not in a layer wins over all of LUZ, with no `!important`. [How to order and override them](https://nandovejer.github.io/luz/docs/get-started/layers/).
 
 Core cascade layers
 ```text

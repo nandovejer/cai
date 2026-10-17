@@ -15,8 +15,8 @@
   <script type="module" crossorigin src="../../../assets/reference-or9Ve1Dh.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CFwLTcYL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-BXzNEBss.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-BWHl3Jti.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-uPwpUGqG.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BSyRBnxb.css">
 </head>
 <body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -30,7 +30,7 @@
           <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.0.0 beta</span></a>
       <nav class="site-header__nav" aria-label="Site">
         <a href="../../../">Home</a>
         <a href="../../../docs/" aria-current="true">Docs</a>
@@ -247,11 +247,12 @@
     <p class="luz-docs-page-head__eyebrow">Site · Patterns</p>
     <h1 class="docs-title">Language switch</h1>
     <p class="luz-docs-page-head__lead">Lets readers go to the same page in another language, from a button in the header.</p>
-    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">&lt;luz-lang-switch&gt;, .luz-lang-switch, __button, __menu, __link</code></li><li>No JavaScript</li><li>Light · Dark · High contrast</li><li><a href="#known-issues">1 known issue</a></li></ul>
+    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">&lt;luz-lang-switch&gt;, .luz-lang-switch, __button, __menu, __link</code></li><li>No JavaScript</li><li>Light · Dark · High contrast</li><li><a href="#known-issues">2 known issues</a></li></ul>
   </header>
   <div class="docs-body">
     <div class="docs-component" id="p-lang-switch">
           <h2 id="example">Example</h2>
+          <p>The language switch of a header, with English, Spanish and Arabic.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <luz-lang-switch>
@@ -269,7 +270,8 @@
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe. It has not been tested with a screen reader yet.</p>
+          <p>The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe.</p>
+          <p>It has not been tested with a screen reader yet.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Language switch documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -306,19 +308,20 @@
                 </thead>
                 <tbody>
                   <tr><td data-label="Tag, class or property"><div><code>&lt;luz-lang-switch&gt;</code></div></td><td data-label="Effect"><div>The block: holds the button and the list. A tag that no script defines, with no class and no role of its own</div></td></tr>
-                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__button</code></div></td><td data-label="Effect"><div>A 44 px button with the current language’s name; filled while the list is open</div></td></tr>
-                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__icon</code></div></td><td data-label="Effect"><div>An optional globe before the name, drawn in the text colour. Decorative: <code>aria-hidden="true"</code></div></td></tr>
-                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__name</code></div></td><td data-label="Effect"><div>The current language’s name. Below 360 px it is clipped and the globe shows alone; it stays in the button’s name</div></td></tr>
-                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__menu</code></div></td><td data-label="Effect"><div>The popover: fixed under the header, at the end of the row (the left edge in right-to-left text)</div></td></tr>
-                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__title</code></div></td><td data-label="Effect"><div>The visible name of the list</div></td></tr>
-                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__list</code></div></td><td data-label="Effect"><div>The list of languages, without bullets</div></td></tr>
-                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__link</code></div></td><td data-label="Effect"><div>One 44 px row per language. With <code>aria-current</code>: bold and underlined</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code class="docs-name"><span>.luz-lang-switch</span><wbr><span>__button</span></code></div></td><td data-label="Effect"><div>A 44 px button with the current language’s name; filled while the list is open</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code class="docs-name"><span>.luz-lang-switch</span><wbr><span>__icon</span></code></div></td><td data-label="Effect"><div>An optional globe before the name, drawn in the text colour. Decorative: <code>aria-hidden="true"</code></div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code class="docs-name"><span>.luz-lang-switch</span><wbr><span>__name</span></code></div></td><td data-label="Effect"><div>The current language’s name. Below 360 px it is clipped and the globe shows alone; it stays in the button’s name</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code class="docs-name"><span>.luz-lang-switch</span><wbr><span>__menu</span></code></div></td><td data-label="Effect"><div>The popover: fixed under the header, at the end of the row (the left edge in right-to-left text)</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code class="docs-name"><span>.luz-lang-switch</span><wbr><span>__title</span></code></div></td><td data-label="Effect"><div>The visible name of the list</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code class="docs-name"><span>.luz-lang-switch</span><wbr><span>__list</span></code></div></td><td data-label="Effect"><div>The list of languages, without bullets</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code class="docs-name"><span>.luz-lang-switch</span><wbr><span>__link</span></code></div></td><td data-label="Effect"><div>One 44 px row per language. With <code class="docs-name"><span>aria-current</span></code>: bold and underlined</div></td></tr>
                   <tr><td data-label="Tag, class or property"><div><code>--luz-lang-switch-top</code></div></td><td data-label="Effect"><div>How far from the top of the screen the list opens. Defaults to <code>--luz-bar-h</code>, the height of a one-row bar of 44 px controls; set it on the tag if your header is taller.</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>Changing language is going to another page, so the switch is a list of links. The button opens it with the native <code>popovertarget</code>, and <code>@luz-ds/site</code> only styles it: there is no script. <code>&lt;luz-lang-switch&gt;</code> is a tag that no script ever defines; it only gives the block a name in the markup and in CSS, and adds no role: the button and the <code>nav</code> carry the meaning.</p>
+            <p>Changing language is going to another page, so the switch is a list of links. The button opens it with the native <code>popovertarget</code>, and <code>@luz-ds/site</code> only styles it: there is no script.</p>
+            <p><code>&lt;luz-lang-switch&gt;</code> is a tag that no script ever defines; it only gives the block a name in the markup and in CSS, and adds no role: the button and the <code>nav</code> carry the meaning.</p>
             <ul>
               <li>Each language is named in that language, with <code>lang</code> so a screen reader pronounces it, and <code>hreflang</code> so the link says where it goes.</li>
               <li>The list is a popover in the top layer, fixed under the header at the inline end; it mirrors in right-to-left text.</li>
@@ -469,7 +472,7 @@
 
   <footer class="docs-footer luz-landing-footer" id="site-footer">
     <div class="o-container o-container--inline o-row">
-      <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
+      <p class="u-text-muted">LUZ Design System · v0.0.0 · Beta · MIT License</p>
       <nav class="o-actions" aria-label="Project links">
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../">Home</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>

@@ -57,7 +57,9 @@ Use a select when the reader must choose one option from a long list they alread
 - The options are short and the reader can scan them in order.
 
 ### When not to use
-A select hides the options until the reader opens it, and some people find that hard. The [GOV.UK Design System](https://design-system.service.gov.uk/components/select/) says to use it as a last resort. The rule of six is LUZ's own: that guide gives no number.
+A select hides the options until the reader opens it, and some people find that hard. The [GOV.UK Design System](https://design-system.service.gov.uk/components/select/) says to use it as a last resort.
+
+The rule of six is LUZ's own: that guide gives no number.
 
 - With six options or fewer, use [radio buttons](https://nandovejer.github.io/luz/docs/components/form/): every option stays in view.
 - To choose several, use [checkboxes](https://nandovejer.github.io/luz/docs/components/form/).

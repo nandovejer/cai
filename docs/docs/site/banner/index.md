@@ -3,7 +3,9 @@
 Tells every visitor one short thing at the top of the page, such as a sale, an event or planned maintenance.
 
 ### Known issues
-It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the banner short and remove it from the markup when it ends. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a banner; Escape or a click outside closes it.
+It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the banner short and remove it from the markup when it ends.
+
+In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a banner; Escape or a click outside closes it.
 
 ### Copy the markup
 A `<luz-banner>` around one `<section>` named by its first words, after the [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/) and the [cookie consent](https://nandovejer.github.io/luz/docs/site/consent/), before the header of the page (a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header).

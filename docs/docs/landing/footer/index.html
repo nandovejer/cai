@@ -15,8 +15,8 @@
   <script type="module" crossorigin src="../../../assets/reference-or9Ve1Dh.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CFwLTcYL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-BXzNEBss.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-BWHl3Jti.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-uPwpUGqG.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BSyRBnxb.css">
 </head>
 <body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -30,7 +30,7 @@
           <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.0.0 beta</span></a>
       <nav class="site-header__nav" aria-label="Site">
         <a href="../../../">Home</a>
         <a href="../../../docs/" aria-current="true">Docs</a>
@@ -252,6 +252,7 @@
   <div class="docs-body">
     <div class="docs-component" id="p-landing-footer">
           <h2 id="example">Example</h2>
+          <p>Two footers: a single row with a status and two links, and one with the brand and two columns.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <div class="luz-landing-footer">
@@ -290,7 +291,8 @@
               </div>
             </div>
           </div>
-          <p class="docs-demo__note">The footer with a brand and columns. From 768 px of window the brand is twice as wide as a column and they sit in one row; here the column is narrower, so they stack. The column titles are paragraphs, as this page has its own headings.</p>
+          <p class="docs-demo__note">The footer with a brand and columns. From 768 px of window the brand is twice as wide as a column and they sit in one row; here the column is narrower, so they stack.</p>
+          <p class="docs-demo__note">The column titles are paragraphs, as this page has its own headings.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
@@ -351,12 +353,12 @@
                   <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.luz-landing-footer</code></div></td><td data-label="Effect"><div>On <code>&lt;footer&gt;</code>: a rule on top, 24 px above its row and 32 px below; its row spreads its children to the two ends, and is a column aligned to the start at 768 px and below</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.o-container.o-container--inline.o-row</code> (core)</div></td><td data-label="Effect"><div>The row: the width and gutters of the page, so its content starts where the main's does</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.luz-landing-footer__brand</code></div></td><td data-label="Effect"><div>The first cell of the <code>.o-container.o-container--inline.o-grid</code> (core), 24 px (<code>--luz-space-lg</code>) apart: a name, a version, one line. From 768 px it is twice a column</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.luz-landing-footer__col</code></div></td><td data-label="Effect"><div>A column, on a <code>&lt;nav&gt;</code>: a title over a list of links with no markers, 8 px (<code>--luz-space-xs</code>) apart; each link is a box 28 px (<code>--luz-control-sm</code>) tall, a target of 24 px or more</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.luz-landing-footer__col-title</code></div></td><td data-label="Effect"><div>A column's title: sans, small, semibold, primary text</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.o-actions</code> (core)</div></td><td data-label="Effect"><div>The links, as an <a href="../../../docs/components/layout/#objects-actions">action group</a></div></td></tr>
+                  <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-landing-footer</span></code></div></td><td data-label="Effect"><div>On <code>&lt;footer&gt;</code>: a rule on top, 24 px above its row and 32 px below; its row spreads its children to the two ends, and is a column aligned to the start at 768 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code class="docs-name"><span>.o-container.o-container</span><wbr><span>--inline.o-row</span></code> (core)</div></td><td data-label="Effect"><div>The row: the width and gutters of the page, so its content starts where the main's does</div></td></tr>
+                  <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-landing-footer</span><wbr><span>__brand</span></code></div></td><td data-label="Effect"><div>The first cell of the <code class="docs-name"><span>.o-container.o-container</span><wbr><span>--inline.o-grid</span></code> (core), 24 px (<code>--luz-space-lg</code>) apart: a name, a version, one line. From 768 px it is twice a column</div></td></tr>
+                  <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-landing-footer</span><wbr><span>__col</span></code></div></td><td data-label="Effect"><div>A column, on a <code>&lt;nav&gt;</code>: a title over a list of links with no markers, 8 px (<code>--luz-space-xs</code>) apart; each link is a box 28 px (<code>--luz-control-sm</code>) tall, a target of 24 px or more</div></td></tr>
+                  <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-landing-footer</span><wbr><span>__col-title</span></code></div></td><td data-label="Effect"><div>A column's title: sans, small, semibold, primary text</div></td></tr>
+                  <tr><td data-label="Class"><div><code class="docs-name"><span>.o-actions</span></code> (core)</div></td><td data-label="Effect"><div>The links, as an <a href="../../../docs/components/layout/#objects-actions">action group</a></div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -505,7 +507,7 @@
 
   <footer class="docs-footer luz-landing-footer" id="site-footer">
     <div class="o-container o-container--inline o-row">
-      <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
+      <p class="u-text-muted">LUZ Design System · v0.0.0 · Beta · MIT License</p>
       <nav class="o-actions" aria-label="Project links">
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../">Home</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>

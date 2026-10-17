@@ -76,7 +76,9 @@ import "@luz-ds/core";
 
 ### Level 3: tokens, core and site
 
-Six components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner. Site needs core and tokens. The page structure, from the header to the footer, is in landing and cms, which work without site.
+Six components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner. Site needs core and tokens.
+
+The page structure, from the header to the footer, is in landing and cms, which work without site.
 
 `pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site`
 
@@ -104,7 +106,16 @@ import "@luz-ds/site";
 
 ### Packages for one kind of site
 
-On top of level 3, a package can add what one kind of site needs: [Landing](https://nandovejer.github.io/luz/docs/landing/), the header, hero, sections and footer of a landing page and blocks to copy for it, [CMS](https://nandovejer.github.io/luz/docs/cms/), the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS, [App](https://nandovejer.github.io/luz/docs/app/), the header and the dashboard of a web application, and [Documentation](https://nandovejer.github.io/luz/docs/documentation/), the shell, page head, rail, example, do and don't, pager and page foot of a documentation site. Each needs the packages of level 2, loaded first; site is optional for them, and the commands below add it for its search and its language switch. Install the one you need.
+On top of level 3, a package can add what one kind of site needs:
+
+- [Landing](https://nandovejer.github.io/luz/docs/landing/): the header, hero, sections and footer of a landing page, and blocks to copy for it.
+- [CMS](https://nandovejer.github.io/luz/docs/cms/): the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS.
+- [App](https://nandovejer.github.io/luz/docs/app/): the header and the dashboard of a web application.
+- [Documentation](https://nandovejer.github.io/luz/docs/documentation/): the shell, page head, rail, example, do and don't, pager and page foot of a documentation site.
+
+Each needs the packages of level 2, loaded first. Site is optional for them, and the commands below add it for its search and its language switch.
+
+Install the one you need.
 
 `pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/landing`
 
@@ -168,7 +179,11 @@ curl -s https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css | opens
 
 Write the result as `integrity="sha384-…"` on the tag that loads that file, and repeat it for each file.
 
-A hash on a script covers that file only, not the files it loads later. `site.min.js` loads `search.min.js` on a page with a search and `consent.min.js` on a page with a cookie banner and `mode.min.js` on a page with an Auto color mode. Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked. A `<link rel="modulepreload">` with a hash is not a guard in Safari or Firefox: use it as a performance hint only.
+A hash on a script covers that file only, not the files it loads later. `site.min.js` loads `search.min.js` on a page with a search and `consent.min.js` on a page with a cookie banner and `mode.min.js` on a page with an Auto color mode.
+
+Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked.
+
+A `<link rel="modulepreload">` with a hash is not a guard in Safari or Firefox: use it as a performance hint only.
 
 Integrity for the site scripts
 ```html
@@ -197,7 +212,9 @@ URL: https://nandovejer.github.io/luz/docs/get-started/snippet/
 
 Pick what you are building and how you load it, then copy the lines. The CDN lines carry integrity hashes computed from the published files.
 
-Every snippet loads tokens first, then core, then the package for your kind of site, in the order the [cascade layers](https://nandovejer.github.io/luz/docs/get-started/layers/) expect. The site package is optional for a landing page, a blog and an application, so its lines are marked and safe to delete. For the level-by-level explanation, read [Install LUZ](https://nandovejer.github.io/luz/docs/get-started/); for a build tool, [With a bundler or framework](https://nandovejer.github.io/luz/docs/get-started/bundler/).
+Every snippet loads tokens first, then core, then the package for your kind of site, in the order the [cascade layers](https://nandovejer.github.io/luz/docs/get-started/layers/) expect. The site package is optional for a landing page, a blog and an application, so its lines are marked and safe to delete.
+
+For the level-by-level explanation, read [Install LUZ](https://nandovejer.github.io/luz/docs/get-started/); for a build tool, [With a bundler or framework](https://nandovejer.github.io/luz/docs/get-started/bundler/).
 
 ## How LUZ is organised
 URL: https://nandovejer.github.io/luz/docs/get-started/structure/
@@ -262,7 +279,9 @@ Which package holds each part of a page
 
 ### CSS layers
 
-Core's CSS comes in native cascade layers (`@layer`), in ITCSS order, inside one container layer called `luz`. The six below are the ones that hold its rules; [the layers page](https://nandovejer.github.io/luz/docs/get-started/layers/) lists them all, with tokens, site and print. A later layer wins over an earlier one, and any CSS of yours that is not in a layer wins over all of LUZ, with no `!important`. [How to order and override them](https://nandovejer.github.io/luz/docs/get-started/layers/).
+Core's CSS comes in native cascade layers (`@layer`), in ITCSS order, inside one container layer called `luz`. The six below are the ones that hold its rules; [the layers page](https://nandovejer.github.io/luz/docs/get-started/layers/) lists them all, with tokens, site and print.
+
+A later layer wins over an earlier one, and any CSS of yours that is not in a layer wins over all of LUZ, with no `!important`. [How to order and override them](https://nandovejer.github.io/luz/docs/get-started/layers/).
 
 Core cascade layers
 ```text
@@ -338,7 +357,9 @@ What each class prefix means
 - `.luz-docs-`: A piece of a documentation page: docs: `.luz-docs-pager`
 - `.is-`: A state a script mirrors onto an element. Read it, but do not style from outside: it is not part of what you can rely on: core: `.is-active`
 
-Inside a component, two separators say how the pieces fit. A double underscore names a part of the component: `.luz-card__title` is the title of a card. A double hyphen names a variant of it: `.luz-btn--primary` is the primary button.
+Inside a component, two separators say how the pieces fit. A double underscore names a part of the component: `.luz-card__title` is the title of a card.
+
+A double hyphen names a variant of it: `.luz-btn--primary` is the primary button.
 
 Read this markup from left to right, one class at a time.
 
@@ -437,7 +458,9 @@ LUZ is made to be changed from the outside. You do not edit its files: you write
 
 ### Change a token, not a component
 
-LUZ's components read tokens: custom properties that start with `--luz-`. To change how LUZ looks, write the token again in your own CSS. Every component that reads it follows.
+LUZ's components read tokens: custom properties that start with `--luz-`. To change how LUZ looks, write the token again in your own CSS.
+
+Every component that reads it follows.
 
 The token override
 ```css
@@ -453,7 +476,9 @@ The token override
 
 ### Colours and modes
 
-LUZ ships one look in three modes: light, dark and high contrast. Colours are semantic tokens, such as `--luz-brand-fill` and `--luz-surface-page`, and each one has a value for each mode. To change them, [make your own theme](https://nandovejer.github.io/luz/docs/tokens/themes/): it gives you a template, the steps and where to load it. Then run [the contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/) on your colours, which measures the pairs LUZ promises to keep readable.
+LUZ ships one look in three modes: light, dark and high contrast. Colours are semantic tokens, such as `--luz-brand-fill` and `--luz-surface-page`, and each one has a value for each mode.
+
+To change them, [make your own theme](https://nandovejer.github.io/luz/docs/tokens/themes/): it gives you a template, the steps and where to load it. Then run [the contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/) on your colours, which measures the pairs LUZ promises to keep readable.
 
 ### Fonts
 
@@ -569,7 +594,9 @@ Type sizes at 16px root
 
 ### Corners
 
-`--luz-radius-md` is the ceiling: no rectangle is rounder. It is the corner of buttons, cards, alerts, menus and dialogs. Three more steps cover the other cases.
+`--luz-radius-md` is the ceiling: no rectangle is rounder. It is the corner of buttons, cards, alerts, menus and dialogs.
+
+Three more steps cover the other cases.
 
 - `--luz-radius-none` (0px): a square corner, for a box that joins a neighbour.
 - `--luz-radius-sm` (2px): small marks, such as inline code and a checkbox.
@@ -589,7 +616,9 @@ Square corners
 
 Three tokens set how far a surface seems to float: `--luz-shadow-sm` for a card, `--luz-shadow-md` for tooltips and toasts, and `--luz-shadow-lg` for dialogs and the drawer.
 
-LUZ redraws them in dark mode, and in high contrast it draws outlines instead. A rule on `:root` outside any layer wins in every mode, so one value serves them all. If you want the dark ones heavier, set them for that mode as well.
+LUZ redraws them in dark mode, and in high contrast it draws outlines instead. A rule on `:root` outside any layer wins in every mode, so one value serves them all.
+
+If you want the dark ones heavier, set them for that mode as well.
 
 Shadows for light and dark
 ```css
@@ -606,7 +635,9 @@ Never let a shadow be the only edge of a surface: it disappears in forced colors
 
 ### Adjust one component
 
-Change a token first: every component that reads it follows, in every mode. When one component needs a rule of its own, write it in CSS outside any layer. It wins over every LUZ layer, so the selector can stay short.
+Change a token first: every component that reads it follows, in every mode. When one component needs a rule of its own, write it in CSS outside any layer.
+
+It wins over every LUZ layer, so the selector can stay short.
 
 A rule for one component
 ```css
@@ -638,7 +669,9 @@ Three things to avoid.
 
 ### Icons
 
-LUZ draws 22 icons of its own, on [the Icon grid page](https://nandovejer.github.io/luz/docs/components/icon-grid/), which also has the markup. For hundreds, bring a set. Whatever set you use, the pattern is the same:
+LUZ draws 22 icons of its own, on [the Icon grid page](https://nandovejer.github.io/luz/docs/components/icon-grid/), which also has the markup. For hundreds, bring a set.
+
+Whatever set you use, the pattern is the same:
 
 1. Use an inline `<svg>` that takes `currentColor`. It follows the text colour and the mode, and it works in forced colors.
 2. Mark it decorative with `aria-hidden="true"` and `focusable="false"`. Its name comes from the visible text beside it, or from a `.u-sr-only` span in the button.
@@ -886,28 +919,38 @@ The rule in `site.css` sets the type knob to 1.125rem and wins over LUZ's defaul
 - Astro bundled the `<script>` with `import "@luz-ds/core"` into one module file and split the lazy chunks off it.
 - The fonts came out as hashed files, and the layers and your own rule came out in the order described above.
 
-The build output was inspected, and the built page was not opened in a browser. Astro with a view transition router (`<ClientRouter />`) was not tried, and neither was Windows. The `landing`, `cms` and `app` imports have the same shape as the ones above, and were not built.
+The build output was inspected, and the built page was not opened in a browser. Astro with a view transition router (`<ClientRouter />`) was not tried, and neither was Windows.
+
+The `landing`, `cms` and `app` imports have the same shape as the ones above, and were not built.
 
 ### Vite, Next, Nuxt and SvelteKit
 
-Only Astro was built for this page; Vite on its own, Next, Nuxt and SvelteKit were not built or tested. The imports are the same ones, in the root layout or the entry file of the app. Each tool's own documentation says where CSS from a package goes:
+Only Astro was built for this page; Vite on its own, Next, Nuxt and SvelteKit were not built or tested. The imports are the same ones, in the root layout or the entry file of the app.
+
+Each tool's own documentation says where CSS from a package goes:
 
 - [Vite documentation](https://vite.dev/guide/)
 - [Next.js documentation](https://nextjs.org/docs)
 - [Nuxt documentation](https://nuxt.com/docs)
 - [SvelteKit documentation](https://svelte.dev/docs/kit)
 
-One fact is the same for all of them. A LUZ module has no side effect when it is imported, until you call its `init` function, and `luz.js` and `site.js` check that `document` exists first. So a framework that renders on the server can import them. In plain Node, with no `document`, ten modules of core and site were imported with no error.
+One fact is the same for all of them. A LUZ module has no side effect when it is imported, until you call its `init` function, and `luz.js` and `site.js` check that `document` exists first.
+
+So a framework that renders on the server can import them. In plain Node, with no `document`, ten modules of core and site were imported with no error.
 
 ### Fonts and assets
 
 `@luz-ds/tokens/css` is `luz-tokens.css`, and its `@font-face` rules point at the ET Book files with `url()`. Your bundler resolves those paths: Astro emitted the files as hashed `woff2` assets.
 
-To skip ET Book, import `@luz-ds/tokens/tokens.css` instead. It has the same tokens and no `@font-face`, so no font is downloaded. Then set `--luz-font-body` to the font you use: [Make it yours](https://nandovejer.github.io/luz/docs/get-started/make-it-yours/) shows how.
+To skip ET Book, import `@luz-ds/tokens/tokens.css` instead. It has the same tokens and no `@font-face`, so no font is downloaded.
+
+Then set `--luz-font-body` to the font you use: [Make it yours](https://nandovejer.github.io/luz/docs/get-started/make-it-yours/) shows how.
 
 ### A CDN in a framework
 
-You can load LUZ from a CDN in a framework layout instead of importing it. In an Astro layout, a `<link rel="stylesheet">` in the `<head>` and a `<script type="module" src="https://…">`, each with `integrity` and `crossorigin`, stay as written. So does a script with `is:inline`. Astro only processes a `<script>` that has no attribute other than `src`.
+You can load LUZ from a CDN in a framework layout instead of importing it. In an Astro layout, a `<link rel="stylesheet">` in the `<head>` and a `<script type="module" src="https://…">`, each with `integrity` and `crossorigin`, stay as written.
+
+So does a script with `is:inline`. Astro only processes a `<script>` that has no attribute other than `src`.
 
 Use the CDN or the imports, not both: LUZ would load twice. [Choose your snippet](https://nandovejer.github.io/luz/docs/get-started/snippet/) gives the tags with their hashes.
 
@@ -958,7 +1001,9 @@ initTabs();
 
 #### Languages and the strings scripts write
 
-English is in the entry. Every other language LUZ ships is a small file, fetched at start for a page whose `<html lang>`, or any `lang` outside a link or an option, names it; a page in English makes no request. With the individual modules, call `loadLocales()` yourself, and `await loadLocales()` before `initHighlight()`, `initPlayers()` and `initThemeCycle()`. A file that cannot load is one console warning, and English.
+English is in the entry. Every other language LUZ ships is a small file, fetched at start for a page whose `<html lang>`, or any `lang` outside a link or an option, names it; a page in English makes no request.
+
+With the individual modules, call `loadLocales()` yourself, and `await loadLocales()` before `initHighlight()`, `initPlayers()` and `initThemeCycle()`. A file that cannot load is one console warning, and English.
 
 For a language LUZ does not ship, set `data-luz-label-*` once on `<html>` or `<body>`, or call `registerLocale()` before the scripts start.
 
@@ -1064,7 +1109,9 @@ Overriding LUZ from your own layer
 
 ### Why one container layer
 
-LUZ's layers used to be six top-level names: `settings`, `generic`, `elements`, `objects`, `components` and `utilities`. They are short and common, and other tools use some of the same names. A page that loaded one of them next to LUZ merged its `components` or `utilities` with LUZ's, and the order between them was an accident.
+LUZ's layers used to be six top-level names: `settings`, `generic`, `elements`, `objects`, `components` and `utilities`. They are short and common, and other tools use some of the same names.
+
+A page that loaded one of them next to LUZ merged its `components` or `utilities` with LUZ's, and the order between them was an accident.
 
 - Inside `luz`, LUZ's layer names cannot meet yours.
 - One name orders all of LUZ: you place `luz` once, and you do not have to know what is inside.
@@ -1156,13 +1203,13 @@ What an AI coding agent can read, how to check what it wrote, and the accessibil
 
 ### Check what an agent wrote
 
-`npx @luz-ds/check` reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and color tokens are wrong. It reads files and writes nothing. It needs Node 20 or later.
+`npx @luz-ds/check` reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and color tokens are wrong. It reads files and writes nothing.
 
 The files an agent can read are linked from `llms.txt`. The commands with paths, the options and exit codes (`npx @luz-ds/check --help`), a sample of the output, the fields of `--json` and the tables of the files and of the rules are on the page at the URL above.
 
 ### What check blocks and what it warns about
 
-Each rule has an id such as `class/unknown`, shown in every finding. A rule that blocks makes the exit code 1. A rule that warns does not, unless you pass `--strict`. The two tables are written from the list of rules the command has.
+Each rule has an id such as `class/unknown`, shown in every finding. A rule that blocks makes the exit code 1.
 
 ### The accessibility reviewer
 
@@ -1253,7 +1300,9 @@ Not styled, on purpose: `checkbox`, `radio`, `range`, `color`, `file` and `hidde
 
 ### Space between blocks
 
-LUZ's reset removes every margin, so a Markdown article would run together. Inside the zone, a paragraph, list, quotation, figure, preformatted block, table, rule, `details`, `fieldset`, `form` or address starts one step (`--luz-space-md`) below the block before it. A heading starts further down (`--luz-space-xl`), and the block that follows it sits closer (`--luz-space-sm`), so each heading belongs to what it introduces.
+LUZ's reset removes every margin, so a Markdown article would run together. Inside the zone, a paragraph, list, quotation, figure, preformatted block, table, rule, `details`, `fieldset`, `form` or address starts one step (`--luz-space-md`) below the block before it.
+
+A heading starts further down (`--luz-space-xl`), and the block that follows it sits closer (`--luz-space-sm`), so each heading belongs to what it introduces.
 
 - The first child of its parent has no margin above it, so the zone does not push itself away from its container.
 - `div`, `span` and inline elements are left alone: their layout is yours. For a column of blocks you build yourself, use [`.o-stack`](https://nandovejer.github.io/luz/docs/components/layout/).
@@ -1283,7 +1332,9 @@ Three promises behind every release: it is made for people first and readable by
 
 LUZ is made for the person who uses the page. It starts from native HTML, works with a keyboard and with JavaScript off, and aims for WCAG 2.2 level AA in three color modes.
 
-Plain HTML and CSS with a closed list of class names is also easy for an AI agent to get right. The site publishes the list of names, and a command checks what the agent wrote. [Working with AI](https://nandovejer.github.io/luz/docs/get-started/ai/) has the files and the prompt.
+Plain HTML and CSS with a closed list of class names is also easy for an AI agent to get right. The site publishes the list of names, and a command checks what the agent wrote.
+
+[Working with AI](https://nandovejer.github.io/luz/docs/get-started/ai/) has the files and the prompt.
 
 ### Tests first
 
@@ -1315,7 +1366,9 @@ The rules those checks enforce are in [PRINCIPLES.md](https://github.com/nandove
 
 The packages have no runtime dependency. They ship plain CSS and small ES modules that need no build step, and they use the browser's own elements and APIs before any script.
 
-Size budgets are a red line: a check fails when a file grows past its ceiling, and nobody raises a ceiling to make it pass. Everything LUZ ships is under the MIT licence, and only the MIT licence. [Get started](https://nandovejer.github.io/luz/docs/get-started/) shows how to load it.
+Size budgets are a red line: a check fails when a file grows past its ceiling, and nobody raises a ceiling to make it pass. Everything LUZ ships is under the MIT licence, and only the MIT licence.
+
+[Get started](https://nandovejer.github.io/luz/docs/get-started/) shows how to load it.
 
 ## Tokens
 URL: https://nandovejer.github.io/luz/docs/tokens/
@@ -1988,7 +2041,9 @@ A single `<details>` needs no class: the elements layer styles it. The class onl
 - `open`: Starts a panel open. In a named group, only the first `open` one in the source stays open
 
 ### How it works
-Native `<details>` and `<summary>`, styled by `elements/interactive.css` with no class. `components/accordion.css` adds only the joined block. No JavaScript.
+Native `<details>` and `<summary>`, styled by `elements/interactive.css` with no class. `components/accordion.css` adds only the joined block.
+
+No JavaScript.
 
 - The summary is the label of the panel; the rest of the details is its content.
 - Closed content is not shown and is out of the reading order until the panel opens.
@@ -1997,7 +2052,9 @@ Native `<details>` and `<summary>`, styled by `elements/interactive.css` with no
 Nothing changes: opening, closing and grouping are the browser's. The accordion is complete without a script.
 
 ### Keyboard and ARIA
-Tab reaches each summary in order. Enter or Space opens or closes it. There are no arrow-key shortcuts between panels.
+Tab reaches each summary in order. Enter or Space opens or closes it.
+
+There are no arrow-key shortcuts between panels.
 
 - Add no role: a `<details>` already has its semantics, and no ARIA role is allowed on it.
 - Keep links and buttons out of the summary: it is itself the control.
@@ -2107,7 +2164,9 @@ Avatar with a photo markup
 ```
 
 ### Variants and options
-Pick one size modifier. Without one, the avatar has no size of its own. The content is the initials or one `<img>`.
+Pick one size modifier.
+
+Without one, the avatar has no size of its own. The content is the initials or one `<img>`.
 
 - `.luz-avatar--sm`: 24 × 24 px, extra-small text
 - `.luz-avatar--md`: 36 × 36 px, small text
@@ -2621,7 +2680,9 @@ Files: components/copy-btn.css · Package: @luz-ds/core
 Copies a command or a value to the clipboard, and says it did.
 
 ### Known issues
-The Clipboard API needs a secure context (https, or localhost while you develop). Elsewhere the copy fails. The failure is announced to screen readers only: the button shows no message, so a sighted reader sees nothing happen. The text can still be selected and copied by hand.
+The Clipboard API needs a secure context (https, or localhost while you develop). Elsewhere the copy fails.
+
+The failure is announced to screen readers only: the button shows no message, so a sighted reader sees nothing happen. The text can still be selected and copied by hand.
 
 ### Copy the markup
 Copy button markup
@@ -2716,7 +2777,9 @@ A native [popover](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)
 Nothing changes: the popover is HTML. The actions that are buttons need your own script to do something, as any button does; the ones that are links work as they are.
 
 ### Keyboard and ARIA
-Enter or Space on the button opens the panel; the focus stays on the button, and the panel follows it in the tab order. Tab moves to the first action, then through the others, and Shift+Tab goes back. Escape closes the panel and returns the focus to the button.
+Enter or Space on the button opens the panel; the focus stays on the button, and the panel follows it in the tab order. Tab moves to the first action, then through the others, and Shift+Tab goes back.
+
+Escape closes the panel and returns the focus to the button.
 
 - Give the button a name that says what is inside: “Actions”, “More options for Ana”, not a bare “…”.
 - An unavailable action uses `aria-disabled="true"` and no `disabled`, so it stays reachable and a screen reader says it exists. Do not run its action when it is activated.
@@ -2956,7 +3019,9 @@ Icon in a button markup
 </button>
 ```
 
-Two icons point to the end of the line: `chevron-end` and `arrow-end`, marked with `data-luz-flip`. In right-to-left text, LUZ mirrors anything with that attribute using the rule below, in core's utilities layer, so you write nothing. Add the attribute to an icon of your own that points to the end of the line.
+Two icons point to the end of the line: `chevron-end` and `arrow-end`, marked with `data-luz-flip`. In right-to-left text, LUZ mirrors anything with that attribute using the rule below, in core's utilities layer, so you write nothing.
+
+Add the attribute to an icon of your own that points to the end of the line.
 
 Right-to-left rule, shipped in luz.utilities
 ```css
@@ -3073,7 +3138,9 @@ Files: components/meta.css · Package: @luz-ds/core
 Shows a few facts about something on one line, such as its date, its reading time and its author, with a dot between them.
 
 ### Known issues
-The dots are hidden from screen readers with alternative text for generated content, which Firefox has since version 128 and Safari since 17.4. An older browser lets a screen reader read each dot. Not yet tested with a screen reader.
+The dots are hidden from screen readers with alternative text for generated content, which Firefox has since version 128 and Safari since 17.4. An older browser lets a screen reader read each dot.
+
+Not yet tested with a screen reader.
 
 ### Copy the markup
 Meta line markup
@@ -3188,7 +3255,9 @@ Files: components/modal.css · Package: @luz-ds/core
 Asks for a decision that must be made before the reader goes on, in a native dialog.
 
 ### Known issues
-Some supported browsers do not have the `command` and `commandfor` attributes yet. In those browsers, with JavaScript off, the open button does nothing. Give the reader another way to the same action.
+Some supported browsers do not have the `command` and `commandfor` attributes yet. In those browsers, with JavaScript off, the open button does nothing.
+
+Give the reader another way to the same action.
 
 ### Copy the markup
 Modal markup
@@ -3271,7 +3340,9 @@ Files: components/navbar.css · Package: @luz-ds/core
 Puts the main links of a site in a header's row, and in a panel under it on a narrow screen.
 
 ### Known issues
-If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it, hiding what is behind. Escape closes it. This meets WCAG 2.4.11 (AA) and does not meet 2.4.12 (AAA).
+If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it, hiding what is behind. Escape closes it.
+
+This meets WCAG 2.4.11 (AA) and does not meet 2.4.12 (AAA).
 
 - **Browsers without anchor positioning.** Where CSS anchor positioning is supported (Chrome and Edge 125, Safari 26, Firefox 147) the panel opens under the bar wherever it ends, even with a notice or the cookie banner above it. Elsewhere it opens at `--luz-bar-h` from the top of the window: with enlarged text and a bar that wraps to a second row, or with a band above the bar before the page scrolls, it can cover part of the bar. Escape or a click outside closes it.
 - **Forced colors in Firefox.** The dim layer behind the open menu is not drawn, so the page is not dimmed. The panel keeps its border, so it is still set apart.
@@ -3369,7 +3440,9 @@ There are no modifiers. The list wraps onto more lines when it is narrow.
 - `.luz-pagination__gap`: The “…” of a long list: a mark, hidden from screen readers
 
 ### How it works
-A `<nav>` landmark around a list of links, styled by `components/pagination.css`. Each page is a real address, so the server renders it and the back button, a bookmark and a search engine all work. No JavaScript.
+A `<nav>` landmark around a list of links, styled by `components/pagination.css`. Each page is a real address, so the server renders it and the back button, a bookmark and a search engine all work.
+
+No JavaScript.
 
 - The numbers are links, not buttons: following one loads another page.
 - `rel="prev"` and `rel="next"` say which links go to the neighbours.
@@ -3405,7 +3478,9 @@ Files: components/player.css · Package: @luz-ds/core
 Plays a video, a sound or a MIDI file in the page, with the same controls for all three.
 
 ### Known issues
-Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example. A MIDI file has no player without JavaScript: offer a download link in the fallback text.
+Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example.
+
+A MIDI file has no player without JavaScript: offer a download link in the fallback text.
 
 ### Copy the markup
 An audio player. The video player adds a `.luz-player-media-wrap` around the `<video>` and a mute button and volume slider: copy it from the example above.
@@ -3479,7 +3554,9 @@ The native media element plays the file; `player.js` drives the LUZ controls, st
 - In right-to-left text the timeline follows the reading direction: the seek bar starts at the right and fills towards the left, the controls row mirrors, and the slider's keys are the browser's own. The play, pause and volume icons are not mirrored: they do not point anywhere.
 
 ### Without JavaScript
-Audio and video show the browser's own controls, and the LUZ controls stay hidden. The browser's controls offer the captions and subtitles, and a track with `default` shows from the start. A MIDI player shows its fallback text instead.
+Audio and video show the browser's own controls, and the LUZ controls stay hidden. The browser's controls offer the captions and subtitles, and a track with `default` shows from the start.
+
+A MIDI player shows its fallback text instead.
 
 ### Keyboard and ARIA
 Tab moves through the controls; each one keeps its native keys.
@@ -3555,7 +3632,9 @@ Files: components/prose.css · Package: @luz-ds/core
 Sets long text in lines of about 70 characters, with space between its blocks, whatever markup an editor writes inside.
 
 ### Known issues
-A table without a wrapper that is wider than the column pushes the page sideways on a narrow screen. Put a wide table in core's [table](https://nandovejer.github.io/luz/docs/components/table/) wrapper, `.luz-table-wrap`, which scrolls inside itself. Not yet tested with a screen reader.
+A table without a wrapper that is wider than the column pushes the page sideways on a narrow screen. Put a wide table in core's [table](https://nandovejer.github.io/luz/docs/components/table/) wrapper, `.luz-table-wrap`, which scrolls inside itself.
+
+Not yet tested with a screen reader.
 
 ### Copy the markup
 Prose markup
@@ -3671,7 +3750,9 @@ Use a select when the reader must choose one option from a long list they alread
 - The options are short and the reader can scan them in order.
 
 ### When not to use
-A select hides the options until the reader opens it, and some people find that hard. The [GOV.UK Design System](https://design-system.service.gov.uk/components/select/) says to use it as a last resort. The rule of six is LUZ's own: that guide gives no number.
+A select hides the options until the reader opens it, and some people find that hard. The [GOV.UK Design System](https://design-system.service.gov.uk/components/select/) says to use it as a last resort.
+
+The rule of six is LUZ's own: that guide gives no number.
 
 - With six options or fewer, use [radio buttons](https://nandovejer.github.io/luz/docs/components/form/): every option stays in view.
 - To choose several, use [checkboxes](https://nandovejer.github.io/luz/docs/components/form/).
@@ -3888,7 +3969,9 @@ A native `<table>` with `<caption>`, `<thead>` and `<th scope>`, styled by `comp
 - Cards change the `display` of the table elements, which can hide the table from some screen readers. The stylesheet recommends `role="table"`, `"row"` and `"cell"` on a table that stacks.
 
 ### Without JavaScript
-Nothing changes: scrolling, the sticky column and the cards are all CSS. A heading with a link sorts on the server; a plain heading is just a heading. Rows are never hidden, and if the script does not load the table stays whole.
+Nothing changes: scrolling, the sticky column and the cards are all CSS. A heading with a link sorts on the server; a plain heading is just a heading.
+
+Rows are never hidden, and if the script does not load the table stays whole.
 
 #### Loading the sort on its own
 
@@ -3965,7 +4048,9 @@ A row of in-page links to the panels, styled by `components/tabs.css` and upgrad
 - `activateTab(tab)` selects a tab from your own script.
 
 ### Without JavaScript
-The tabs are a row of links, and every panel is shown, stacked, in order. Each link jumps to its panel. Give each panel a heading, so the stacked page still reads well.
+The tabs are a row of links, and every panel is shown, stacked, in order. Each link jumps to its panel.
+
+Give each panel a heading, so the stacked page still reads well.
 
 ### Keyboard and ARIA
 Tab moves into the tab row, to the selected tab; Tab again leaves for the panel.
@@ -4152,7 +4237,9 @@ The options are attributes of `<luz-timeline>`. Each item has a date, a title an
 - `data-luz-state`: Written by the script on the items of a vertical timeline: `active` or `past`. Do not set it yourself
 
 ### How it works
-A custom element around a native ordered list, with styles from `components/timeline.css` and a script, `timeline.js`. `luz.js` loads the script only on a page that has a `<luz-timeline>`. The element looks for the first `.luz-timeline` inside it; with none, it does nothing.
+A custom element around a native ordered list, with styles from `components/timeline.css` and a script, `timeline.js`. `luz.js` loads the script only on a page that has a `<luz-timeline>`.
+
+The element looks for the first `.luz-timeline` inside it; with none, it does nothing.
 
 - **Horizontal.** The script builds, with DOM methods only, Previous and Next at the sides of the card and a rail of dates under it: one button per item, with the text of its date. The cards share one grid cell, so the band is as tall as the longest card and nothing jumps when you change the item. The cards that are not current are `inert` and hidden. In the current card the date is hidden from sight, because the rail shows it.
 - **Changing the item.** Click a date, use Previous and Next, the arrow keys, Home and End on the rail, or swipe more than 40 px sideways with a finger or the mouse. Toward the start of the line is the next item. Past either end it wraps round. A swipe that ends on a link is not a click on it.
@@ -4162,7 +4249,9 @@ A custom element around a native ordered list, with styles from `components/time
 - **Text.** "Previous", "Next", "Pause" and "Play" are in the language of the page when LUZ ships it (English, Spanish), chosen by the nearest `lang`, or yours through `registerLocale()` and `data-luz-label-*`. They travel with the script, so `@luz-ds/core/timeline` works on its own. With `luz.js` on the page, a language you add with `registerLocale()` reaches them too. See [the JavaScript modules](https://nandovejer.github.io/luz/docs/get-started/javascript/).
 
 ### Without JavaScript
-An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does. Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.
+An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does.
+
+Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.
 
 ### Keyboard and ARIA
 Tab reaches, in this order: Previous, the links in the current card, Next, the current date on the rail and the Pause or Play button. The other dates are not in the Tab order: the arrow keys move between them.
@@ -4259,7 +4348,9 @@ Files: components/tooltip.css · Package: @luz-ds/core
 Adds a short hint to a control on hover or focus; never essential content.
 
 ### Known issues
-Partly fails WCAG 1.4.13 (content on hover or focus): Escape does not close the tooltip, so the reader has to move the pointer or the focus away. Keep tooltips short and non-essential. Listed in the [accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/).
+Partly fails WCAG 1.4.13 (content on hover or focus): Escape does not close the tooltip, so the reader has to move the pointer or the focus away. Keep tooltips short and non-essential.
+
+Listed in the [accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/).
 
 ### Copy the markup
 Tooltip markup
@@ -4271,7 +4362,9 @@ Tooltip markup
 ```
 
 ### Variants and options
-One position: above the control, centred. Where the browser has CSS anchor positioning, the tip moves below the control when there is no room above. There are no modifiers.
+One position: above the control, centred. Where the browser has CSS anchor positioning, the tip moves below the control when there is no room above.
+
+There are no modifiers.
 
 - `.luz-tooltip`: Wraps the control and the tip, and opens the tip on hover and on focus inside
 - `.luz-tooltip__text`: The tip: one line, on the strong surface, with a shadow
@@ -4440,7 +4533,9 @@ App shell markup
 </body>
 ```
 
-The footer is a plain `<footer>`, which core places across the bottom: nothing here needs site. For whole pages without a sidebar, use [`.o-page`](https://nandovejer.github.io/luz/docs/components/layout/#objects-page). [What each package needs](https://nandovejer.github.io/luz/docs/get-started/structure/#needs) lists every piece.
+The footer is a plain `<footer>`, which core places across the bottom: nothing here needs site. For whole pages without a sidebar, use [`.o-page`](https://nandovejer.github.io/luz/docs/components/layout/#objects-page).
+
+[What each package needs](https://nandovejer.github.io/luz/docs/get-started/structure/#needs) lists every piece.
 
 ## Utility classes
 URL: https://nandovejer.github.io/luz/docs/components/utilities/
@@ -4490,7 +4585,9 @@ URL: https://nandovejer.github.io/luz/docs/site/
 
 Six self-contained components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner, and how to tell whether you need them.
 
-A piece is here when it needs data of the site: its search index, its cookie policy, its languages, its menu, an announcement. Each is a `<luz-*>` tag that works on its own, in any header or page. Everything else is a **component** of core, one reusable piece that fits inside anything; components are in [Components](https://nandovejer.github.io/luz/docs/components/).
+A piece is here when it needs data of the site: its search index, its cookie policy, its languages, its menu, an announcement. Each is a `<luz-*>` tag that works on its own, in any header or page.
+
+Everything else is a **component** of core, one reusable piece that fits inside anything; components are in [Components](https://nandovejer.github.io/luz/docs/components/).
 
 The page structure (the header, the hero, the footer, the page header) is in the packages for one kind of site: [landing](https://nandovejer.github.io/luz/docs/landing/) for a landing page and [CMS](https://nandovejer.github.io/luz/docs/cms/) for a blog, a newspaper or any CMS. They work without this package, and take its components where a search or a language switch goes.
 
@@ -4539,10 +4636,14 @@ Files: <luz-submenu> · Package: @luz-ds/site
 Groups a few links of a header under one button, so the header keeps a short row of links.
 
 ### Known issues
-A submenu is a native `<details>`, which has no Escape key and does not close when you click elsewhere: it closes when you press its button again or open another one (in browsers that support `name` on `<details>`: Chrome and Edge 120, Safari 17.2, Firefox 130; in older ones several can be open at once). From 769 px an open box stays over the top of the page until then, and if you keep pressing Tab after it, a link of the page behind it can be hidden (WCAG 2.2 success criterion 2.4.11, Focus not obscured). In the menu at 768 px and below this does not happen: the links are in the flow and Escape closes the whole menu. It has not been tested with a screen reader.
+A submenu is a native `<details>`, which has no Escape key and does not close when you click elsewhere: it closes when you press its button again or open another one (in browsers that support `name` on `<details>`: Chrome and Edge 120, Safari 17.2, Firefox 130; in older ones several can be open at once). From 769 px an open box stays over the top of the page until then, and if you keep pressing Tab after it, a link of the page behind it can be hidden (WCAG 2.2 success criterion 2.4.11, Focus not obscured).
+
+In the menu at 768 px and below this does not happen: the links are in the flow and Escape closes the whole menu. It has not been tested with a screen reader.
 
 ### Copy the markup
-An item of the list of core’s [navbar](https://nandovejer.github.io/luz/docs/components/navbar/), in a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header, whose content is a `<luz-submenu>` around a `<details>`: its `<summary>` is the button, and a list of links follows it. No class: the tag is the block, and its parts are found by their place. Give every submenu of the header the same `name`, so opening one closes the others.
+An item of the list of core’s [navbar](https://nandovejer.github.io/luz/docs/components/navbar/), in a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header, whose content is a `<luz-submenu>` around a `<details>`: its `<summary>` is the button, and a list of links follows it. No class: the tag is the block, and its parts are found by their place.
+
+Give every submenu of the header the same `name`, so opening one closes the others.
 
 Submenu markup
 ```html
@@ -4610,7 +4711,9 @@ Files: <luz-banner>, tone="warning" · Package: @luz-ds/site
 Tells every visitor one short thing at the top of the page, such as a sale, an event or planned maintenance.
 
 ### Known issues
-It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the banner short and remove it from the markup when it ends. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a banner; Escape or a click outside closes it.
+It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the banner short and remove it from the markup when it ends.
+
+In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a banner; Escape or a click outside closes it.
 
 ### Copy the markup
 A `<luz-banner>` around one `<section>` named by its first words, after the [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/) and the [cookie consent](https://nandovejer.github.io/luz/docs/site/consent/), before the header of the page (a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header).
@@ -4667,10 +4770,17 @@ Files: .luz-consent, __title, __choices · Package: @luz-ds/site
 Asks a visitor once whether the site may use optional cookies, with Accept and Reject side by side, and remembers the answer.
 
 ### Known issues
-Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way. The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again. In a window less than 30 rem (480 px) tall the banner is not fixed: it is in the flow at the top of the page, where its markup is, so the page moves down when it appears. The saved state hides when focus leaves it for the page, but not when you click an empty part of the page: use its Close button. It has not been tested with a screen reader.
+Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way.
+
+- The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again.
+- In a window less than 30 rem (480 px) tall the banner is not fixed: it is in the flow at the top of the page, where its markup is, so the page moves down when it appears.
+- The saved state hides when focus leaves it for the page, but not when you click an empty part of the page. Use its Close button.
+- It has not been tested with a screen reader.
 
 ### Copy the markup
-Right after the [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/), before a [banner](https://nandovejer.github.io/luz/docs/site/banner/) and the header of the page (a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header): it shows at the bottom of the window, but it comes first in the reading and Tab order. One checkbox per category of optional cookies, its `value` the category’s name. `site.min.js` loads the banner’s own file, `consent.min.js`, when the browser is idle; a page without `site.min.js` loads that file on its own.
+Right after the [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/), before a [banner](https://nandovejer.github.io/luz/docs/site/banner/) and the header of the page (a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header): it shows at the bottom of the window, but it comes first in the reading and Tab order. One checkbox per category of optional cookies, its `value` the category’s name.
+
+`site.min.js` loads the banner’s own file, `consent.min.js`, when the browser is idle; a page without `site.min.js` loads that file on its own.
 
 Cookie consent markup
 ```html
@@ -4747,7 +4857,9 @@ There are no variants. The hooks are `data-luz-consent-*` attributes.
 - `--luz-consent-h`: Set on `:root` by the script while the banner shows: its height. The page, `.o-main` and `.luz-sidebar` keep that much room at their end, and scroll what Tab reaches above the banner
 
 ### How it works
-CSS from `@luz-ds/site`, two native forms and a file of its own, `@luz-ds/site/consent` (`dist/consent.min.js`, under 1 kB compressed), which defines `<luz-consent>`. `site.min.js` loads it when the browser is idle, and only on a page with a `<luz-consent>`, so no other page pays for it. A banner added after the page has loaded needs the file imported by hand; two copies of it on one page define the element once.
+CSS from `@luz-ds/site`, two native forms and a file of its own, `@luz-ds/site/consent` (`dist/consent.min.js`, under 1 kB compressed), which defines `<luz-consent>`. `site.min.js` loads it when the browser is idle, and only on a page with a `<luz-consent>`, so no other page pays for it.
+
+A banner added after the page has loaded needs the file imported by hand; two copies of it on one page define the element once.
 
 - **When it asks:** when no answer is stored, when the stored one has expired, or when the banner offers a category the stored answer was not asked about. Then it shows, as a band at the bottom of the window, so nothing on the page moves: it traps nothing and takes no focus, and the page keeps room for it at its end and scrolls what Tab reaches above it, so the page can be read and used before answering.
 - **The answer:** Accept grants every category, Reject none, Save my choices the ones ticked. Enter in a checkbox saves the ticked ones, never all. Escape is not an answer: nothing happens. The confirmation then takes the place of the question and takes focus, and is read. It goes away with its Close button, or when focus leaves the banner for the page; focus stays where it went.
@@ -4757,7 +4869,9 @@ CSS from `@luz-ds/site`, two native forms and a file of its own, `@luz-ds/site/c
 - The script writes no text: every word is in your markup, in the page’s language.
 
 ### Without JavaScript
-The banner and the button that shows it again stay hidden, by their `hidden` attribute. Without a script none of the site’s own scripts run, so there is nothing to ask about, and buttons that would do nothing are never shown. Link the cookie policy from the footer of every page, so it can always be read.
+The banner and the button that shows it again stay hidden, by their `hidden` attribute. Without a script none of the site’s own scripts run, so there is nothing to ask about, and buttons that would do nothing are never shown.
+
+Link the cookie policy from the footer of every page, so it can always be read.
 
 ### Keyboard and ARIA
 - **Order:** the skip link stays first, so a returning visitor can still jump to the content. The banner comes next, before the header, although it shows at the bottom: the policy link, Accept, Reject, then the button that opens the categories.
@@ -4815,7 +4929,9 @@ Auto color mode markup
 
 #### Script for the head
 
-This script, for `by="system"`, avoids the flash of the wrong mode: it sets `data-theme` before the first paint. It is recommended, not required. It takes the mode stored under `luz-theme`, then `prefers-contrast`, then `prefers-color-scheme`.
+This script, for `by="system"`, avoids the flash of the wrong mode: it sets `data-theme` before the first paint. It is recommended, not required.
+
+It takes the mode stored under `luz-theme`, then `prefers-contrast`, then `prefers-color-scheme`.
 
 Under a CSP without `'unsafe-inline'`, serve it as a classic file in the `<head>` or allow it by its `'sha256-…'` hash.
 
@@ -4842,7 +4958,9 @@ There are no variants. The attributes of `<luz-mode>`:
 - `light-attr`: The attribute that holds the phase of the day, `data-light` by default. Never `data-theme` or a `data-luz-*` attribute: they are not checked, and are the mode's and core's
 
 ### How it works
-CSS from `@luz-ds/site` for the element's box and `@luz-ds/site/mode`, which defines `<luz-mode>`. `site.min.js` loads it when idle, on a page with a `<luz-mode>`. The radios and labels are core's: the element writes no text.
+CSS from `@luz-ds/site` for the element's box and `@luz-ds/site/mode`, which defines `<luz-mode>`. `site.min.js` loads it when idle, on a page with a `<luz-mode>`.
+
+The radios and labels are core's: the element writes no text.
 
 - **Auto by the system:** `prefers-contrast: more` gives `high-contrast`; otherwise `prefers-color-scheme: dark` gives `dark`; otherwise `light`. It follows a change while the page is open.
 - **Auto by the clock:** `prefers-contrast: more` still wins. Otherwise the phase of the day decides: `dark` in the dark phases, `light` in the others, and it is written as `data-light`. It checks every minute and when the tab shows again.
@@ -4886,7 +5004,9 @@ A day look and a night look
 ```
 
 ### Without JavaScript
-The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light. The system and the clock are not followed, and nothing is remembered.
+The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light.
+
+The system and the clock are not followed, and nothing is remembered.
 
 ### Keyboard and ARIA
 - **Radios:** Tab reaches the group, the arrow keys choose Auto, Light, Dark or High contrast. With `luz.js`, the cycle button moves to the next of the four with Enter or Space.
@@ -4911,7 +5031,9 @@ Files: <luz-lang-switch>, .luz-lang-switch, __button, __menu, __link · Package:
 Lets readers go to the same page in another language, from a button in the header.
 
 ### Known issues
-The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe. It has not been tested with a screen reader yet.
+The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe.
+
+It has not been tested with a screen reader yet.
 
 ### Copy the markup
 One link per language, to the same page in that language, in the header of every translated page. On each page mark its own language with `aria-current="page"` and write the label in the page’s language.
@@ -4947,7 +5069,9 @@ There are no variants. One custom property places the list.
 - `--luz-lang-switch-top`: How far from the top of the screen the list opens. Defaults to `--luz-bar-h`, the height of a one-row bar of 44 px controls; set it on the tag if your header is taller.
 
 ### How it works
-Changing language is going to another page, so the switch is a list of links. The button opens it with the native `popovertarget`, and `@luz-ds/site` only styles it: there is no script. `<luz-lang-switch>` is a tag that no script ever defines; it only gives the block a name in the markup and in CSS, and adds no role: the button and the `nav` carry the meaning.
+Changing language is going to another page, so the switch is a list of links. The button opens it with the native `popovertarget`, and `@luz-ds/site` only styles it: there is no script.
+
+`<luz-lang-switch>` is a tag that no script ever defines; it only gives the block a name in the markup and in CSS, and adds no role: the button and the `nav` carry the meaning.
 
 - Each language is named in that language, with `lang` so a screen reader pronounces it, and `hreflang` so the link says where it goes.
 - The list is a popover in the top layer, fixed under the header at the inline end; it mirrors in right-to-left text.
@@ -4983,10 +5107,14 @@ Files: <luz-search>, .luz-search · Package: @luz-ds/site
 Finds a page, a section or an HTML element of a site by name, from a button in the header.
 
 ### Known issues
-The search has not been tested with a screen reader yet. Ctrl+K opens this search instead of the browser’s own web search box: use the address bar to search the web. With `site.js`, a Ctrl+K pressed before the search’s script has loaded loads it, then opens the dialog, after a short wait on a slow connection. At 400 percent zoom the whole dialog scrolls, so the field can move out of view while you read the results.
+The search has not been tested with a screen reader yet. Ctrl+K opens this search instead of the browser’s own web search box: use the address bar to search the web.
+
+With `site.js`, a Ctrl+K pressed before the search’s script has loaded loads it, then opens the dialog, after a short wait on a slow connection. At 400 percent zoom the whole dialog scrolls, so the field can move out of view while you read the results.
 
 ### Copy the markup
-One `<luz-search>` holds the link to your index, the button that replaces it, and the dialog. Put it where the search goes, usually at the end of the header: the link and the button share one place, so nothing moves when the button takes over, and the closed dialog takes no space. Every text is yours: write it in the page’s language.
+One `<luz-search>` holds the link to your index, the button that replaces it, and the dialog. Put it where the search goes, usually at the end of the header: the link and the button share one place, so nothing moves when the button takes over, and the closed dialog takes no space.
+
+Every text is yours: write it in the page’s language.
 
 Search markup
 ```html
@@ -5046,7 +5174,9 @@ Every option is markup: a class or an attribute.
 - The texts the script writes are the `data-luz-label-*` attributes of the dialog: `results`, `result`, `capped`, `none`, `loading` and `error`, with `{n}`, `{shown}` and `{query}` in them. `data-luz-label-idle` is the text the status shows while the field is empty, for example “Type to search the documentation”. A missing label writes nothing.
 
 ### How it works
-Load `site.min.js`, as a module. It loads nothing on a page without a `<luz-search>`. On a page with one, it loads the search’s own file, `search.min.js`, the first time the reader points at it or moves the focus into it, presses `Ctrl` + `K`, or when the browser is idle, whichever comes first. That file defines `<luz-search>`, a custom element in the light DOM (no Shadow DOM), and every one on the page wires itself.
+Load `site.min.js`, as a module. It loads nothing on a page without a `<luz-search>`.
+
+On a page with one, it loads the search’s own file, `search.min.js`, the first time the reader points at it or moves the focus into it, presses `Ctrl` + `K`, or when the browser is idle, whichever comes first. That file defines `<luz-search>`, a custom element in the light DOM (no Shadow DOM), and every one on the page wires itself.
 
 - The button takes the link’s place, in the same space, so nothing moves. If the link has the keyboard focus or a pressed pointer at that moment, the swap waits until the reader leaves it, follows it or lets go: the focus is never moved.
 - The button opens the native `<dialog>` with `showModal()`: the browser keeps the focus inside, closes it with Escape and returns the focus.
@@ -5101,7 +5231,9 @@ Files: components/search.css, components/consent.css, components/lang-switch.css
 
 Every tag and class of the site components, what element it goes on and what it does, in one place.
 
-Look up a tag or a class by name. Each component's own page has its markup and guidance. The page structure that site held before, from the shell to the footer, is in core ([layout](https://nandovejer.github.io/luz/docs/components/layout/), [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/), [image](https://nandovejer.github.io/luz/docs/components/image/), [band](https://nandovejer.github.io/luz/docs/components/band/)) and in the packages for one kind of site ([landing](https://nandovejer.github.io/luz/docs/landing/), [CMS](https://nandovejer.github.io/luz/docs/cms/)).
+Look up a tag or a class by name. Each component's own page has its markup and guidance.
+
+The page structure that site held before, from the shell to the footer, is in core ([layout](https://nandovejer.github.io/luz/docs/components/layout/), [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/), [image](https://nandovejer.github.io/luz/docs/components/image/), [band](https://nandovejer.github.io/luz/docs/components/band/)) and in the packages for one kind of site ([landing](https://nandovejer.github.io/luz/docs/landing/), [CMS](https://nandovejer.github.io/luz/docs/cms/)).
 
 ### Search
 
@@ -5151,7 +5283,9 @@ URL: https://nandovejer.github.io/luz/docs/landing/
 
 What a landing page needs on top of core, from its header and hero to the blocks of an event page, and how to tell whether you need it.
 
-A landing page is one page that presents a product or an event and asks the visitor to act. This package holds the patterns only that kind of page uses. The page column, the sticky bar, the skip link and the header’s links are core’s; the search, the cookie banner and the language switch are [Site](https://nandovejer.github.io/luz/docs/site/)’s, and optional.
+A landing page is one page that presents a product or an event and asks the visitor to act. This package holds the patterns only that kind of page uses.
+
+The page column, the sticky bar, the skip link and the header’s links are core’s; the search, the cookie banner and the language switch are [Site](https://nandovejer.github.io/luz/docs/site/)’s, and optional.
 
 - Every class starts with `.luz-landing-`, uses semantic tokens only and sits in the cascade layer `luz.landing`, after site's.
 - It has no script. Load `landing.css` after the CSS of tokens, core and site: [Install LUZ](https://nandovejer.github.io/luz/docs/get-started/#site-kinds) has the command and the CDN tags.
@@ -5272,7 +5406,9 @@ Hero markup
 ```
 
 ### Variants and options
-Two modifiers, `--centered` and `__media--bleed`, as in the [product page template](https://nandovejer.github.io/luz/docs/landing/templates/#product-page). The eyebrow, the lead and the picture are optional; with no picture the copy takes the whole width. The block is a class of the landing on core's split grid.
+Two modifiers, `--centered` and `__media--bleed`, as in the [product page template](https://nandovejer.github.io/luz/docs/landing/templates/#product-page). The eyebrow, the lead and the picture are optional; with no picture the copy takes the whole width.
+
+The block is a class of the landing on core's split grid.
 
 - `.luz-landing-hero`: On a `<section>` with core's `.o-grid.o-grid--split`: space above it, the gaps, and columns of at least 24rem (`--luz-grid-min`), so two equal columns when each gets 24rem, one below
 - `.luz-landing-hero--centered`: One column at every width: the copy at most 48rem wide, centred, with its text and actions centred, and the picture under it
@@ -5542,7 +5678,9 @@ URL: https://nandovejer.github.io/luz/docs/cms/
 
 The page structure of a blog, a newspaper or any site of articles, from the header to the post listing, and how to tell whether you need it.
 
-A site of articles publishes many pages of the same shape: a story with its header, its text and its author, and lists that lead to them. This package holds the page structure of that kind of site: its header (a bar or a masthead), the page header, the article header with its table of contents, and the footer. The layout every page needs (the page, the sticky bar, the navbar) is core's, and the pieces that act for the whole site (search, language, cookie consent) are in [Site](https://nandovejer.github.io/luz/docs/site/).
+A site of articles publishes many pages of the same shape: a story with its header, its text and its author, and lists that lead to them. This package holds the page structure of that kind of site: its header (a bar or a masthead), the page header, the article header with its table of contents, and the footer.
+
+The layout every page needs (the page, the sticky bar, the navbar) is core's, and the pieces that act for the whole site (search, language, cookie consent) are in [Site](https://nandovejer.github.io/luz/docs/site/).
 
 - It works with any CMS and any stack. The classes go on any element, so a template of WordPress, Drupal, Ghost, Hugo or your own code can write them.
 - Every class starts with `.luz-cms-`, uses semantic tokens only and sits in the cascade layer `luz.cms`, after site's. Each pattern is a class on a native element, laid out in the markup by core's objects.
@@ -5797,7 +5935,9 @@ Files: .luz-cms-article, __layout, .luz-cms-toc, __title, __list · Package: @lu
 Lists the sections of a long article, beside the text when there is room and above it when there is not.
 
 ### Known issues
-The mark on the section in view needs core's script; without it, no link is marked. Beside the text, the contents sit at the inline end but come first in the source, so Tab reaches them before the text. Not yet tested with a screen reader.
+The mark on the section in view needs core's script; without it, no link is marked. Beside the text, the contents sit at the inline end but come first in the source, so Tab reaches them before the text.
+
+Not yet tested with a screen reader.
 
 ### Copy the markup
 Table of contents markup
@@ -5932,7 +6072,9 @@ URL: https://nandovejer.github.io/luz/docs/app/
 
 The header and the dashboard of a web application, on core's shell and sidebar, and how to tell whether you need them.
 
-An application is used every day by the same people to check a state and act on one thing. The layout it needs is already core's: the shell with its sidebar, the drawer on a phone, the sticky bar, the grid and the card. This package holds the two pieces that only an application has: the bar at the top of the main area, with the search and the account, and the dashboard, a grid of panels under the view's title.
+An application is used every day by the same people to check a state and act on one thing. The layout it needs is already core's: the shell with its sidebar, the drawer on a phone, the sticky bar, the grid and the card.
+
+This package holds the two pieces that only an application has: the bar at the top of the main area, with the search and the account, and the dashboard, a grid of panels under the view's title.
 
 - Every class starts with `.luz-app-`, uses semantic tokens only and sits in the cascade layer `luz.app`, after site's, landing's and cms's. Each pattern is a class on a native element, laid out in the markup by core's objects.
 - It has no script. Load `app.css` after the CSS of tokens and core (and site's, if you use its search): [Install LUZ](https://nandovejer.github.io/luz/docs/get-started/#site-kinds) has the command and the CDN tags. The sidebar is core's, with its own optional script.
@@ -6018,7 +6160,9 @@ CSS from `@luz-ds/app` on core's shell, sticky bar, drawer and dropdown. No Java
 - The view's `h1` and its main action are not here: they are the first row of the [dashboard](https://nandovejer.github.io/luz/docs/app/dashboard/). The bar holds only what is the same in every view.
 
 ### Without JavaScript
-Nothing changes. The drawer and the account list are popovers opened by the button's `popovertarget`, with no script, and site's search shows its link to the A–Z index. In a browser without the popover API the sidebar stays in the page above the content, the menu button is not shown, and the account list stays under its button.
+Nothing changes.
+
+The drawer and the account list are popovers opened by the button's `popovertarget`, with no script, and site's search shows its link to the A–Z index. In a browser without the popover API the sidebar stays in the page above the content, the menu button is not shown, and the account list stays under its button.
 
 ### Keyboard and ARIA
 - **Order:** the order of the source and of the screen. Skip link, the sidebar (a column from 769 px), the search, the account, then the view. At 768 px and below the closed drawer is out of the order: skip link, menu button, search, account, then the view.
@@ -6141,7 +6285,9 @@ The shell, page head, rail, example, do and don't, pager and page foot of a docu
 - Your site is a landing page, a blog or an application: [Landing](https://nandovejer.github.io/luz/docs/landing/), [CMS](https://nandovejer.github.io/luz/docs/cms/) and [App](https://nandovejer.github.io/luz/docs/app/) have their own pieces.
 - You only need a sidebar and a content area: core's [layout](https://nandovejer.github.io/luz/docs/components/layout/) and [sidebar](https://nandovejer.github.io/luz/docs/components/sidebar/) are enough.
 
-A documentation site is read in long sittings, one page after the next. The layout it needs is already core's: the shell, the sidebar and its drawer, the code block, the table. This package holds the seven pieces only a documentation page has: the three columns, the head, the list of sections, the framed example, the do and don't pair, the links to the next page and the small print.
+A documentation site is read in long sittings, one page after the next. The layout it needs is already core's: the shell, the sidebar and its drawer, the code block, the table.
+
+This package holds the seven pieces only a documentation page has: the three columns, the head, the list of sections, the framed example, the do and don't pair, the links to the next page and the small print.
 
 ### Install and load
 
@@ -6201,7 +6347,9 @@ CSS from `@luz-ds/docs` on core's shell and sidebar. Docs gives the tracks and t
 - Every child of the content keeps to `--luz-docs-measure`, so an example is as wide as a line of text. In print the rail is left out.
 
 ### Without JavaScript
-Nothing changes: the layout is CSS. The drawer is a popover opened by the menu button's `popovertarget`, with no script. In a browser without the popover API the sidebar stays in the page, above the content.
+Nothing changes: the layout is CSS. The drawer is a popover opened by the menu button's `popovertarget`, with no script.
+
+In a browser without the popover API the sidebar stays in the page, above the content.
 
 ### Keyboard and ARIA
 - **Order:** the order of the source; the grid does not change it. Skip link, header, sidebar, content, rail, footer.
@@ -6438,7 +6586,9 @@ Files: .luz-docs-dodont, __item, __verdict, __stage · Package: @luz-ds/docs
 A Do and a Don't, one example to follow and one to avoid, each with its reason, side by side when there is room.
 
 ### Known issues
-In browsers without alternative text for generated content (Safari before 17.4, Firefox before 128), a screen reader may read the tick or the cross before "Do" or "Don't". The word that follows is always read. Not tested with a screen reader.
+In browsers without alternative text for generated content (Safari before 17.4, Firefox before 128), a screen reader may read the tick or the cross before "Do" or "Don't". The word that follows is always read.
+
+Not tested with a screen reader.
 
 ### Copy the markup
 A pair: the Do first, then the Don't. Each is a figure whose caption says why:
@@ -6623,7 +6773,7 @@ This page is a library of whole-page templates: open its URL for the markup of e
 ## Accessibility statement
 URL: https://nandovejer.github.io/luz/docs/accessibility/
 
-LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 16 October 2026.
+LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 17 October 2026.
 
 - Target
 - What is checked on every change

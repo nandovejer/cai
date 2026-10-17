@@ -28,7 +28,9 @@ Avatar with a photo markup
 ```
 
 ### Variants and options
-Pick one size modifier. Without one, the avatar has no size of its own. The content is the initials or one `<img>`.
+Pick one size modifier.
+
+Without one, the avatar has no size of its own. The content is the initials or one `<img>`.
 
 - `.luz-avatar--sm`: 24 × 24 px, extra-small text
 - `.luz-avatar--md`: 36 × 36 px, small text

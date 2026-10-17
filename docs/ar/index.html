@@ -17,10 +17,10 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../boot.js" ></script>
   <script type="module" crossorigin src="../assets/header-CDFpI0K3.js"></script>
-  <script type="module" crossorigin src="../assets/landing-BagdSstR.js"></script>
+  <script type="module" crossorigin src="../assets/landing-CXfW7goQ.js"></script>
   <link rel="stylesheet" crossorigin href="../assets/header-enjYdf1s.css">
-  <link rel="stylesheet" crossorigin href="../assets/landing-DLJz4QDG.css">
-  <link rel="stylesheet" crossorigin href="../assets/header-BXzNEBss.css">
+  <link rel="stylesheet" crossorigin href="../assets/landing-DJY7WkhM.css">
+  <link rel="stylesheet" crossorigin href="../assets/header-uPwpUGqG.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
@@ -46,6 +46,7 @@
       data-luz-label-light-map-alt="خريطة مدينة: حبر على ورق نهارًا، ونيون ليلًا."
       data-luz-label-light-scrub="تصفّح ساعات اليوم"
       data-luz-label-light-live="العودة إلى الآن"
+      data-luz-label-light-pause="إيقاف الحركة"
       data-luz-label-light-sep="، "
       data-luz-label-light-dawn="الفجر"
       data-luz-label-light-morning="ضوء الصباح"
@@ -64,7 +65,7 @@
           <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
-      <a class="site-header__brand" href="../ar/"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
+      <a class="site-header__brand" href="../ar/"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.0.0 beta</span></a>
       <nav class="site-header__nav" aria-label="الموقع">
         <a href="../ar/" aria-current="page">الرئيسية</a>
         <a href="../docs/" hreflang="en">التوثيق</a>
@@ -169,7 +170,7 @@
     <section class="luz-landing-hero luz-landing-hero--centered o-grid o-grid--split" id="hero" aria-labelledby="hero-title">
       <div class="luz-landing-hero__copy">
         <p class="luz-landing-hero__eyebrow" lang="en">Light, usable &amp; zero-dependency</p>
-        <h1 class="luz-landing-hero__title" id="hero-title">LUZ، نظام تصميم <em>للإنسان</em>، جاهز للذكاء الاصطناعي.</h1>
+        <h1 class="luz-landing-hero__title" id="hero-title">LUZ، نظام تصميم <em>للإنسان</em>، جاهز <em>للذكاء الاصطناعي</em>.</h1>
         <p class="luz-landing-hero__lead">رموز التصميم وCSS وقليل من JavaScript الخالصة، مبنية على ما يفعله المتصفح أصلًا. كل مكوّن يعمل قبل تحميل JavaScript، في الوضع الفاتح والداكن والتباين العالي.</p>
         <p class="landing-built"><a href="../docs/get-started/how-luz-is-built/#tests-first" hreflang="en">نحب التطوير الموجَّه بالاختبارات</a>: كل تغيير يبدأ باختبار فاشل.</p>
         <div class="o-actions">
@@ -575,7 +576,7 @@ import &quot;@luz-ds/core&quot;;</code></pre>
           <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>تباين عالٍ</label>
         </fieldset>
       </luz-mode>
-      <p class="u-text-muted">يُحسب الضوء من ساعتك، لا من موقعك أبدًا. ويبقى اختيارك في هذا المتصفح.</p>
+      <p class="u-text-muted" data-needs-js hidden>يُحسب الضوء من ساعتك، لا من موقعك أبدًا. ويبقى اختيارك في هذا المتصفح.</p>
     </div>
   </footer>
 

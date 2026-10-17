@@ -15,8 +15,8 @@
   <script type="module" crossorigin src="../../../assets/reference-or9Ve1Dh.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CFwLTcYL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-BXzNEBss.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-BWHl3Jti.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-uPwpUGqG.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BSyRBnxb.css">
 </head>
 <body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -30,7 +30,7 @@
           <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.0.0 beta</span></a>
       <nav class="site-header__nav" aria-label="Site">
         <a href="../../../">Home</a>
         <a href="../../../docs/" aria-current="true">Docs</a>
@@ -252,6 +252,7 @@
   <div class="docs-body">
     <div class="docs-component" id="p-mode">
           <h2 id="example">Example</h2>
+          <p>The color mode switcher with its Auto choice, disabled so that it does not change this page.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <fieldset class="luz-mode-switcher" disabled>
@@ -262,7 +263,8 @@
                   <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
                 </fieldset>
           </div>
-          <p class="docs-demo__note">The radio group the element wraps, disabled here because a working one would change the color mode of this whole page. Auto is the fourth radio, checked until the reader chooses. The switcher in this page's footer is <a href="../../../docs/components/mode-switcher/">core's</a>, with three modes.</p>
+          <p class="docs-demo__note">The radio group the element wraps, disabled here because a working one would change the color mode of this whole page. Auto is the fourth radio, checked until the reader chooses.</p>
+          <p class="docs-demo__note">The switcher in this page's footer is this element around <a href="../../../docs/components/mode-switcher/">core's</a> radios, with Auto first. On this site Auto follows the clock.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>What to expect:</p>
@@ -301,7 +303,8 @@
 &lt;/luz-mode&gt;</code></pre>
             </div>
             <h4 id="boot">Script for the head</h4>
-            <p>This script, for <code>by="system"</code>, avoids the flash of the wrong mode: it sets <code>data-theme</code> before the first paint. It is recommended, not required. It takes the mode stored under <code>luz-theme</code>, then <code>prefers-contrast</code>, then <code>prefers-color-scheme</code>.</p>
+            <p>This script, for <code>by="system"</code>, avoids the flash of the wrong mode: it sets <code>data-theme</code> before the first paint. It is recommended, not required.</p>
+            <p>It takes the mode stored under <code>luz-theme</code>, then <code>prefers-contrast</code>, then <code>prefers-color-scheme</code>.</p>
             <p>Under a CSP without <code>'unsafe-inline'</code>, serve it as a classic file in the <code>&lt;head&gt;</code> or allow it by its <code>'sha256-…'</code> hash.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
@@ -327,15 +330,16 @@
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>remember</code></div></td><td data-label="Effect"><div>A boolean. Stores the choice under <code>luz-theme</code>, core's key. Auto removes it. Without it a reload starts in Auto</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>remember</code></div></td><td data-label="Effect"><div>A boolean. Stores the choice under <code class="docs-name"><span>luz-theme</span></code>, core's key. Auto removes it. Without it a reload starts in Auto</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>by</code></div></td><td data-label="Effect"><div>What Auto follows: <code>system</code> (the default) or <code>clock</code></div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>for</code></div></td><td data-label="Effect"><div>The <code>id</code> of the element that gets the attributes. <code>&lt;html&gt;</code> by default</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>light-attr</code></div></td><td data-label="Effect"><div>The attribute that holds the phase of the day, <code>data-light</code> by default. Never <code>data-theme</code> or a <code>data-luz-*</code> attribute: they are not checked, and are the mode's and core's</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code class="docs-name"><span>light-attr</span></code></div></td><td data-label="Effect"><div>The attribute that holds the phase of the day, <code class="docs-name"><span>data-light</span></code> by default. Never <code class="docs-name"><span>data-theme</span></code> or a <code>data-luz-*</code> attribute: they are not checked, and are the mode's and core's</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@luz-ds/site</code> for the element's box and <code>@luz-ds/site/mode</code>, which defines <code>&lt;luz-mode&gt;</code>. <code>site.min.js</code> loads it when idle, on a page with a <code>&lt;luz-mode&gt;</code>. The radios and labels are core's: the element writes no text.</p>
+            <p>CSS from <code>@luz-ds/site</code> for the element's box and <code>@luz-ds/site/mode</code>, which defines <code>&lt;luz-mode&gt;</code>. <code>site.min.js</code> loads it when idle, on a page with a <code>&lt;luz-mode&gt;</code>.</p>
+            <p>The radios and labels are core's: the element writes no text.</p>
             <ul>
               <li><strong>Auto by the system:</strong> <code>prefers-contrast: more</code> gives <code>high-contrast</code>; otherwise <code>prefers-color-scheme: dark</code> gives <code>dark</code>; otherwise <code>light</code>. It follows a change while the page is open.</li>
               <li><strong>Auto by the clock:</strong> <code>prefers-contrast: more</code> still wins. Otherwise the phase of the day decides: <code>dark</code> in the dark phases, <code>light</code> in the others, and it is written as <code>data-light</code>. It checks every minute and when the tab shows again.</li>
@@ -366,10 +370,10 @@
                   <tr><th scope="col">Name</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Name"><div><code>el.mode</code></div></td><td data-label="What it does"><div>The choice: <code>auto</code>, <code>light</code>, <code>dark</code> or <code>high-contrast</code>. Setting it chooses the radio</div></td></tr>
+                  <tr><td data-label="Name"><div><code>el.mode</code></div></td><td data-label="What it does"><div>The choice: <code>auto</code>, <code>light</code>, <code>dark</code> or <code class="docs-name"><span>high-contrast</span></code>. Setting it chooses the radio</div></td></tr>
                   <tr><td data-label="Name"><div><code>el.light</code></div></td><td data-label="What it does"><div>The phase of the day now, or <code>null</code> unless <code>by="clock"</code></div></td></tr>
-                  <tr><td data-label="Name"><div><code>preview(x)</code></div></td><td data-label="What it does"><div>Shows another time of day: <code>x</code> is a phase name or an hour from 0 to 24. With Auto, <code>data-theme</code> follows it; with a mode chosen, only the light does. <code>preview(null)</code> goes back. Unless <code>by="clock"</code> it returns <code>false</code></div></td></tr>
-                  <tr><td data-label="Name"><div><code>luz-mode:change</code></div></td><td data-label="What it does"><div>Bubbles from the element at every change. Its <code>detail</code>: <code>mode</code> (the choice), <code>theme</code> (the <code>data-theme</code> applied), <code>light</code> (the phase, or <code>null</code>), <code>remembered</code> (<code>true</code> only with <code>remember</code> and a mode stored now) and <code>simulated</code> (<code>true</code> while a preview is active)</div></td></tr>
+                  <tr><td data-label="Name"><div><code>preview(x)</code></div></td><td data-label="What it does"><div>Shows another time of day: <code>x</code> is a phase name or an hour from 0 to 24. With Auto, <code class="docs-name"><span>data-theme</span></code> follows it; with a mode chosen, only the light does. <code>preview(null)</code> goes back. Unless <code>by="clock"</code> it returns <code>false</code></div></td></tr>
+                  <tr><td data-label="Name"><div><code>luz-mode:change</code></div></td><td data-label="What it does"><div>Bubbles from the element at every change. Its <code>detail</code>: <code>mode</code> (the choice), <code>theme</code> (the <code class="docs-name"><span>data-theme</span></code> applied), <code>light</code> (the phase, or <code>null</code>), <code>remembered</code> (<code>true</code> only with <code>remember</code> and a mode stored now) and <code>simulated</code> (<code>true</code> while a preview is active)</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -393,7 +397,8 @@
 }</code></pre>
             </div>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light. The system and the clock are not followed, and nothing is remembered.</p>
+            <p>The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light.</p>
+            <p>The system and the clock are not followed, and nothing is remembered.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
               <li><strong>Radios:</strong> Tab reaches the group, the arrow keys choose Auto, Light, Dark or High contrast. With <code>luz.js</code>, the cycle button moves to the next of the four with Enter or Space.</li>
@@ -518,7 +523,7 @@
 
   <footer class="docs-footer luz-landing-footer" id="site-footer">
     <div class="o-container o-container--inline o-row">
-      <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
+      <p class="u-text-muted">LUZ Design System · v0.0.0 · Beta · MIT License</p>
       <nav class="o-actions" aria-label="Project links">
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../">Home</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>

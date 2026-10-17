@@ -29,7 +29,9 @@ There are no modifiers. The list wraps onto more lines when it is narrow.
 - `.luz-pagination__gap`: The “…” of a long list: a mark, hidden from screen readers
 
 ### How it works
-A `<nav>` landmark around a list of links, styled by `components/pagination.css`. Each page is a real address, so the server renders it and the back button, a bookmark and a search engine all work. No JavaScript.
+A `<nav>` landmark around a list of links, styled by `components/pagination.css`. Each page is a real address, so the server renders it and the back button, a bookmark and a search engine all work.
+
+No JavaScript.
 
 - The numbers are links, not buttons: following one loads another page.
 - `rel="prev"` and `rel="next"` say which links go to the neighbours.

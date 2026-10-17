@@ -3,10 +3,14 @@
 Finds a page, a section or an HTML element of a site by name, from a button in the header.
 
 ### Known issues
-The search has not been tested with a screen reader yet. Ctrl+K opens this search instead of the browser’s own web search box: use the address bar to search the web. With `site.js`, a Ctrl+K pressed before the search’s script has loaded loads it, then opens the dialog, after a short wait on a slow connection. At 400 percent zoom the whole dialog scrolls, so the field can move out of view while you read the results.
+The search has not been tested with a screen reader yet. Ctrl+K opens this search instead of the browser’s own web search box: use the address bar to search the web.
+
+With `site.js`, a Ctrl+K pressed before the search’s script has loaded loads it, then opens the dialog, after a short wait on a slow connection. At 400 percent zoom the whole dialog scrolls, so the field can move out of view while you read the results.
 
 ### Copy the markup
-One `<luz-search>` holds the link to your index, the button that replaces it, and the dialog. Put it where the search goes, usually at the end of the header: the link and the button share one place, so nothing moves when the button takes over, and the closed dialog takes no space. Every text is yours: write it in the page’s language.
+One `<luz-search>` holds the link to your index, the button that replaces it, and the dialog. Put it where the search goes, usually at the end of the header: the link and the button share one place, so nothing moves when the button takes over, and the closed dialog takes no space.
+
+Every text is yours: write it in the page’s language.
 
 Search markup
 ```html
@@ -66,7 +70,9 @@ Every option is markup: a class or an attribute.
 - The texts the script writes are the `data-luz-label-*` attributes of the dialog: `results`, `result`, `capped`, `none`, `loading` and `error`, with `{n}`, `{shown}` and `{query}` in them. `data-luz-label-idle` is the text the status shows while the field is empty, for example “Type to search the documentation”. A missing label writes nothing.
 
 ### How it works
-Load `site.min.js`, as a module. It loads nothing on a page without a `<luz-search>`. On a page with one, it loads the search’s own file, `search.min.js`, the first time the reader points at it or moves the focus into it, presses `Ctrl` + `K`, or when the browser is idle, whichever comes first. That file defines `<luz-search>`, a custom element in the light DOM (no Shadow DOM), and every one on the page wires itself.
+Load `site.min.js`, as a module. It loads nothing on a page without a `<luz-search>`.
+
+On a page with one, it loads the search’s own file, `search.min.js`, the first time the reader points at it or moves the focus into it, presses `Ctrl` + `K`, or when the browser is idle, whichever comes first. That file defines `<luz-search>`, a custom element in the light DOM (no Shadow DOM), and every one on the page wires itself.
 
 - The button takes the link’s place, in the same space, so nothing moves. If the link has the keyboard focus or a pressed pointer at that moment, the swap waits until the reader leaves it, follows it or lets go: the focus is never moved.
 - The button opens the native `<dialog>` with `showModal()`: the browser keeps the focus inside, closes it with Escape and returns the focus.

@@ -38,7 +38,9 @@ A row of in-page links to the panels, styled by `components/tabs.css` and upgrad
 - `activateTab(tab)` selects a tab from your own script.
 
 ### Without JavaScript
-The tabs are a row of links, and every panel is shown, stacked, in order. Each link jumps to its panel. Give each panel a heading, so the stacked page still reads well.
+The tabs are a row of links, and every panel is shown, stacked, in order. Each link jumps to its panel.
+
+Give each panel a heading, so the stacked page still reads well.
 
 ### Keyboard and ARIA
 Tab moves into the tab row, to the selected tab; Tab again leaves for the panel.

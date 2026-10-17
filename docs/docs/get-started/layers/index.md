@@ -79,7 +79,9 @@ Overriding LUZ from your own layer
 
 ### Why one container layer
 
-LUZ's layers used to be six top-level names: `settings`, `generic`, `elements`, `objects`, `components` and `utilities`. They are short and common, and other tools use some of the same names. A page that loaded one of them next to LUZ merged its `components` or `utilities` with LUZ's, and the order between them was an accident.
+LUZ's layers used to be six top-level names: `settings`, `generic`, `elements`, `objects`, `components` and `utilities`. They are short and common, and other tools use some of the same names.
+
+A page that loaded one of them next to LUZ merged its `components` or `utilities` with LUZ's, and the order between them was an accident.
 
 - Inside `luz`, LUZ's layer names cannot meet yours.
 - One name orders all of LUZ: you place `luz` once, and you do not have to know what is inside.

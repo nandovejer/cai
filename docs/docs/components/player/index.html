@@ -15,8 +15,8 @@
   <script type="module" crossorigin src="../../../assets/reference-or9Ve1Dh.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CFwLTcYL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-BXzNEBss.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-BWHl3Jti.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-uPwpUGqG.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BSyRBnxb.css">
 </head>
 <body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -30,7 +30,7 @@
           <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.0.0 beta</span></a>
       <nav class="site-header__nav" aria-label="Site">
         <a href="../../../">Home</a>
         <a href="../../../docs/" aria-current="true">Docs</a>
@@ -247,11 +247,12 @@
     <p class="luz-docs-page-head__eyebrow">Components · Media</p>
     <h1 class="docs-title">Player</h1>
     <p class="luz-docs-page-head__lead">Plays a video, a sound or a MIDI file in the page, with the same controls for all three.</p>
-    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">components/player.css</code></li><li>JS: player.js</li><li>Light · Dark · High contrast</li><li>Tested</li><li><a href="#known-issues">1 known issue</a></li></ul>
+    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">components/player.css</code></li><li>JS: player.js</li><li>Light · Dark · High contrast</li><li>Tested</li><li><a href="#known-issues">2 known issues</a></li></ul>
   </header>
   <div class="docs-body">
     <div class="docs-component" id="c-player">
           <h2 id="example">Example</h2>
+          <p>A video and an audio file with the same controls.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage o-grid docs-cols-2">
             <div class="docs-demo__stage">
@@ -290,7 +291,8 @@
                 </div>
               </div>
             </div>
-            <p class="docs-demo__note">Video, MP4, 15 seconds, with English captions shown by default and Spanish subtitles. It has no sound: both tracks describe the picture. Video: <a href="https://images.nasa.gov/details/NHQ_2020_1221_Earth%20Views">NASA, Earth Views from the ISS</a>, in the public domain.</p>
+            <p class="docs-demo__note">Video, MP4, 15 seconds, with English captions shown by default and Spanish subtitles. It has no sound: both tracks describe the picture.</p>
+            <p class="docs-demo__note">Video: <a href="https://images.nasa.gov/details/NHQ_2020_1221_Earth%20Views">NASA, Earth Views from the ISS</a>, in the public domain.</p>
             </div>
 
             <div class="docs-demo__stage">
@@ -311,7 +313,8 @@
                   </div>
                 </div>
               </div>
-              <p class="docs-demo__note">Audio, MP3, 25 seconds. Nothing is downloaded until you press play. Recording: <a href="https://www.nasa.gov/historical-sounds/">NASA, Apollo 11 launch countdown and lift-off</a>, in the public domain.</p>
+              <p class="docs-demo__note">Audio, MP3, 25 seconds.</p>
+              <p class="docs-demo__note">Nothing is downloaded until you press play. Recording: <a href="https://www.nasa.gov/historical-sounds/">NASA, Apollo 11 launch countdown and lift-off</a>, in the public domain.</p>
 
               <!-- data-src is set by reference.js (the build does not rewrite data-* URLs) -->
               <div class="luz-player" data-type="midi" role="group" aria-label="MIDI player">
@@ -334,7 +337,8 @@
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example. A MIDI file has no player without JavaScript: offer a download link in the fallback text.</p>
+          <p>Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example.</p>
+          <p>A MIDI file has no player without JavaScript: offer a download link in the fallback text.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Player documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -401,14 +405,14 @@ initPlayers();</code></pre>
                 </thead>
                 <tbody>
                   <tr><td data-label="Class or attribute"><div><code>data-type="video"</code></div></td><td data-label="Effect"><div>A <code>&lt;video class="luz-player-video"&gt;</code>; a click on the picture plays or pauses</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>data-type="audio"</code></div></td><td data-label="Effect"><div>An <code>&lt;audio class="luz-player-audio"&gt;</code> with a compact control row (<code>.luz-player-controls--audio</code>)</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>data-type="midi"</code> and <code>data-src</code></div></td><td data-label="Effect"><div>A MIDI file, played with Web Audio by <code>midi.js</code>, loaded only when needed</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-player-mute</code>, <code>.luz-player-volbar</code></div></td><td data-label="Effect"><div>A mute button and a volume slider</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-player-fullscreen</code>, <code>.luz-player-pip</code></div></td><td data-label="Effect"><div>Optional full-screen and picture-in-picture buttons for video</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-type="audio"</code></div></td><td data-label="Effect"><div>An <code>&lt;audio class="luz-player-audio"&gt;</code> with a compact control row (<code class="docs-name"><span>.luz-player-controls</span><wbr><span>--audio</span></code>)</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-type="midi"</code> and <code class="docs-name"><span>data-src</span></code></div></td><td data-label="Effect"><div>A MIDI file, played with Web Audio by <code>midi.js</code>, loaded only when needed</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code class="docs-name"><span>.luz-player-mute</span></code>, <code class="docs-name"><span>.luz-player-volbar</span></code></div></td><td data-label="Effect"><div>A mute button and a volume slider</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code class="docs-name"><span>.luz-player-fullscreen</span></code>, <code class="docs-name"><span>.luz-player-pip</span></code></div></td><td data-label="Effect"><div>Optional full-screen and picture-in-picture buttons for video</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>&lt;track kind="captions"&gt;</code>, <code>kind="subtitles"</code></div></td><td data-label="Effect"><div>A WebVTT file with <code>srclang</code> and <code>label</code>; <code>default</code> shows it from the start</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-player-captions</code></div></td><td data-label="Effect"><div>A button that turns captions on and off: the default track, else the first</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-player-tracks</code></div></td><td data-label="Effect"><div>A select, with <code>.luz-input</code>, to pick one track or none</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-player-fallback</code></div></td><td data-label="Effect"><div>Text shown only when the script does not run</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code class="docs-name"><span>.luz-player-captions</span></code></div></td><td data-label="Effect"><div>A button that turns captions on and off: the default track, else the first</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code class="docs-name"><span>.luz-player-tracks</span></code></div></td><td data-label="Effect"><div>A select, with <code class="docs-name"><span>.luz-input</span></code>, to pick one track or none</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code class="docs-name"><span>.luz-player-fallback</span></code></div></td><td data-label="Effect"><div>Text shown only when the script does not run</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -425,7 +429,8 @@ initPlayers();</code></pre>
               <li>In right-to-left text the timeline follows the reading direction: the seek bar starts at the right and fills towards the left, the controls row mirrors, and the slider's keys are the browser's own. The play, pause and volume icons are not mirrored: they do not point anywhere.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Audio and video show the browser's own controls, and the LUZ controls stay hidden. The browser's controls offer the captions and subtitles, and a track with <code>default</code> shows from the start. A MIDI player shows its fallback text instead.</p>
+            <p>Audio and video show the browser's own controls, and the LUZ controls stay hidden. The browser's controls offer the captions and subtitles, and a track with <code>default</code> shows from the start.</p>
+            <p>A MIDI player shows its fallback text instead.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab moves through the controls; each one keeps its native keys.</p>
             <ul>
@@ -563,7 +568,7 @@ initPlayers();</code></pre>
 
   <footer class="docs-footer luz-landing-footer" id="site-footer">
     <div class="o-container o-container--inline o-row">
-      <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
+      <p class="u-text-muted">LUZ Design System · v0.0.0 · Beta · MIT License</p>
       <nav class="o-actions" aria-label="Project links">
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../">Home</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>

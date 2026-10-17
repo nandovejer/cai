@@ -3,7 +3,9 @@
 Plays a video, a sound or a MIDI file in the page, with the same controls for all three.
 
 ### Known issues
-Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example. A MIDI file has no player without JavaScript: offer a download link in the fallback text.
+Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example.
+
+A MIDI file has no player without JavaScript: offer a download link in the fallback text.
 
 ### Copy the markup
 An audio player. The video player adds a `.luz-player-media-wrap` around the `<video>` and a mute button and volume slider: copy it from the example above.
@@ -77,7 +79,9 @@ The native media element plays the file; `player.js` drives the LUZ controls, st
 - In right-to-left text the timeline follows the reading direction: the seek bar starts at the right and fills towards the left, the controls row mirrors, and the slider's keys are the browser's own. The play, pause and volume icons are not mirrored: they do not point anywhere.
 
 ### Without JavaScript
-Audio and video show the browser's own controls, and the LUZ controls stay hidden. The browser's controls offer the captions and subtitles, and a track with `default` shows from the start. A MIDI player shows its fallback text instead.
+Audio and video show the browser's own controls, and the LUZ controls stay hidden. The browser's controls offer the captions and subtitles, and a track with `default` shows from the start.
+
+A MIDI player shows its fallback text instead.
 
 ### Keyboard and ARIA
 Tab moves through the controls; each one keeps its native keys.

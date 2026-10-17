@@ -66,7 +66,9 @@ Icon in a button markup
 </button>
 ```
 
-Two icons point to the end of the line: `chevron-end` and `arrow-end`, marked with `data-luz-flip`. In right-to-left text, LUZ mirrors anything with that attribute using the rule below, in core's utilities layer, so you write nothing. Add the attribute to an icon of your own that points to the end of the line.
+Two icons point to the end of the line: `chevron-end` and `arrow-end`, marked with `data-luz-flip`. In right-to-left text, LUZ mirrors anything with that attribute using the rule below, in core's utilities layer, so you write nothing.
+
+Add the attribute to an icon of your own that points to the end of the line.
 
 Right-to-left rule, shipped in luz.utilities
 ```css

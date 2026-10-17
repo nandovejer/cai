@@ -1,10 +1,13 @@
 /* ==========================================================================
    LUZ DOCS: shell.
    body.o-shell.luz-docs-shell > header, nav.luz-sidebar.luz-docs-nav,
-   main.o-main.luz-docs-main, aside.luz-docs-rail, footer. Three columns
-   from 80rem (the sidebar, the content, the rail), two from 60rem (the
-   rail under the content, in its column), one below, in the order of the
-   markup: nothing is lost when the third column goes (WCAG 1.4.10). The header and the footer span the shell. The
+   aside.luz-docs-rail, main.o-main.luz-docs-main, footer. "On this page"
+   comes before the content, in the markup and on screen: three columns
+   from 80rem (the sidebar, the content, the rail, which stretches over the
+   content's row), two from 60rem (the rail above the content, in its
+   column), one below, in the order of the markup: nothing is lost when the
+   third column goes (WCAG 1.4.10). The skip link goes to main, past the
+   sidebar and the rail. The header and the footer span the shell. The
    content's children keep to the measure, --luz-docs-measure.
    Core gives the grid, the sidebar and its drawer (a popover nav at 768px
    and below); docs gives the tracks and the measure.
@@ -21,8 +24,8 @@
 	grid-template:
 		"head" auto
 		"nav" auto
-		"main" 1fr
 		"rail" auto
+		"main" 1fr
 		"foot" auto / minmax(0, 1fr);
 }
 
@@ -41,7 +44,7 @@
 	align-content: start;
 	gap: var(--luz-space-md);
 	min-inline-size: 0;
-	/* The rail follows under the content below 80rem: room for one break, not two */
+	/* The footer follows the content: room for one break, not two */
 	padding: var(--luz-space-lg) var(--luz-space-md) var(--luz-space-xl);
 }
 
@@ -80,8 +83,8 @@
 	.luz-docs-shell {
 		grid-template:
 			"head head" auto
-			"nav main" 1fr
 			"nav rail" auto
+			"nav main" 1fr
 			"nav foot" auto / var(--luz-docs-nav-w) minmax(0, 1fr);
 	}
 

@@ -343,6 +343,7 @@ class LuzLight extends HTMLElement {
   }
 
   _setSunX(x) {
+    if (!this.isConnected) return;
     const value = x.toFixed(1) + "%";
     this.style.setProperty("--_sun-x", value);
     document.documentElement.style.setProperty("--sun-x", value);
@@ -359,6 +360,8 @@ class LuzLight extends HTMLElement {
   /** Bring everything to the (simulated) instant, then again at the next minute. */
   _tick() {
     clearTimeout(this._timer);
+    // Detached: no timer, no write to the page
+    if (!this.isConnected) return;
     const now = Date.now(), t = now + this._sim, p = partsIn(this._tz, t);
     this._timer = setTimeout(() => this._tick(), 6e4 - (now % 6e4));
     const root = document.documentElement, rs = root.style;

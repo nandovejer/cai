@@ -41,7 +41,8 @@
  *     (the Figma import page, a workflow outside markup: summary and pointer).
  *   - an HTML elements page: its summary and the outline of its headings.
  *   - every other page: all of it, outside the demos.
- * Never: [data-docs-specimen], [inert], [aria-hidden="true"], <dialog>,
+ * Never: [data-docs-specimen], [inert], [aria-hidden="true"], [hidden] (but
+ * hidden="until-found", the inactive tab panels, is text), <dialog>,
  * <template>, <script>, <style>, <svg>, the copy buttons, the tab row.
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -160,10 +161,13 @@ function isValues(node) {
   return node.name === "table" || /(?:^|\s)docs-(?:scale|token|token-grid|swatches?)(?:\s|$)/.test(node.attrs.get("class") ?? "");
 }
 
+/** [hidden] in any spelling, except "until-found" (a panel find-in-page opens): not on screen, not text. */
+const isHidden = (attrs) => attrs.has("hidden") && String(attrs.get("hidden")).trim().toLowerCase() !== "until-found";
+
 /** True for an element whose subtree is left out. */
 function isLeftOut(node, ctx) {
   const { name, attrs } = node;
-  if (DROPPED.has(name) || attrs.has("data-docs-specimen") || attrs.has("inert") || attrs.get("aria-hidden") === "true" || isChrome(node)) return true;
+  if (DROPPED.has(name) || attrs.has("data-docs-specimen") || attrs.has("inert") || attrs.get("aria-hidden") === "true" || isHidden(attrs) || isChrome(node)) return true;
   return ctx?.values === false && isValues(node);
 }
 
@@ -201,7 +205,7 @@ function plain(nodes) {
   const walk = (list) => {
     for (const n of list) {
       if (n.type === "text") raw += n.text;
-      else if (!DROPPED.has(n.name) && n.attrs.get("aria-hidden") !== "true") walk(n.children);
+      else if (!DROPPED.has(n.name) && n.attrs.get("aria-hidden") !== "true" && !isHidden(n.attrs)) walk(n.children);
     }
   };
   walk(nodes);
@@ -479,7 +483,7 @@ function outline(body, bodyLine, file) {
   for (const tag of tags(pad + body, file)) {
     if (tag.type === "start") {
       if (VOID.has(tag.name) || tag.selfClosing) continue;
-      const left = tag.attrs.has("data-docs-specimen") || tag.attrs.has("inert") || tag.attrs.get("aria-hidden") === "true" || tag.name === "dialog";
+      const left = tag.attrs.has("data-docs-specimen") || tag.attrs.has("inert") || tag.attrs.get("aria-hidden") === "true" || isHidden(tag.attrs) || tag.name === "dialog";
       stack.push({ name: tag.name, left });
       if (left) hidden += 1;
       const level = HEADINGS.exec(tag.name)?.[1];

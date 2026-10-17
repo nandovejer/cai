@@ -783,8 +783,10 @@ test.describe('Documentation site', () => {
           await expect(page.locator('html'), route).toHaveAttribute('data-theme', 'light');
           // Nothing is hidden but what only works with JavaScript: the search
           // buttons, and the cookie banner of the Cookie consent example with
-          // the button that shows it again
-          await expect(page.locator('main [hidden]:not([data-luz-search-open], [data-luz-consent], [data-luz-consent] *, [data-luz-consent-open])'), route).toHaveCount(0);
+          // the button that shows it again, and the Try it form and the width
+          // selector of the examples (form.docs-try, fieldset.docs-width),
+          // which change the example in the browser and do nothing without JS
+          await expect(page.locator('main [hidden]:not([data-luz-search-open], [data-luz-consent], [data-luz-consent] *, [data-luz-consent-open], form.docs-try, fieldset.docs-width)'), route).toHaveCount(0);
           expect(
             await page.locator('details[data-fold-narrow]').evaluateAll((all) => all.every((el) => el.open)),
             route,

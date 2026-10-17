@@ -81,7 +81,9 @@ describe("Try it, on the Button page", () => {
   });
 
   it("has no control other than those four inputs and the copy button, and no ARIA role standing in for one", () => {
-    const controls = findAll(form[0], (n) => ["input", "select", "textarea", "button"].includes(n.name));
+    // The preview button is the thing being tried, not a control of the form
+    const preview = query(form[0], "div.docs-try__preview");
+    const controls = findAll(form[0], (n) => ["input", "select", "textarea", "button"].includes(n.name) && !(preview && isInside(n, preview)));
     expect(controls.filter((n) => n.name !== "input").map((n) => `${n.name}.${n.attrs.get("class")}`)).toEqual(["button.luz-copy-btn"]);
     expect(controls.filter((n) => n.name === "input")).toHaveLength(5 + 3 + 1);
     for (const n of descendants(form[0])) expect(n.attrs.get("role") ?? "", `<${n.name}>`).not.toMatch(/^(radio|checkbox|switch|slider|button|tab|listbox|combobox)$/);

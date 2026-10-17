@@ -20,7 +20,7 @@ import { finding } from "../report.js";
 import { closest } from "../suggest.js";
 import { classAttribute, classTokens, isEcho, packageOfName } from "./shared.js";
 
-const LINK = /@luz-ds\/(tokens|core|site|landing|cms|app)@(\d{1,9})\.(\d{1,9})\.(\d{1,9})/g;
+const LINK = /@luz-ds\/(tokens|core|site|landing|cms|app|docs)@(\d{1,9})\.(\d{1,9})\.(\d{1,9})/g;
 const SEMVER = /^(\d{1,9})\.(\d{1,9})\.(\d{1,9})/;
 
 const nameOf = new WeakMap(); // world -> Map name -> result of a measure

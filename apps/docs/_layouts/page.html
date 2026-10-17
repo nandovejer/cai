@@ -22,25 +22,26 @@
   <link rel="stylesheet" href="/apps/docs/reference.css">
   <link rel="stylesheet" href="/apps/docs/elements.css">
 </head>
-<body class="o-shell docs-page">
+<body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
 
   <!-- luz:include header -->
 
-  <nav class="luz-sidebar page-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
+  <nav class="luz-sidebar page-nav luz-docs-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
     <!-- luz:include site-links -->
 {{nav}}
   </nav>
 
-  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <main class="o-main luz-docs-main" id="main-content" tabindex="-1">
 {{pagehead}}
-{{toc}}
   <div class="docs-body">
 {{content}}
 {{generated}}
   </div>
 {{endnav}}
+{{pagefoot}}
   </main>
+{{rail}}
 
   <!-- luz:include footer -->
 

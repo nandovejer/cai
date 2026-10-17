@@ -17,40 +17,24 @@
    Layout
    -------------------------------------------------------------------------- */
 
-/* The site header spans the shell; the sidebar and main share the next row */
+/* The shell is @luz-ds/docs's (.luz-docs-shell: the header, the sidebar,
+   main, the rail and the footer in its tracks). The app gives it the site
+   frame (--site-max, --site-edge: apps/site/header.css), the same as the
+   header's and the home page's: from 80rem the sidebar's dark column still
+   reaches the window's edge, but grows by the free space and pads by it, so
+   its links start where the header's brand does (the gutter less the link's
+   own padding and 3px border), and the rail grows and pads by it at the
+   other end, so it ends under the search. The rail sticks below the
+   sticky site header. */
 .docs-page {
-  grid-template-rows: auto 1fr auto;
+  --luz-docs-nav-w: calc(var(--luz-sidebar-width) + var(--site-edge));
+  --luz-docs-rail-w: calc(13rem + var(--luz-space-xl) + var(--site-edge));
+  --luz-docs-rail-top: calc(var(--site-header-h) + var(--luz-space-lg));
 }
 
-.docs-page > .site-header {
-  grid-column: 1 / -1;
-  grid-row: 1;
-}
-
-.docs-page > .luz-sidebar,
-.docs-page > .o-main {
-  grid-row: 2;
-}
-
-/* The site frame (--site-max, --site-edge: apps/site/header.css),
-   the same as the header's and the home page's. Wider than 768px the
-   sidebar's dark column still reaches the window's edge, but grows by the
-   free space and pads by it, so its links start where the header's brand
-   does (the gutter less the link's own padding and 3px border); main pads
-   its end by the same space, so the content ends under the search. */
 @media (min-width: 769px) {
-  .docs-page {
-    grid-template-columns: calc(var(--luz-sidebar-width) + var(--site-edge)) minmax(0, 1fr);
-  }
-
   .docs-page > .luz-sidebar {
-    width: calc(var(--luz-sidebar-width) + var(--site-edge));
-    min-width: 0;
     padding-inline-start: calc(var(--site-edge) + var(--luz-space-xl) - var(--luz-space-md) - 3px);
-  }
-
-  .docs-main {
-    padding-inline-end: var(--site-edge);
   }
 
   .docs-page > .docs-footer {
@@ -58,16 +42,27 @@
   }
 }
 
-/* The footer stays in main's column: the sticky sidebar, as tall as the
-   viewport, reaches into the last row at the end of the page. Below 769px
-   the grid has one column and the footer stays in it. */
-.docs-page > footer {
-  grid-row: 3;
+/* Every page is in the sidebar: as the first block above the content, as
+   the package draws it between core's drawer and 60rem, it would be the
+   length of a hundred links before the page. The sidebar stays a column
+   from 769px, where the drawer ends, as it is from 60rem. */
+@media (769px <= width < 60rem) {
+  .docs-page {
+    grid-template:
+      "head head" auto
+      "nav main" 1fr
+      "nav rail" auto
+      "nav foot" auto / var(--luz-docs-nav-w) minmax(0, 1fr);
+  }
+
+  .docs-page > .luz-sidebar {
+    position: sticky;
+  }
 }
 
-@media (min-width: 769px) {
-  .docs-page > footer {
-    grid-column: 2;
+@media (min-width: 80rem) {
+  .docs-page > .luz-docs-rail {
+    padding-inline-end: calc(var(--site-edge) + var(--luz-space-xl));
   }
 }
 
@@ -78,7 +73,6 @@
   min-width: 0;
 }
 
-.docs-eyebrow,
 .docs-subhead {
   font-family: var(--luz-font-mono);
   font-size: var(--luz-text-xs);
@@ -108,28 +102,18 @@
    Page: site links, header, chapters, prose
    -------------------------------------------------------------------------- */
 
-/* main: the page head (breadcrumb, h1, lead), "On this page", the content
-   and the end of the page ("Keep going", Previous / Next). From 1280px "On this page" is a rail at the end. */
-.docs-main {
-  display: grid;
-  gap: var(--luz-space-xl);
-  align-content: start;
-  padding-block: var(--luz-space-lg) var(--luz-space-3xl);
+/* main (.luz-docs-main, the package's: its gaps, its gutters and the
+   measure): the breadcrumb, the page head, the content, the end of the page
+   ("Keep going", Previous / Next) and the page foot. */
+.luz-docs-main {
   /* A word longer than the line (400 % text on a phone) breaks instead of
      widening the page */
   overflow-wrap: break-word;
 }
 
 /* Every anchor target clears the top edge when it is jumped to */
-.docs-main [id] {
+.luz-docs-main [id] {
   scroll-margin-top: var(--luz-space-lg);
-}
-
-.docs-main > * {
-  width: 100%;
-  max-width: var(--luz-content-max);
-  margin-inline: auto;
-  padding-inline: var(--luz-space-xl);
 }
 
 .docs-body {
@@ -145,20 +129,15 @@
   border-block-start: 0;
 }
 
-.docs-title-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--luz-space-2xs) var(--luz-space-sm);
+/* The chips of a component page name its files as code, in the chip's size */
+.luz-docs-page-head__meta .docs-demo__file {
+  font-size: inherit;
 }
 
-.docs-title {
-  font-size: var(--luz-text-4xl);
-  line-height: 1.1;
-}
-
-.docs-title-row .docs-title {
-  margin-inline-end: var(--luz-space-xs);
+/* What "Copy page as Markdown" says when it has copied (reference.js) */
+.docs-rail-status {
+  margin: 0;
+  color: var(--luz-text-secondary);
 }
 
 /* A long URL or class name in running text wraps instead of widening the page */
@@ -378,63 +357,6 @@
   min-width: 0;
   margin: 0;
   overflow-wrap: anywhere;
-}
-
-/* --------------------------------------------------------------------------
-   "On this page": a closed <details> under the page head; from 1280px a
-   rail at the end of the row, opened by the docs script, with the section
-   in view marked by weight and a start border (core's initSidebar).
-   -------------------------------------------------------------------------- */
-
-/* The pattern is @luz-ds/docs' rail (.luz-docs-rail__*); here it sits in
-   main, under the page head, in the size of running text */
-.luz-docs-rail__onpage {
-  font-size: var(--luz-text-md);
-}
-
-.luz-docs-rail__fold {
-  margin: 0;
-}
-
-.luz-docs-rail__title {
-  font-size: var(--luz-text-md);
-}
-
-@media (min-width: 1280px) {
-  .docs-main:has(> .luz-docs-rail__onpage) {
-    /* The rail keeps 13rem for its links plus the page gutter at its end,
-       so it ends where the header's search does (the site frame) */
-    grid-template-columns: minmax(0, 1fr) calc(13rem + var(--luz-space-xl));
-    column-gap: 0;
-  }
-
-  .docs-main:has(> .luz-docs-rail__onpage) > * {
-    grid-column: 1;
-  }
-
-  .docs-main > .luz-docs-rail__onpage {
-    grid-column: 2;
-    grid-row: 1 / span 3;
-    align-self: start;
-    position: sticky;
-    inset-block-start: calc(var(--site-header-h) + var(--luz-space-lg));
-    max-block-size: calc(100vh - var(--site-header-h) - var(--luz-space-2xl));
-    overflow-y: auto;
-    padding-inline: 0 var(--luz-space-xl);
-  }
-
-  /* A rail, not a box */
-  .luz-docs-rail__fold,
-  .luz-docs-rail__fold[open] {
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: none;
-  }
-
-  .luz-docs-rail__title {
-    margin: 0 0 var(--luz-space-xs);
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1578,24 +1500,6 @@ h2.docs-demo__title {
 }
 
 @media (max-width: 768px) {
-  /* One column: header, (the sidebar when it is not a drawer), main, footer */
-  .docs-page {
-    grid-template-rows: auto auto 1fr auto;
-  }
-
-  .docs-page > .luz-sidebar {
-    grid-row: 2;
-  }
-
-  .docs-page > .o-main {
-    grid-row: 3;
-  }
-
-  .docs-page > footer {
-    grid-column: 1;
-    grid-row: 4;
-  }
-
   .docs-cols-4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1623,10 +1527,6 @@ h2.docs-demo__title {
 }
 
 @media (max-width: 640px) {
-  .docs-main > * {
-    padding-inline: var(--luz-space-md);
-  }
-
   /* The footer keeps the margin of main's content */
   .docs-footer {
     margin-inline: var(--luz-space-md);
@@ -1635,10 +1535,6 @@ h2.docs-demo__title {
   /* Two columns of a 320px page are 106px: a datetime-local does not fit */
   .docs-cols-4 {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .docs-title {
-    font-size: var(--luz-text-2xl);
   }
 
   .docs-chapter__title {
@@ -1711,7 +1607,6 @@ h2.docs-demo__title {
 @media print {
   .site-header,
   .docs-footer,
-  .luz-docs-rail__onpage,
   .docs-end,
   .docs-view-tabs,
   .docs-breadcrumb,
@@ -1719,7 +1614,7 @@ h2.docs-demo__title {
     display: none;
   }
 
-  .docs-main {
+  .luz-docs-main {
     max-inline-size: none;
     padding: 0;
   }

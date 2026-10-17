@@ -22,6 +22,9 @@
  * - The search index (@luz-ds/site search, format version 1) is
  *   generated from the same scan as the A–Z page: served at
  *   /docs/search-index.json in dev, written there by the build.
+ * - index.md (ai.js): every page as Markdown, next to its index.html, from
+ *   the text of llms-full.txt; the rail's "Copy page as Markdown" links to it.
+ *   Written by the build, served as text/markdown in dev.
  * - llms.txt and llms-full.txt (ai.js): the index of the pages and their
  *   curated text for an AI agent, from the same scan; written at the root of
  *   the build, served as plain text in dev (root-absolute links there,
@@ -58,7 +61,7 @@ import {
   SHARED_PARTIALS_DIR,
 } from "./site.js";
 import { PACKAGES } from "../luz-packages.js";
-import { AI_ROUTES, exampleAssets, exampleDocuments, manifestAssets, renderLlmsFull, renderLlmsTxt } from "./ai.js";
+import { AI_ROUTES, exampleAssets, exampleDocuments, manifestAssets, renderLlmsFull, renderLlmsTxt, renderPageMarkdown } from "./ai.js";
 import { SITE_URL } from "./i18n.js";
 
 const LANDING = { route: "/", file: "apps/landing/index.html" };
@@ -70,6 +73,9 @@ const CONTENT_TYPES = {
   ".js": "text/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
 };
+
+/** The file name of a page's Markdown, next to its index.html. */
+const MARKDOWN_FILE = "index.md";
 
 /** The render-blocking color-mode script: its source and its file in the build. */
 const THEME_BOOT = { src: "/apps/site/boot.js", out: "boot.js" };
@@ -135,7 +141,13 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
   const landingSource = () => readInside(landingAbs, [dirname(landingAbs)]);
   /** {{root}} of a document in the pages build: relative to its depth; the site's path on the 404. */
   const rootFor = (route) => (route === NOT_FOUND_ROUTE ? pagesBase : rootOf(route));
-  const routes = () => new Set(documents().map((d) => d.route));
+  /** The Markdown of each page, by its route (`/docs/a/index.md`): the text, made when it is asked for. */
+  const markdownFiles = () => {
+    const options = { siteUrl: relativeUrls ? siteUrl : "" };
+    return new Map(scan().pages.map((page) => [`${page.route}${MARKDOWN_FILE}`, () => renderPageMarkdown(scan(), page, options)]));
+  };
+  // The routes a link may point at: the documents and their Markdown, made relative in the pages build
+  const routes = () => new Set([...documents().map((d) => d.route), ...markdownFiles().keys()]);
 
   /** The search index, as the bytes that are published. */
   const searchIndex = () => JSON.stringify(buildSearchIndex(scan()));
@@ -293,6 +305,18 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
             return next();
           }
         }
+        // A page's index.md: from the table of the pages, never a path (SEC-PLG-5/6)
+        const markdown = path.endsWith(`/${MARKDOWN_FILE}`) ? markdownFiles().get(path) : undefined;
+        if (markdown) {
+          try {
+            const body = markdown();
+            res.setHeader("Content-Type", "text/markdown; charset=utf-8");
+            return res.end(body);
+          } catch (error) {
+            logger.error(`[luz-docs-site] ${error.message}`);
+            return next();
+          }
+        }
         // examples/ and manifests/: from a table of what is generated, never a path (SEC-PLG-5/6)
         if (csp && (path.startsWith(AI_ROUTES.examples) || path.startsWith(AI_ROUTES.manifests))) {
           try {
@@ -389,6 +413,8 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
       this.emitFile({ type: "asset", fileName: SEARCH_INDEX_ROUTE.slice(1), source: searchIndex() });
       // The files for an AI agent, at the root of the site (discovery is by link, not by convention)
       for (const [route, render] of aiFiles()) this.emitFile({ type: "asset", fileName: route.slice(1), source: render() });
+      // Every page as Markdown, next to its index.html
+      for (const [route, render] of markdownFiles()) this.emitFile({ type: "asset", fileName: route.slice(1), source: render() });
       // The examples, the files they load and the manifests of the packages, next to them
       for (const [route, { body }] of exampleFiles()) this.emitFile({ type: "asset", fileName: route.slice(1), source: body() });
       // Unhashed too: a classic script, which Vite leaves alone (EX-009)

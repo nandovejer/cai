@@ -9,10 +9,11 @@
  * and the tests read the same route table.
  *
  * What the generator writes around each page, from the front matter of all
- * of them (one data source, so they never disagree): the sidebar (the areas,
- * only the current one expanded), the breadcrumb, the page title and lead,
- * "On this page", "Keep going" and Previous / Next, the galleries of the area index pages and
- * the A–Z index. apps/docs/404.html is the not-found page: its URLs start at
+ * of them (one data source, so they never disagree): the sidebar (every area
+ * and every page, flat), the breadcrumb, the page head (eyebrow, title, lead
+ * and, on a component or pattern page, the chips), the rail ("On this page"
+ * and the page's actions), "Keep going" and Previous / Next, the page foot
+ * (the last update), the galleries of the area index pages and the A–Z index. apps/docs/404.html is the not-found page: its URLs start at
  * the site's path, because GitHub Pages serves it at any URL.
  *
  * Template syntax, on purpose only these:
@@ -31,6 +32,7 @@
  * path; no symlinks; route segments use a strict alphabet; expansion is a
  * single pass, so text a substitution produced is never expanded again.
  */
+import { execFileSync } from "node:child_process";
 import { existsSync, lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { HtmlError, readHtml, tags } from "./html.js";
@@ -81,7 +83,7 @@ const FRONT_MATTER = {
 
 /** The values a layout or partial may use as {{key}}. */
 const PLACEHOLDERS = new Set([
-  "title", "doctitle", "description", "root", "content", "nav", "pagehead", "toc", "endnav", "generated",
+  "title", "doctitle", "description", "root", "content", "nav", "pagehead", "rail", "endnav", "pagefoot", "generated",
   // The page's language (i18n.js): its code and direction, its home page, the
   // <link rel="alternate"> of every language, the language switcher
   "lang", "dir", "home", "alternates", "langswitch", "langlinks",
@@ -89,7 +91,7 @@ const PLACEHOLDERS = new Set([
   "version",
 ]);
 /** Values inserted as HTML, not escaped. Only the generator produces them. */
-const RAW_VALUES = new Set(["content", "nav", "pagehead", "toc", "endnav", "generated", "alternates", "langswitch", "langlinks"]);
+const RAW_VALUES = new Set(["content", "nav", "pagehead", "rail", "endnav", "pagefoot", "generated", "alternates", "langswitch", "langlinks"]);
 
 /** Where the home page's languages live, from the repository root. */
 export const I18N_DIR = "apps/landing/i18n";
@@ -432,35 +434,34 @@ function contentOf(page) {
 const link = (href, text, attrs = "") => `<a${attrs} href="${escapeHtml(href)}">${escapeHtml(text)}</a>`;
 
 /**
- * The sidebar: the areas of site.json, and the pages of the current area only.
- * aria-current="page" on the current page (the area link on an area index),
- * "true" on its area link. No .is-active: that is the scroll spy's mark.
+ * The sidebar, flat: every area of site.json with every page of it, so a
+ * page of another area is one link away and nothing is folded. A group
+ * marked `sidebar: true` is a labelled sub-list. aria-current="page" on the
+ * current page (the area link on an area index), "true" on its area link.
+ * No .is-active: that is the scroll spy's mark. One line per link, without
+ * indentation: the list is on every page, under the ceiling of a page (RL-17).
  */
 export function renderNav(site, page) {
   const current = areaOf(site, page);
+  const item = (p) => `<li>${link(p.route, p.meta.title, ` class="luz-sidebar__link"${p.route === page.route ? ' aria-current="page"' : ""}`)}</li>`;
   const items = site.areas.map((area) => {
     const route = areaRoute(area);
     const here = current?.id === area.id;
     const mark = !here ? "" : page.route === route ? ' aria-current="page"' : ' aria-current="true"';
     const href = indexOf(site, area) ? route : area.fallback ?? route;
     const head = link(href, area.label, ` class="luz-sidebar__link docs-nav__area"${mark}`);
-    if (!here) return `      <li>${head}</li>`;
-    const item = (p) =>
-      `<li>${link(p.route, p.meta.title, ` class="luz-sidebar__link"${p.route === page.route ? ' aria-current="page"' : ""}`)}</li>`;
     const children = sectionsOf(site, area).flatMap(({ group, pages }) =>
       group
         ? [
             `<li class="docs-nav__group"><span class="luz-sidebar__section-label" id="nav-${group.id}">${escapeHtml(group.label)}</span>`,
-            `  <ul class="docs-nav__pages" aria-labelledby="nav-${group.id}">`,
-            ...pages.map((p) => `    ${item(p)}`),
-            "  </ul>",
-            "</li>",
+            `<ul class="docs-nav__pages" aria-labelledby="nav-${group.id}">`,
+            ...pages.map(item),
+            "</ul></li>",
           ]
         : pages.map(item),
     );
-    if (!children.length) return `      <li>${head}</li>`;
-    const body = ['<ul class="docs-nav__pages">', ...children.map((c) => `  ${c}`), "</ul>"].join("\n        ");
-    return `      <li>${head}\n        ${body}\n      </li>`;
+    if (!children.length) return `<li>${head}</li>`;
+    return [`<li>${head}`, '<ul class="docs-nav__pages">', ...children, "</ul></li>"].join("\n");
   });
   return `    <ul class="docs-nav">\n${items.join("\n")}\n    </ul>`;
 }
@@ -482,18 +483,77 @@ export function renderBreadcrumb(site, page) {
   return `    <nav class="docs-breadcrumb" aria-label="Breadcrumb">\n      <ol class="luz-breadcrumb">\n${items}\n      </ol>\n    </nav>`;
 }
 
-/** Breadcrumb, h1 (with the component's files and JS module), and the lead. */
-export function renderPageHead(site, page) {
-  const meta = [
-    ...page.meta.files.split(",").map((f) => f.trim()).filter(Boolean).map((f) => `<code class="docs-demo__file">${escapeHtml(f)}</code>`),
-    ...(page.meta.module ? [`<span class="luz-tag luz-tag--purple">JS: ${escapeHtml(page.meta.module)}</span>`] : []),
+/** Where the source of the site is: the rail's and the page foot's Edit and Report. */
+export const REPO_URL = "https://github.com/nandovejer/luz";
+
+/**
+ * A component or a pattern page: the pages whose head ends with the chips.
+ * A component of a gallery group (not a helper), or a pattern of a package's area.
+ */
+export function isViewPage(page) {
+  const { area, group } = page.meta;
+  return (area === "components" && group !== "" && group !== "helpers") || (PACKAGE_AREAS.has(area) && group === "patterns");
+}
+
+/**
+ * The number of known issues a page's "Known issues" section declares: its
+ * list items; without a list, its paragraphs; "None known." is 0. Null when
+ * the page has no such section.
+ */
+export function knownIssuesOf(body) {
+  const heading = /<h2 id="known-issues">[\s\S]*?<\/h2>/.exec(body);
+  if (!heading) return null;
+  const rest = body.slice(heading.index + heading[0].length);
+  const end = rest.search(/<h2\b|<nav\b/);
+  const section = end === -1 ? rest : rest.slice(0, end);
+  const items = (section.match(/<li\b/g) ?? []).length;
+  if (items) return items;
+  if (/None known\./.test(section)) return 0;
+  return (section.match(/<p[\s>]/g) ?? []).length;
+}
+
+/** Is there a spec of the page: tests/<slug>.spec.js or tests/<area>-<slug>.spec.js? */
+const isTested = (site, page) => {
+  const slug = page.route.split("/").at(-2);
+  return [`${slug}.spec.js`, `${page.meta.area}-${slug}.spec.js`].some((name) => existsSync(join(site.repoRoot, "tests", name)));
+};
+
+/**
+ * The chips of a component or pattern page: one per `;` entry of `files`,
+ * the module (or "No JavaScript"), the modes, "Tested" when the page has a
+ * spec, and its known issues, linked to the section.
+ */
+function chipsOf(site, page) {
+  const files = page.meta.files.split(";").map((f) => f.trim()).filter(Boolean);
+  const issues = knownIssuesOf(page.body) ?? 0;
+  const said = issues === 0 ? "No known issues" : issues === 1 ? "1 known issue" : `${issues} known issues`;
+  return [
+    ...files.map((f) => `<code class="docs-demo__file">${escapeHtml(f)}</code>`),
+    page.meta.module ? `JS: ${escapeHtml(page.meta.module)}` : "No JavaScript",
+    "Light · Dark · High contrast",
+    ...(isTested(site, page) ? ["Tested"] : []),
+    link("#known-issues", said),
   ];
-  const title = meta.length
-    ? `    <div class="docs-title-row">\n      <h1 class="docs-title">${escapeHtml(page.meta.title)}</h1>\n      ${meta.join("\n      ")}\n    </div>`
-    : `    <h1 class="docs-title">${escapeHtml(page.meta.title)}</h1>`;
-  const lead = page.meta.lead === "true" ? `\n    <p class="docs-lead">${escapeHtml(page.meta.description)}</p>` : "";
+}
+
+/**
+ * The breadcrumb, then the page head: the eyebrow ("Area · Group", or the
+ * area alone; none on the hub), the h1, the lead (unless the content brings
+ * its own) and, on a component or pattern page, the chips. The not-found
+ * page keeps its plain head: the h1 and the lead.
+ */
+export function renderPageHead(site, page) {
+  const h1 = `    <h1 class="docs-title">${escapeHtml(page.meta.title)}</h1>`;
+  const lead = page.meta.lead === "true" ? [`    <p class="luz-docs-page-head__lead">${escapeHtml(page.meta.description)}</p>`] : [];
+  if (page.route === NOT_FOUND_ROUTE) {
+    return `  <div class="luz-docs-page-head">\n${h1}${page.meta.lead === "true" ? `\n    <p class="docs-lead">${escapeHtml(page.meta.description)}</p>` : ""}\n  </div>`;
+  }
+  const area = areaOf(site, page);
+  const group = area?.groups?.find((g) => g.id === page.meta.group);
+  const eyebrow = area ? [`    <p class="luz-docs-page-head__eyebrow">${escapeHtml(group ? `${area.label} · ${group.label}` : area.label)}</p>`] : [];
+  const chips = isViewPage(page) ? [`    <ul class="luz-docs-page-head__meta">${chipsOf(site, page).map((c) => `<li>${c}</li>`).join("")}</ul>`] : [];
   const crumb = renderBreadcrumb(site, page);
-  return `  <div class="luz-docs-page-head">\n${crumb ? `${crumb}\n` : ""}${title}${lead}\n  </div>`;
+  return [...(crumb ? [crumb] : []), '  <header class="luz-docs-page-head">', ...eyebrow, h1, ...lead, ...chips, "  </header>"].join("\n");
 }
 
 /**
@@ -501,8 +561,8 @@ export function renderPageHead(site, page) {
  * outside demos. Only on a page with three or more h2. Each h3 is listed
  * under its h2, in a nested list (on a component page: the sections of the
  * Code and of the Design tab, both, whichever tab is open; core's tabs.js
- * opens the tab of a section a link points at). A closed <details> on narrow
- * screens; the docs script opens it as a rail on wide ones and marks the
+ * opens the tab of a section a link points at). An open <details> in the
+ * rail, so it reads without JS; from 80rem the docs script marks the
  * section in view (core's initSidebar).
  */
 export function renderToc(page, html) {
@@ -524,17 +584,17 @@ export function renderToc(page, html) {
     lines.push(`            <li>${item(h)}</li>`);
     if (next?.level !== 3) lines.push("          </ul>\n        </li>");
   });
-  return `  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">\n    <details class="luz-docs-rail__fold">\n      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>\n      <ul class="luz-docs-rail__list">\n${lines.join("\n")}\n      </ul>\n    </details>\n  </nav>`;
+  return `  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">\n    <details class="luz-docs-rail__fold" open>\n      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>\n      <ul class="luz-docs-rail__list">\n${lines.join("\n")}\n      </ul>\n    </details>\n  </nav>`;
 }
 
 /**
  * The end of a page: "Keep going", a labelled nav with the area's essential
  * links, then Previous / Next in the reading order (across areas: an area's
- * index leads to its first page, its last page to the next area's index).
- * Each pager link is one block, a small "Previous" / "Next" above the page's
- * title; its name is "Previous: <title>", an aria-label that starts with
- * the visible text (from the two lines alone Chrome makes "Previous
- * Breadcrumb"). Nothing on the hub area and the not-found page.
+ * index leads to its first page, its last page to the next area's index),
+ * @luz-ds/docs's pager. Each pager link is one block, a small "Previous" /
+ * "Next" above the page's title, named by that visible text, "Previous
+ * Breadcrumb" (WCAG 2.5.3): no aria-label. Nothing on the hub area and the
+ * not-found page.
  */
 export function renderEndNav(site, page) {
   const around = neighboursOf(site, page);
@@ -549,7 +609,7 @@ export function renderEndNav(site, page) {
     const target = around?.[key];
     if (!target) continue;
     pager.push(
-      `      <li class="luz-docs-pager__${key}"><a class="luz-docs-pager__link" rel="${rel}" href="${escapeHtml(target.route)}" aria-label="${label}: ${escapeHtml(target.meta.title)}">` +
+      `      <li class="luz-docs-pager__${key}"><a class="luz-docs-pager__link" rel="${rel}" href="${escapeHtml(target.route)}">` +
         `<span class="luz-docs-pager__label">${label}</span> ` +
         `<span class="luz-docs-pager__title">${escapeHtml(target.meta.title)}</span></a></li>`,
     );
@@ -557,6 +617,75 @@ export function renderEndNav(site, page) {
   if (pager.length) lines.push('    <ul class="luz-docs-pager">', ...pager, "    </ul>");
   lines.push("  </nav>");
   return lines.join("\n");
+}
+
+/** The Edit and Report links of a page: its source file on GitHub, and a new issue titled with the page. */
+const actionsOf = (page) => ({
+  edit: `${REPO_URL}/edit/main/${page.file}`,
+  report: `${REPO_URL}/issues/new?title=${encodeURIComponent(page.meta.title)}`,
+});
+
+/**
+ * The rail, the aside after main: "On this page" (`toc`, from renderToc;
+ * none on a short page) and the page's actions: Copy page as Markdown (a
+ * link to the page's index.md, which the docs script copies to the
+ * clipboard), Edit this page and Report a problem.
+ */
+export function renderRail(page, toc) {
+  const { edit, report } = actionsOf(page);
+  return [
+    '  <aside class="luz-docs-rail" aria-label="About this page">',
+    ...(toc ? [toc] : []),
+    '    <div class="luz-docs-rail__actions">',
+    `      ${link(`${page.route}index.md`, "Copy page as Markdown", " data-docs-copy-page")}`,
+    `      ${link(edit, "Edit this page")}`,
+    `      ${link(report, "Report a problem")}`,
+    "    </div>",
+    "  </aside>",
+  ].join("\n");
+}
+
+const pad = (n) => String(n).padStart(2, "0");
+/** Today, as the local calendar has it: YYYY-MM-DD. */
+const today = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
+
+/** The date of the last commit of each file, by absolute path: one git call per file per process. */
+const lastCommits = new Map();
+
+/**
+ * The day a page was last changed: the commit date of its file
+ * (`git log -1 --format=%cs`), cached; today in dev, and for a file git does
+ * not know (new, or outside a repository).
+ */
+export function lastUpdatedOf(site, page, { dev = false } = {}) {
+  if (dev) return today();
+  if (!lastCommits.has(page.abs)) {
+    let date = "";
+    try {
+      date = execFileSync("git", ["log", "-1", "--format=%cs", "--", page.file], {
+        cwd: site.repoRoot,
+        encoding: "utf-8",
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
+    } catch {
+      date = "";
+    }
+    lastCommits.set(page.abs, /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : null);
+  }
+  return lastCommits.get(page.abs) ?? today();
+}
+
+const DATE_FORMAT = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+
+/** The page foot: "Last updated <time>", then Edit and Report, the rail's links. */
+export function renderPageFoot(site, page, options = {}) {
+  const iso = lastUpdatedOf(site, page, options);
+  const { edit, report } = actionsOf(page);
+  const day = DATE_FORMAT.format(new Date(`${iso}T00:00:00Z`));
+  return `  <p class="luz-docs-page-foot">Last updated <time datetime="${iso}">${day}</time> · ${link(edit, "Edit this page")} · ${link(report, "Report a problem")}</p>`;
 }
 
 /**
@@ -962,8 +1091,12 @@ export function sourceReader(site) {
   return { partial, layout };
 }
 
+/** Where an area index wants its generated block (the gallery), when not after the content. */
+export const GENERATED_MARKER = "<!-- luz:generated -->";
+
 /**
- * The block a page's `generate` front matter asks for, written after its content.
+ * The block a page's `generate` front matter asks for, written after its
+ * content, or where the content has GENERATED_MARKER.
  * "snippets" reads the dist/ files of the packages (snippets.js), so a missing
  * file fails the build and only warns in dev (`options.dev`).
  */
@@ -993,8 +1126,13 @@ export function renderPage(page, site, options = {}) {
   const strings = { locale, used: options.used };
   const expanded = expand(page.body, { file: page.file, firstLine: page.bodyLine, partial: reader.partial, current, placeholders: false, ...strings });
   // "ai" is written inside the content, at its two markers, so it is known to the table of contents
-  const content = page.meta.generate === "ai" ? fillAiMarkers(expanded, site, { file: page.file }) : expanded;
-  const generated = renderGenerated(page, site, options);
+  const filled = page.meta.generate === "ai" ? fillAiMarkers(expanded, site, { file: page.file }) : expanded;
+  // `<!-- luz:generated -->` in the content puts the generated block where it stands, once
+  const block = renderGenerated(page, site, options);
+  const marked = filled.includes(GENERATED_MARKER);
+  const content = marked ? filled.replace(GENERATED_MARKER, () => block).replaceAll(GENERATED_MARKER, "") : filled;
+  const generated = marked ? "" : block;
+  const toc = renderToc(page, `${content}\n${generated}`);
   const layout = reader.layout(page.meta.layout);
   return expand(layout.text, {
     file: layout.file,
@@ -1011,8 +1149,9 @@ export function renderPage(page, site, options = {}) {
       content,
       nav: renderNav(site, page),
       pagehead: renderPageHead(site, page),
-      toc: renderToc(page, `${content}\n${generated}`),
+      rail: page.route === NOT_FOUND_ROUTE ? "" : renderRail(page, toc),
       endnav: renderEndNav(site, page),
+      pagefoot: page.route === NOT_FOUND_ROUTE ? "" : renderPageFoot(site, page, { dev: options.dev === true }),
       generated,
     },
   });

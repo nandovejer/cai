@@ -12,7 +12,7 @@
  * or by an `@import` in a <style>, and its package is read from the URL:
  * `@luz-ds/<pkg>` or `/packages/<pkg>/` anywhere in it, else a file name of
  * luz.css, luz.min.css (core) or luz-tokens(.min).css (tokens). `site`,
- * `landing`, `cms` and `app` as a bare file name may be the project's own: a
+ * `landing`, `cms`, `app` and `docs` as a bare file name may be the project's own: a
  * `copy`, which keeps load/package-missing silent for that package and is
  * never a reason to block. A URL a template computes may be anything: while a
  * page has one, load/tokens-missing and load/package-missing are silent. A
@@ -23,10 +23,10 @@ import { finding } from "../report.js";
 import { classAttribute, classTokens } from "./shared.js";
 
 const TEMPLATE = /\{\{|<%|\$\{/;
-const IN_URL = /@luz-ds\/(tokens|core|site|landing|cms|app)(?![\w-])/;
-const IN_DEV = /\/packages\/(tokens|core|site|landing|cms|app)\//;
-// luz.css and luz-tokens.css are LUZ's; a bare site.css, landing.css, cms.css or app.css may be the project's own
-const FILE = /^(?:luz(-tokens)?|(site|landing|cms|app))(?:\.min)?\.css$/;
+const IN_URL = /@luz-ds\/(tokens|core|site|landing|cms|app|docs)(?![\w-])/;
+const IN_DEV = /\/packages\/(tokens|core|site|landing|cms|app|docs)\//;
+// luz.css and luz-tokens.css are LUZ's; a bare site.css, landing.css, cms.css, app.css or docs.css may be the project's own
+const FILE = /^(?:luz(-tokens)?|(site|landing|cms|app|docs))(?:\.min)?\.css$/;
 const IMPORT = /@import\s+(?:url\(\s*)?["']?([^"')\s;]+)/g;
 const LAYER = /@layer\s+([^;{}@]{0,512})([;{}])/g;
 export const STYLESHEET = /(?:^|\s)stylesheet(?:\s|$)/i;

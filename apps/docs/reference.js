@@ -2,7 +2,8 @@
  * LUZ documentation site — page glue, loaded by every page.
  * Wires the core behaviors the examples demonstrate, one module at a time,
  * the few HTML element demos that need a line of script (canvas,
- * template, custom element), "On this page", the Code / Design tab the
+ * template, custom element), "On this page" and "Copy page as Markdown" in
+ * the rail, the Code / Design tab the
  * reader chose last (view.js), and the site search and the cookie consent
  * example (@luz-ds/site).
  *
@@ -45,17 +46,59 @@ function initFolds() {
 }
 
 function initOnThisPage() {
-  // A closed <details> in the markup, so it reads without JS on every
-  // screen; from 1280px it is a rail beside the content: open it, and mark
-  // the section in view (aria-current="true", core's scroll spy). Below
-  // 1280px nothing is marked: the list is closed.
-  // Only the page's own list (in main, or in a rail aside), never the live
-  // demo of the rail pattern, which sits inside an example.
-  const nav = document.querySelector(":is(.docs-main, aside.luz-docs-rail) > .luz-docs-rail__onpage");
-  if (!nav || !window.matchMedia("(min-width: 1280px)").matches) return;
-  // eslint-disable-next-line no-restricted-syntax -- RL-3: sets the initial state only; opening and closing stay native
-  nav.querySelector("details").open = true;
+  // "On this page" is an open <details> in the rail (aside.luz-docs-rail), so
+  // it reads without JS. From 80rem the rail is a column beside the content:
+  // mark the section in view there (aria-current="true", core's scroll spy).
+  // Only the page's own list, never the live demo of the rail pattern, which
+  // sits inside an example in main.
+  const nav = document.querySelector("aside.luz-docs-rail > .luz-docs-rail__onpage");
+  if (!nav || !window.matchMedia("(min-width: 80rem)").matches) return;
   initSidebar(nav);
+}
+
+/* ---- Copy page as Markdown --------------------------------------------- */
+
+const COPIED = "Copied the page as Markdown.";
+
+function initCopyPage() {
+  // A plain link to the page's index.md: without a script it opens the file.
+  // With one, a click copies the file's text and says so in the rail. The
+  // text is fetched when the pointer or the focus reaches the link, so the
+  // copy happens inside the click (Safari asks for that); if the copy fails,
+  // the link does what it does without a script.
+  const link = document.querySelector("aside.luz-docs-rail a[data-docs-copy-page]");
+  if (!link || !navigator.clipboard) return;
+  // The status exists, empty, before anything is said in it
+  const status = document.createElement("p");
+  status.className = "docs-rail-status";
+  status.setAttribute("role", "status");
+  link.closest(".luz-docs-rail__actions").append(status);
+  let text = null;
+  let loading = null;
+  const load = () =>
+    (loading ??= fetch(link.href)
+      .then((response) => (response.ok ? response.text() : Promise.reject(new Error(`${response.status}`))))
+      .then((body) => (text = body)));
+  link.addEventListener("pointerenter", () => load().catch(() => {}));
+  link.addEventListener("focus", () => load().catch(() => {}));
+  let clear;
+  link.addEventListener("click", (event) => {
+    // A new tab, a new window or a download: the link's own
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    // eslint-disable-next-line no-restricted-syntax -- RL-3: the link still works without a script; with one it copies instead of opening the file
+    event.preventDefault();
+    const copied = text !== null ? navigator.clipboard.writeText(text) : load().then((body) => navigator.clipboard.writeText(body));
+    copied.then(
+      () => {
+        status.textContent = COPIED;
+        clearTimeout(clear);
+        clear = setTimeout(() => {
+          status.textContent = "";
+        }, 5000);
+      },
+      () => window.location.assign(link.href),
+    );
+  });
 }
 
 function initRangeOutputs() {
@@ -289,6 +332,7 @@ initSpecimenTheme();
 initCanvas();
 initFolds();
 initOnThisPage();
+initCopyPage();
 initAssets();
 initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each

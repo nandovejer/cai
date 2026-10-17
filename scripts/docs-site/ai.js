@@ -143,9 +143,13 @@ const CONTAINERS = new Set(["div", "section", "article", "header", "footer", "na
 const HEADINGS = /^h([1-6])$/;
 const TABLE_PARTS = new Set(["thead", "tbody", "tfoot", "tr", "th", "td", "caption", "colgroup", "col"]);
 
-/** Docs-only furniture that is not content: the copy bar of a snippet, the tab row, the cross-link to the other tab. */
+/**
+ * Docs-only furniture that is not content: the copy bar of a snippet, the tab row, the cross-link to the
+ * other tab, a button that opens the site search (the hub's: its link to the A–Z index is the text).
+ */
 function isChrome(node) {
   const cls = node.attrs.get("class") ?? "";
+  if (node.name === "button" && node.attrs.has("data-luz-search-open")) return true;
   if (/(?:^|\s)(?:docs-snippet__bar|docs-view-tabs|docs-view__xref)(?:\s|$)/.test(cls)) return true;
   if (/(?:^|\s)docs-demo__stage(?:\s|$)/.test(cls) || node.attrs.has("data-contrast-tool")) return true;
   return node.name === "button" && (node.attrs.has("data-copy-from") || node.attrs.has("data-copy") || /(?:^|\s)luz-copy-btn(?:\s|$)/.test(cls));
@@ -640,6 +644,19 @@ export function renderLlmsFull(site, { siteUrl = "" } = {}) {
     );
   }
   return text;
+}
+
+/**
+ * The Markdown of one page, published next to it as `<route>index.md` (the
+ * rail's "Copy page as Markdown"): `# title`, the description, then the same
+ * text llms-full.txt has for the page, from the same function (RL-19). Every
+ * page has one, the hub and the A–Z index included; none of them is listed
+ * in llms-full.txt, which does not grow.
+ */
+export function renderPageMarkdown(site, page, { siteUrl = "" } = {}) {
+  const url = urlOf(page.route, siteUrl);
+  const body = bodyOf(page, { siteUrl, base: url });
+  return `${[`# ${page.meta.title}`, "", page.meta.description, ...(body ? ["", body] : [])].join("\n").trimEnd()}\n`;
 }
 
 /* ---- examples/ and manifests/ ----------------------------------------------- */

@@ -16,7 +16,14 @@
 	--luz-docs-rail-w: 14rem;
 	--luz-docs-rail-top: var(--luz-space-lg);
 
-	grid-template: "head" "nav" "main" "rail" "foot" / minmax(0, 1fr);
+	/* The content takes the free height: on a short page the header keeps
+	   its own height (core's shell is at least the height of the window) */
+	grid-template:
+		"head" auto
+		"nav" auto
+		"main" 1fr
+		"rail" auto
+		"foot" auto / minmax(0, 1fr);
 }
 
 .luz-docs-shell > :where(header) {

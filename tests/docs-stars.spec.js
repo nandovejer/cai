@@ -27,6 +27,7 @@
  * It needs JavaScript only for what the site does before it (boot.js sets
  * data-theme), so it runs in `chromium`.
  */
+/* global atob, Blob, createImageBitmap, innerHeight, OffscreenCanvas, scrollX, scrollY -- these run in the page, inside page.evaluate() */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { faded } from './helpers/settle.js';

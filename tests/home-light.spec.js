@@ -806,6 +806,27 @@ test.describe('review fixes', () => {
     });
   }
 
+  test('the stars drift very slightly with the globe: the same way, the far layer less', async ({ page }) => {
+    await open(page, '/', { time: '23:30' });
+    const globe = page.locator('home-globe');
+    await expect(globe).toHaveAttribute('land', /.*/, { timeout: 15000 });
+    await page.emulateMedia({ reducedMotion: 'reduce' }); // the spin stops: only the drag moves it
+    const xs = () => page.evaluate(() => ['::before', '::after'].map((p) => parseFloat(getComputedStyle(document.querySelector('main.luz-landing-main'), p).backgroundPositionX)));
+    const before = await xs();
+    const box = await globe.boundingBox();
+    const x = (box?.x ?? 0) + (box?.width ?? 0) / 2;
+    const y = (box?.y ?? 0) + (box?.height ?? 0) / 3;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x + 120, y, { steps: 12 });
+    await page.mouse.up();
+    await expect.poll(async () => (await xs())[0] - before[0]).toBeGreaterThan(4);
+    const [near, far] = (await xs()).map((v, i) => v - before[i]);
+    expect(near, 'the near layer moves less than the drag').toBeLessThan(60);
+    expect(far, 'the far layer moves the same way, less').toBeGreaterThan(0);
+    expect(far).toBeLessThan(near);
+  });
+
   test('under reduced motion the stars are still: no twinkle', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await open(page, '/', { time: '23:30' });

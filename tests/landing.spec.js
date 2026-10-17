@@ -836,7 +836,7 @@ test.describe('Landing page', () => {
     /** The marker's place on the day strip, 0 to 1: the --day-t the page sets (a number or a percentage). */
     const dayT = (page) =>
       page.evaluate(() => {
-        const strip = [...document.querySelectorAll('#modes [aria-hidden="true"]')].find((el) => !el.closest('[data-theme]'));
+        const strip = [...document.querySelectorAll('#modes [aria-hidden="true"]')].find((el) => !el.closest('#modes [data-theme]'));
         if (!strip) return null;
         for (const el of [strip, ...strip.querySelectorAll('*')]) {
           const value = getComputedStyle(el).getPropertyValue('--day-t').trim();
@@ -849,7 +849,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       const strip = await page.evaluate(() => {
-        const el = [...document.querySelectorAll('#modes [aria-hidden="true"]')].find((node) => !node.closest('[data-theme]'));
+        const el = [...document.querySelectorAll('#modes [aria-hidden="true"]')].find((node) => !node.closest('#modes [data-theme]'));
         if (!el) return null;
         return {
           focusable: el.querySelectorAll('a[href], button, input, select, textarea, [tabindex]').length,

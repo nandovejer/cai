@@ -52,7 +52,7 @@ function files(path) {
 
 beforeAll(() => {
   dir = mkdtempSync(join(tmpdir(), "luz-check-strings-"));
-  const sources = [...files("apps"), ...files("scripts"), ...files("packages/check/src"), ...files("packages/core/src/i18n"), EN_FILE, "package.json"];
+  const sources = [...files("apps"), ...files("scripts"), ...files("packages/check/src"), ...files("packages/core/src/i18n"), ...files("packages/core/src/components"), "packages/core/src/objects/_objects.css", "packages/tokens/tokens.json", "packages/tokens/src/semantic.css", EN_FILE, "package.json"];
   for (const name of readdirSync(join(repo, "packages"))) sources.push(`packages/${name}/package.json`);
   for (const rel of new Set(sources)) {
     try {

@@ -18,8 +18,8 @@ export async function focusAndHitTest(locator, { ends = true } = {}) {
     const y = r.top + r.height / 2;
     const points = { centre: [r.left + r.width / 2, y] };
     if (withEnds) {
-      points.start = [r.left + 1, y];
-      points.end = [r.right - 1, y];
+      points.start = [r.left + 3, y];
+      points.end = [r.right - 3, y];
     }
     const describe = (node) => (node ? `${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ''}${node.className && typeof node.className === 'string' ? `.${node.className.trim().split(/\s+/).join('.')}` : ''}` : 'nothing (outside the window)');
     const covered = [];

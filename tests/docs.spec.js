@@ -16,6 +16,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf, routes, routesOf, routesWith, site } from './helpers/docs-site.js';
+import { indexEntries } from '../scripts/docs-site/site.js';
 import { SITE_KINDS } from '../scripts/luz-packages.js';
 import { areaOfPackage } from './helpers/package-areas.js';
 import { KEY as MODE_KEY, seedMode } from './helpers/site-lights.js';
@@ -451,7 +452,12 @@ test.describe('Documentation site', () => {
       await expect(page).toHaveURL(/\/docs\/a-z\/m-z\/$/);
       await expect(main.getByRole('link', { name: 'M–Z', exact: true })).toHaveAttribute('aria-current', 'page');
       await expect(main.getByRole('link', { name: 'A–L', exact: true })).not.toHaveAttribute('aria-current', /.*/);
-      await expect(page.locator('#az-other')).toHaveCount(1);
+      // Other (#az-other) is last on M–Z, and only when an entry starts with neither a letter nor a digit A–Z
+      const hasOther = indexEntries(site).some((e) => !/^[A-Z]/i.test(e.name.replace(/^[^\p{L}\p{N}]+/u, '')));
+      await expect(page.locator('#az-other')).toHaveCount(hasOther ? 1 : 0);
+      if (hasOther) expect(await page.locator('.docs-az__letter h2').last().getAttribute('id')).toBe('az-other');
+      await page.goto('/docs/a-z/');
+      await expect(page.locator('#az-other')).toHaveCount(0);
     });
   });
 
@@ -923,10 +929,13 @@ test.describe('Documentation site', () => {
   });
 
   test.describe('the not-found page', () => {
-    test('says the page is not here and links to the A–Z index and the docs home', async ({ page }) => {
+    test('says the page is not here and links to the A–Z index, the components and the docs home', async ({ page }) => {
       await page.goto('/404.html');
       await expect(page.locator('h1')).toHaveText('Page not found');
-      await expect(page.locator('main').getByRole('link')).toHaveText(['A–Z index', 'Docs home']);
+      const links = page.locator('main').getByRole('link');
+      await expect(links).toHaveText(['A–Z index', 'Components', 'Docs home']);
+      // root-absolute in the source (the Pages build makes them relative), in this order
+      expect(await links.evaluateAll((all) => all.map((a) => a.getAttribute('href')))).toEqual(['/docs/a-z/', '/docs/components/', '/docs/']);
       // The layout has no script of its own (the dev server adds its client)
       expect(readFileSync(fromRepo('apps/docs/_layouts/not-found.html'), 'utf-8')).not.toMatch(/<script/);
     });

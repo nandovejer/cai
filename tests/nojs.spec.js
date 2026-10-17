@@ -134,10 +134,14 @@ for (const app of ['/', '/docs/', '/docs/components/button/', notFoundRoute]) {
   });
 }
 
-test('docs: the A–Z index links every page', async ({ page }) => {
-  await page.goto('/docs/a-z/');
-  const hrefs = new Set(await page.locator('main a').evaluateAll((links) => links.map((a) => new URL(a.href).pathname)));
-  for (const route of routes().filter((r) => r !== '/docs/a-z/')) expect(hrefs.has(route), route).toBe(true);
+test('docs: the A–Z index, both pages together, links every page', async ({ page }) => {
+  const AZ = ['/docs/a-z/', '/docs/a-z/m-z/'];
+  const hrefs = new Set();
+  for (const route of AZ) {
+    await page.goto(route);
+    for (const path of await page.locator('main a').evaluateAll((links) => links.map((a) => new URL(a.href).pathname))) hrefs.add(path);
+  }
+  for (const route of routes().filter((r) => !AZ.includes(r))) expect(hrefs.has(route), route).toBe(true);
 });
 
 test('docs: the home shows the A–Z link in place of the big search button', async ({ page }) => {

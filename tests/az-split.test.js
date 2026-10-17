@@ -18,7 +18,7 @@ import { Buffer } from "node:buffer";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { beforeAll, describe, expect, it } from "vitest";
-import { buildSearchIndex, buildSite, indexData, indexEntries, relativizeLinks, scanSite } from "../scripts/docs-site/site.js";
+import { buildSearchIndex, buildSite, indexData, indexEntries, relativizeLinks, renderAZ, scanSite } from "../scripts/docs-site/site.js";
 import { decodeEntities } from "../scripts/docs-site/html.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
@@ -106,9 +106,60 @@ describe("the A–Z index is two pages", () => {
     const present = new Set(entries.map((e) => letterOf(e.name)));
     expect(sectionIds(htmlOf(FIRST))).toEqual(LOW.filter((l) => present.has(l)).map(idOf));
     expect(sectionIds(htmlOf(SECOND))).toEqual([...HIGH, "#"].filter((l) => present.has(l)).map(idOf));
-    expect(present.has("#"), "the index has entries that do not start with a letter").toBe(true);
-    expect(sectionIds(htmlOf(SECOND)).at(-1)).toBe("az-other");
-    expect(htmlOf(FIRST)).not.toContain('id="az-other"');
+  });
+
+  // Other exists only when an entry's first letter or digit is not A–Z (a digit, "É", ...): today none is
+  it("has the Other section (#az-other) last on M–Z, and never on A–L, only when an entry has no leading letter", () => {
+    const hasOther = entries.some((e) => letterOf(e.name) === "#");
+    expect(htmlOf(FIRST), "#az-other is never on A–L").not.toContain('id="az-other"');
+    if (hasOther) expect(sectionIds(htmlOf(SECOND)).at(-1)).toBe("az-other");
+    else expect(htmlOf(SECOND), "no entry lacks a leading letter, so no Other section").not.toContain('id="az-other"');
+  });
+
+  // The filing rule, proved with entries the real index does not have. renderAZ(site, page) reads
+  // indexEntries(site); the filing helper is not exported, so a copy of the site with extra pages
+  // (their titles are index entries) goes through the public function, not through internals.
+  describe("the filing rule, with synthetic entries", () => {
+    const withTitles = (titles) => {
+      // called inside the tests: `site` is read in beforeAll
+      const model = site.pages.find((p) => p.meta.search !== "false");
+      const extra = titles.map((title, i) => ({
+        ...model,
+        route: `/docs/synthetic-${i}/`,
+        meta: { ...model.meta, title, keywords: "" },
+        body: "<p>Synthetic.</p>",
+      }));
+      const byRoute = new Map(site.byRoute);
+      for (const p of extra) byRoute.set(p.route, p);
+      return { ...site, pages: [...site.pages, ...extra], byRoute };
+    };
+    let synthetic;
+    beforeAll(() => {
+      synthetic = withTitles(["2D shapes", "Éclair", "@layer"]);
+    });
+    const second = () => renderAZ(synthetic, site.byRoute.get(SECOND));
+    const first = () => renderAZ(synthetic, site.byRoute.get(FIRST));
+    const sectionOf = (html, name) => listed(html).find((e) => e.name === name)?.section;
+
+    it("files a name that starts with a digit or a letter outside A–Z under Other, last, on M–Z only", () => {
+      expect(sectionIds(second()).at(-1)).toBe("az-other");
+      expect(sectionIds(first())).not.toContain("az-other");
+      for (const name of ["2D shapes", "Éclair"]) {
+        expect(sectionOf(second(), name), `${name} on M–Z`).toBe("az-other");
+        expect(sectionOf(first(), name), `${name} is not on A–L`).toBeUndefined();
+      }
+    });
+
+    it("skips leading punctuation, so \"@layer\" is filed under L on A–L, not under Other", () => {
+      expect(sectionOf(first(), "@layer")).toBe("az-l");
+      expect(sectionOf(second(), "@layer")).toBeUndefined();
+    });
+
+    it("does not put Other in the row of letters (it is not a letter), and leaves the real index alone", () => {
+      expect(second()).not.toMatch(/<nav class="docs-az__letters"[^>]*>[\s\S]*?href="[^"]*#az-other"[\s\S]*?<\/nav>/);
+      expect(indexEntries(synthetic).length).toBeGreaterThan(entries.length);
+      expect(entries.some((e) => e.name === "2D shapes")).toBe(false);
+    });
   });
 });
 

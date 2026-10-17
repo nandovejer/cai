@@ -212,3 +212,144 @@ test.describe('core tabs', () => {
     expect(await display('')).toBe('none');
   });
 });
+
+/* ---- The tab row sticks under the site header --------------------------- */
+
+const SIZES = [
+  { name: '1280 px', width: 1280, height: 800 },
+  { name: '375 px', width: 375, height: 667 },
+];
+
+const rowBox = (page) => page.evaluate(() => {
+  const row = document.querySelector('nav.luz-tabs.docs-view-tabs');
+  const r = row.getBoundingClientRect();
+  const header = document.querySelector('.site-header').getBoundingClientRect();
+  return { top: r.top, bottom: r.bottom, height: r.height, headerBottom: header.bottom, scrollY: window.scrollY };
+});
+
+// Instant, whatever scroll-behavior the page sets
+const scrollToPanelMiddle = (page, id) => page.evaluate((panelId) => {
+  const panel = document.getElementById(panelId);
+  const rect = panel.getBoundingClientRect();
+  const y = rect.top + window.scrollY + rect.height / 2 - window.innerHeight / 2;
+  window.scrollTo({ top: y, behavior: 'instant' });
+}, id);
+
+// The smooth scroll of a followed link takes a moment: wait until the heading stops
+const settled = async (page, id) => {
+  let last = null;
+  await expect.poll(async () => {
+    const top = await page.evaluate((i) => document.getElementById(i).getBoundingClientRect().top, id);
+    const same = last !== null && Math.abs(top - last) < 0.5;
+    last = top;
+    return same;
+  }, { intervals: [150, 150, 150, 250, 250, 500], timeout: 5000 }).toBe(true);
+};
+
+const expectBelowTabs = async (page, id) => {
+  await settled(page, id);
+  const { headingTop, rowBottom } = await page.evaluate((i) => ({
+    headingTop: document.getElementById(i).getBoundingClientRect().top,
+    rowBottom: document.querySelector('nav.luz-tabs.docs-view-tabs').getBoundingClientRect().bottom,
+  }), id);
+  // Fully below the row: scroll-margin accounts for the header and the tabs
+  expect(headingTop, `#${id} top ${headingTop} vs tab row bottom ${rowBottom}`).toBeGreaterThanOrEqual(rowBottom - 0.5);
+};
+
+for (const size of SIZES) {
+  test.describe(`the tab row is sticky at ${size.name}`, () => {
+    test.use({ viewport: { width: size.width, height: size.height } });
+
+    test('its computed position is sticky and its background is opaque', async ({ page }) => {
+      await page.goto(BUTTON);
+      const style = await page.locator('nav.luz-tabs.docs-view-tabs').evaluate((el) => {
+        const s = getComputedStyle(el);
+        return { position: s.position, background: s.backgroundColor };
+      });
+      expect(style.position).toBe('sticky');
+      // Text scrolling under the row must be hidden: not transparent, alpha 1
+      expect(style.background).not.toBe('rgba(0, 0, 0, 0)');
+      expect(style.background).not.toBe('transparent');
+      const alpha = style.background.match(/rgba?\([^)]*?,\s*([\d.]+)\)$/);
+      expect(alpha ? Number(alpha[1]) : 1).toBe(1);
+    });
+
+    for (const [panel, label] of [['code-panel', 'Code'], ['design-panel', 'Design']]) {
+      test(`in the middle of the ${label} panel the row sits right under the header`, async ({ page }) => {
+        await page.goto(BUTTON);
+        if (label === 'Design') {
+          await tab(page, 'Design').click();
+          await expect(page.locator('#design-panel')).toBeVisible();
+        }
+        await scrollToPanelMiddle(page, panel);
+        await expect(page.locator('nav.luz-tabs.docs-view-tabs')).toBeInViewport({ ratio: 1 });
+        const box = await rowBox(page);
+        expect(box.scrollY).toBeGreaterThan(300);
+        expect(Math.abs(box.top - box.headerBottom)).toBeLessThanOrEqual(1);
+        // And the row is what the header's variable says it is
+        const headerH = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-header-h')));
+        expect(Math.abs(box.top - headerH)).toBeLessThanOrEqual(1);
+      });
+    }
+
+    test('clicking Design while stuck shows the Design panel and the row stays stuck', async ({ page }) => {
+      await page.goto(BUTTON);
+      await scrollToPanelMiddle(page, 'code-panel');
+      const before = await rowBox(page);
+      expect(Math.abs(before.top - before.headerBottom)).toBeLessThanOrEqual(1);
+      await tab(page, 'Design').click();
+      await expect(tab(page, 'Design')).toHaveAttribute('aria-selected', 'true');
+      await expect(page.locator('#design-panel')).toBeVisible();
+      await expect(page.locator('#code-panel')).toBeHidden();
+      await expect(page.locator('nav.luz-tabs.docs-view-tabs')).toBeInViewport({ ratio: 1 });
+      const after = await rowBox(page);
+      expect(Math.abs(after.top - after.headerBottom)).toBeLessThanOrEqual(1);
+    });
+
+    test('a link to #keyboard puts the heading fully below the tab row', async ({ page }) => {
+      await page.goto(BUTTON);
+      await tab(page, 'Design').click();
+      await expect(page.locator('#design-panel')).toBeVisible();
+      await page.locator('#design-panel .docs-view__xref a').click();
+      await expect(tab(page, 'Code')).toHaveAttribute('aria-selected', 'true');
+      await expectBelowTabs(page, 'keyboard');
+    });
+
+    test('a link to #contrast puts the heading fully below the tab row', async ({ page }) => {
+      await page.goto(BUTTON);
+      await page.locator('#code-panel .docs-view__xref a').click();
+      await expect(tab(page, 'Design')).toHaveAttribute('aria-selected', 'true');
+      await expectBelowTabs(page, 'contrast');
+    });
+
+    test('loading the page at #how puts the heading fully below the tab row', async ({ page }) => {
+      await page.goto(`${BUTTON}#how`);
+      await expect(tab(page, 'Code')).toHaveAttribute('aria-selected', 'true');
+      await expectBelowTabs(page, 'how');
+    });
+  });
+}
+
+test.describe('without JavaScript the tab row blocks nothing', () => {
+  test.use({ javaScriptEnabled: false });
+
+  for (const size of SIZES) {
+    for (const id of ['how', 'keyboard', 'contrast']) {
+      test(`#${id} is visible at ${size.name} and the page does not scroll sideways`, async ({ page }) => {
+        await page.setViewportSize({ width: size.width, height: size.height });
+        await page.goto(`${BUTTON}#${id}`);
+        await expect(page.locator(`#${id}`)).toBeVisible();
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        expect(overflow).toBeLessThanOrEqual(0);
+        // The heading is not left under the sticky header or the tab row
+        await expect.poll(() => page.evaluate((i) => {
+          const top = document.getElementById(i).getBoundingClientRect().top;
+          const header = document.querySelector('.site-header').getBoundingClientRect().bottom;
+          const row = document.querySelector('nav.luz-tabs.docs-view-tabs').getBoundingClientRect();
+          // At the tab row's own place only when the page cannot scroll further
+          return top >= header - 1 && (row.bottom <= top + 0.5 || row.top >= top || window.scrollY === 0);
+        }, id)).toBe(true);
+      });
+    }
+  }
+});

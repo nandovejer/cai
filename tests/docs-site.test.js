@@ -531,7 +531,8 @@ describe("the LUZ docs site", () => {
   });
 
   it("lists every page in the A–Z index, and every HTML element", () => {
-    const az = rendered.get("/docs/a-z/");
+    // The index is two pages (A–L, then M–Z and Other): tests/az-split.test.js holds the split itself
+    const az = `${rendered.get("/docs/a-z/")}\n${rendered.get("/docs/a-z/m-z/")}`;
     for (const page of site.pages.filter((p) => p.meta.search !== "false")) expect(az, page.route).toContain(`href="${page.route}"`);
     const elements = JSON.parse(readFileSync(join(repo, "tests/fixtures/html-elements.json"), "utf-8")).elements;
     for (const { name } of elements) expect(az, name).toContain(`#el-${name}"`);
@@ -689,6 +690,10 @@ describe("the LUZ docs site", () => {
     expect(first("keyboard tooltip")).toEqual(["Keyboard and ARIA"]);
   });
 
+  /** An attribute value as the browser reads it: the generator escapes & < > " and ' (as &#39;). */
+  const decodeAttr = (value) =>
+    value.replace(/&(#39|quot|lt|gt|amp);/g, (_, e) => ({ "#39": "'", quot: '"', lt: "<", gt: ">", amp: "&" })[e]);
+
   /** The Previous / Next targets, accessible names and "Keep going" links of a rendered page. */
   const endOf = (html) => {
     const nav = html.match(/<nav class="docs-end" aria-labelledby="docs-end-title">[\s\S]*?<\/nav>/)?.[0] ?? null;
@@ -787,7 +792,7 @@ describe("the LUZ docs site", () => {
       if (prev) expect(endOf(rendered.get(prev[0])).next?.[0], `${prev[0]} → ${route}`).toBe(route);
       // The name says which way and where: "Previous: Breadcrumb"
       for (const [kind, link] of [["Previous", prev], ["Next", next]]) {
-        if (link) expect(link[1], route).toBe(`${kind}: ${site.byRoute.get(link[0]).meta.title.replace(/&/g, "&amp;")}`);
+        if (link) expect(decodeAttr(link[1]), route).toBe(`${kind}: ${site.byRoute.get(link[0]).meta.title}`);
       }
     }
     // Get started → Tokens → HTML elements → Components → Site → Accessibility

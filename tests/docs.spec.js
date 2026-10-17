@@ -424,15 +424,34 @@ test.describe('Documentation site', () => {
       await expect(page).toHaveURL(new RegExp(`${routeOf('c-tooltip')}$`));
     });
 
-    test('the A–Z index links every page, with a row of letters', async ({ page }) => {
-      await open(page, '/docs/a-z/');
-      const hrefs = await page.locator('.docs-az__list a').evaluateAll((links) => links.map((a) => a.getAttribute('href')));
-      for (const route of ALL.filter((r) => r !== '/docs/a-z/')) expect(hrefs, route).toContain(route);
-      const letters = page.getByRole('navigation', { name: 'Letters' });
-      await expect(letters.locator('li')).toHaveCount(26);
-      for (const href of await letters.getByRole('link').evaluateAll((links) => links.map((a) => a.getAttribute('href')))) {
-        await expect(page.locator(href)).toHaveCount(1);
+    test('the A–Z index, in two pages (A–L, M–Z), links every page, with a row of letters on each', async ({ page, request }) => {
+      const AZ = ['/docs/a-z/', '/docs/a-z/m-z/'];
+      const hrefs = [];
+      for (const route of AZ) {
+        await open(page, route);
+        hrefs.push(...(await page.locator('.docs-az__list a').evaluateAll((links) => links.map((a) => a.getAttribute('href')))));
+        const letters = page.getByRole('navigation', { name: 'Letters' });
+        await expect(letters, route).toHaveCount(1);
+        // Every link of the row resolves to an id, on this page or on the other half
+        for (const href of await letters.getByRole('link').evaluateAll((links) => links.map((a) => a.getAttribute('href')))) {
+          const url = new URL(href, page.url());
+          if (url.pathname === new URL(page.url()).pathname) await expect(page.locator(`#${url.hash.slice(1)}`), href).toHaveCount(1);
+          else expect(await (await request.get(url.pathname)).text(), href).toContain(`id="${url.hash.slice(1)}"`);
+        }
       }
+      for (const route of ALL.filter((r) => !AZ.includes(r))) expect(hrefs, route).toContain(route);
+    });
+
+    test('the A–Z pages link to each other: A–L and M–Z, the current one with aria-current', async ({ page }) => {
+      await open(page, '/docs/a-z/');
+      const main = page.locator('main');
+      await expect(main.getByRole('link', { name: 'A–L', exact: true })).toHaveAttribute('aria-current', 'page');
+      await expect(main.getByRole('link', { name: 'M–Z', exact: true })).not.toHaveAttribute('aria-current', /.*/);
+      await main.getByRole('link', { name: 'M–Z', exact: true }).click();
+      await expect(page).toHaveURL(/\/docs\/a-z\/m-z\/$/);
+      await expect(main.getByRole('link', { name: 'M–Z', exact: true })).toHaveAttribute('aria-current', 'page');
+      await expect(main.getByRole('link', { name: 'A–L', exact: true })).not.toHaveAttribute('aria-current', /.*/);
+      await expect(page.locator('#az-other')).toHaveCount(1);
     });
   });
 

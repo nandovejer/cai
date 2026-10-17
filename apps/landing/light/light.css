@@ -509,6 +509,45 @@ home-globe .home-globe__glint {
   pointer-events: none;
 }
 
+/* The puzzle version (puzzle.js): the land as a puzzle of small pieces, in
+   relief: each cut, and the coast, is a line of light towards the sun, a line
+   of shade away from it (the script places them) and the cut itself. No fill
+   on the land, nothing on the sea; the reader's one light */
+home-globe .home-globe__jigsaw,
+home-globe .home-globe__coast {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+home-globe .home-globe__jigsaw--light,
+home-globe .home-globe__coast--light {
+  stroke: var(--_glint);
+  stroke-opacity: 0.55;
+}
+
+home-globe .home-globe__jigsaw--shade,
+home-globe .home-globe__coast--shade {
+  stroke: var(--_shade);
+  stroke-opacity: 0.22;
+}
+
+home-globe .home-globe__jigsaw--line {
+  stroke: color-mix(in oklab, var(--_ink) 30%, var(--_paper));
+}
+
+home-globe .home-globe__coast--line {
+  stroke: color-mix(in oklab, var(--_ink) 50%, var(--_paper));
+}
+
+home-globe .home-globe__here-core {
+  fill: var(--_sun);
+}
+
+home-globe .home-globe__here {
+  pointer-events: none;
+}
+
 /* ==========================================================================
    <home-city>: ink on paper by day, neon by night (--home-city-glow, 0 to 1,
    written by the script, cross-fades)

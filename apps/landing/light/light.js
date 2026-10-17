@@ -31,7 +31,7 @@ const KEY = "luz-home-light";
 const LOOKS = ["globe", "city", "map"];
 const DEG = Math.PI / 180;
 // The three visuals: each one a file, loaded the first time it is wanted
-const LOAD = { globe: () => import("./globe.js"), city: () => import("./city.js"), map: () => import("./map.js") };
+const LOAD = { globe: () => import("./puzzle.js"), city: () => import("./city.js"), map: () => import("./map.js") };
 // What each visual is made with
 const MAKE = {
   globe: (place) => ({ spin: "", cities: "", twilight: "", glint: "", rim: "", torch: "", lat: place.lat, lon: place.lon }),

@@ -1091,6 +1091,15 @@ test.describe('Pause motion (WCAG 2.2.2)', () => {
       });
     }
 
+    test('pressed, at night the stars of the page neither twinkle nor drift with the scroll', async ({ page }) => {
+      await ready(page, 'globe', '23:30');
+      const names = () => page.evaluate(() => ['::before', '::after'].map((p) => getComputedStyle(document.querySelector('main.luz-landing-main'), p).animationName));
+      expect((await names()).every((n) => n !== 'none'), 'control: before pressing, the stars move').toBe(true);
+      await pauseButton(page).click();
+      await expect(pauseButton(page)).toHaveAttribute('aria-pressed', 'true');
+      await expect.poll(names).toEqual(['none', 'none']);
+    });
+
     test('the choice survives a reload: still, pressed, and no frame asked, under the same luz-home-light storage', async ({ page }) => {
       await ready(page, 'globe', '13:00', '/', { frames: true });
       await pauseButton(page).click();

@@ -98,8 +98,10 @@
    of the page, behind its content, fading downwards. Two layers of fixed
    dots (radial gradients in the text colour, no script, no image) that
    twinkle by their opacity alone, at two paces, so the browser does not
-   repaint them. Still under reduced motion; never in high contrast or
-   forced colours
+   repaint them. They drift with the scroll, a little slower than the page,
+   the far layer slower still: a scroll-driven translate, no script, where
+   the browser has scroll timelines. Still under reduced motion; never in
+   high contrast or forced colours
    -------------------------------------------------------------------------- */
 
 .luz-landing-main {
@@ -189,6 +191,34 @@
 @keyframes landing-twinkle {
   to {
     opacity: 0.35;
+  }
+}
+
+/* Over the first screen of scroll they move down by a tenth of it (a fifth
+   for the far layer); after that they are out of sight */
+@keyframes landing-drift {
+  to {
+    translate: 0 var(--_drift);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  :root:is([data-light="dawn"], [data-light="dusk"], [data-light="night"]):not([data-theme="high-contrast"]) .luz-landing-main::before {
+    --_drift: 10vh;
+    animation:
+      landing-twinkle calc(var(--luz-duration-lazy) * 5) ease-in-out infinite alternate,
+      landing-drift linear both;
+    animation-timeline: auto, scroll(root);
+    animation-range: normal, 0 100vh;
+  }
+
+  :root:is([data-light="dawn"], [data-light="dusk"], [data-light="night"]):not([data-theme="high-contrast"]) .luz-landing-main::after {
+    --_drift: 20vh;
+    animation:
+      landing-twinkle calc(var(--luz-duration-lazy) * 7) ease-in-out calc(var(--luz-duration-lazy) * -3) infinite alternate,
+      landing-drift linear both;
+    animation-timeline: auto, scroll(root);
+    animation-range: normal, 0 100vh;
   }
 }
 

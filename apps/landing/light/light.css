@@ -30,7 +30,16 @@ home-light {
   --light-night-fill: #130a2b;
   --light-night-land: #0a0c1a;
   --light-night-lake: #02020a;
-  --light-day: linear-gradient(90deg, #171b36, #6b3f5f 24%, #f7dfb0 36%, #cfe1f6 54%, #f2aa73 78%, #27254a 90%, #171b36);
+  --light-day: linear-gradient(
+    90deg,
+    #171b36,
+    #6b3f5f 24%,
+    #f7dfb0 36%,
+    #cfe1f6 54%,
+    #f2aa73 78%,
+    #27254a 90%,
+    #171b36
+  );
 
   /* The page's */
   --_ink: var(--luz-text-primary);
@@ -101,8 +110,20 @@ home-light .home-light__glow {
   position: absolute;
   inset: -45% 0 -10%;
   pointer-events: none;
-  background: radial-gradient(ellipse 42% 48% at var(--_sun-x) 62%, color-mix(in oklab, var(--light-sun) 42%, transparent), color-mix(in oklab, var(--light-sun) 16%, transparent) 50%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 45%, rgb(0 0 0 / 0.6) 65%, rgb(0 0 0 / 0.2) 85%, transparent 100%), linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
+  background: radial-gradient(
+    ellipse 42% 48% at var(--_sun-x) 62%,
+    color-mix(in oklab, var(--light-sun) 42%, transparent),
+    color-mix(in oklab, var(--light-sun) 16%, transparent) 50%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+      to bottom,
+      #000 45%,
+      rgb(0 0 0 / 0.6) 65%,
+      rgb(0 0 0 / 0.2) 85%,
+      transparent 100%
+    ),
+    linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
   mask-composite: intersect;
 }
 
@@ -119,7 +140,14 @@ home-light .home-light__stage > home-globe {
   max-width: 100%;
   aspect-ratio: 2 / 1;
   margin-inline: auto;
-  mask-image: linear-gradient(to bottom, #000 28%, rgb(0 0 0 / 0.85) 45%, rgb(0 0 0 / 0.55) 64%, rgb(0 0 0 / 0.22) 84%, transparent 100%);
+  mask-image: linear-gradient(
+    to bottom,
+    #000 28%,
+    rgb(0 0 0 / 0.85) 45%,
+    rgb(0 0 0 / 0.55) 64%,
+    rgb(0 0 0 / 0.22) 84%,
+    transparent 100%
+  );
 }
 
 home-light .home-light__stage > home-city,
@@ -130,7 +158,13 @@ home-light .home-light__stage > home-map {
 
 /* A plan has no sky: the map fades in at the top as well, so it has no hard edge */
 home-light .home-light__stage > home-map {
-  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 72%, transparent);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 14%,
+    #000 72%,
+    transparent
+  );
 }
 
 /* --------------------------------------------------------------------------
@@ -290,7 +324,8 @@ home-light .home-light__group button {
   background: none;
   color: var(--_muted);
   cursor: pointer;
-  transition: color var(--luz-duration-slow), background-color var(--luz-duration-slow);
+  transition: color var(--luz-duration-slow),
+    background-color var(--luz-duration-slow);
 }
 
 home-light .home-light__group button:hover,
@@ -338,7 +373,16 @@ home-light .home-light__day input {
 
 /* Right to left, the day runs from the right */
 :root[dir="rtl"] home-light {
-  --light-day: linear-gradient(270deg, #171b36, #6b3f5f 24%, #f7dfb0 36%, #cfe1f6 54%, #f2aa73 78%, #27254a 90%, #171b36);
+  --light-day: linear-gradient(
+    270deg,
+    #171b36,
+    #6b3f5f 24%,
+    #f7dfb0 36%,
+    #cfe1f6 54%,
+    #f2aa73 78%,
+    #27254a 90%,
+    #171b36
+  );
 }
 
 home-light .home-light__day input::-webkit-slider-runnable-track {
@@ -456,7 +500,11 @@ home-globe > .home-globe__halo {
   aspect-ratio: 1;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(circle closest-side at 50% 50%, color-mix(in oklab, var(--luz-surface-muted) 55%, var(--_paper)), transparent 100%);
+  background: radial-gradient(
+    circle closest-side at 50% 50%,
+    color-mix(in oklab, var(--luz-surface-muted) 55%, var(--_paper)),
+    transparent 100%
+  );
 }
 
 home-globe > svg {
@@ -532,9 +580,43 @@ home-globe .home-globe__coast--shade {
   stroke-opacity: 0.22;
 }
 
-home-globe .home-globe__jigsaw--line,
+/* The pieces: each country a faint grey, five tones (no two neighbours alike),
+   a neutral grey at a low opacity so it reads over light and dark paper */
+home-globe .home-globe__piece {
+  fill: oklch(0.55 0 0);
+}
+
+home-globe .home-globe__piece--0 {
+  fill-opacity: 0.03;
+}
+home-globe .home-globe__piece--1 {
+  fill-opacity: 0.06;
+}
+home-globe .home-globe__piece--2 {
+  fill-opacity: 0.09;
+}
+home-globe .home-globe__piece--3 {
+  fill-opacity: 0.12;
+}
+home-globe .home-globe__piece--4 {
+  fill-opacity: 0.15;
+}
+
 home-globe .home-globe__coast--line {
   stroke: color-mix(in oklab, var(--_ink) 30%, var(--_paper));
+}
+
+/* The borders between pieces: barely there, their relief too */
+home-globe .home-globe__jigsaw--line {
+  stroke: color-mix(in oklab, var(--_ink) 10%, var(--_paper));
+}
+
+home-globe .home-globe__jigsaw--light {
+  stroke-opacity: 0.2;
+}
+
+home-globe .home-globe__jigsaw--shade {
+  stroke-opacity: 0.06;
 }
 
 home-globe .home-globe__here-core {
@@ -562,9 +644,21 @@ home-city {
   --_sun: var(--light-sun);
   --_moon: var(--light-moon);
   --_g: var(--home-city-glow, 0);
-  --_line: color-mix(in oklab, var(--_neon) calc(var(--_g) * 100%), var(--_ink));
-  --_mag: color-mix(in oklab, var(--_neon2) calc(var(--_g) * 100%), var(--luz-brand-primary));
-  --_fill: color-mix(in oklab, var(--light-night-fill) calc(var(--_g) * 100%), var(--_paper));
+  --_line: color-mix(
+    in oklab,
+    var(--_neon) calc(var(--_g) * 100%),
+    var(--_ink)
+  );
+  --_mag: color-mix(
+    in oklab,
+    var(--_neon2) calc(var(--_g) * 100%),
+    var(--luz-brand-primary)
+  );
+  --_fill: color-mix(
+    in oklab,
+    var(--light-night-fill) calc(var(--_g) * 100%),
+    var(--_paper)
+  );
   --_sun-l: transparent;
   --_sun-r: transparent;
 
@@ -653,7 +747,11 @@ home-city .home-city__mag {
 }
 
 home-city .home-city__sign {
-  fill: color-mix(in oklab, var(--_stroke2) calc(18% + var(--_g) * 22%), transparent);
+  fill: color-mix(
+    in oklab,
+    var(--_stroke2) calc(18% + var(--_g) * 22%),
+    transparent
+  );
   stroke: var(--_stroke2);
   stroke-width: calc(var(--_sw) * 0.9);
 }
@@ -697,7 +795,8 @@ home-city .home-city__flyer {
 home-city .home-city__beacon {
   fill: var(--_neon2);
   stroke: none;
-  animation: home-city-blink calc(var(--luz-duration-lazy) * 2.25) ease-in-out infinite;
+  animation: home-city-blink calc(var(--luz-duration-lazy) * 2.25) ease-in-out
+    infinite;
 }
 
 home-city .home-city__night {
@@ -755,7 +854,8 @@ home-city .home-city__stars {
 /* Each star has its own duration and delay, written by the script */
 home-city .home-city__star {
   fill: var(--_moon);
-  animation: home-city-twinkle calc(var(--luz-duration-lazy) * 17.5) ease-in-out infinite;
+  animation: home-city-twinkle calc(var(--luz-duration-lazy) * 17.5) ease-in-out
+    infinite;
 }
 
 @keyframes home-city-twinkle {
@@ -784,8 +884,16 @@ home-map {
   --_neon2: var(--light-neon-2);
   --_sun: var(--light-sun);
   --_g: var(--home-map-glow, 0);
-  --_street: color-mix(in oklab, var(--_neon) calc(var(--_g) * 100%), var(--_ink));
-  --_highway: color-mix(in oklab, var(--_neon2) calc(var(--_g) * 100%), var(--luz-brand-primary));
+  --_street: color-mix(
+    in oklab,
+    var(--_neon) calc(var(--_g) * 100%),
+    var(--_ink)
+  );
+  --_highway: color-mix(
+    in oklab,
+    var(--_neon2) calc(var(--_g) * 100%),
+    var(--luz-brand-primary)
+  );
 
   display: block;
   position: relative;
@@ -816,11 +924,19 @@ home-map path {
 
 /* The sea is transparent: the page shows through */
 home-map .home-map__land {
-  fill: color-mix(in oklab, var(--light-night-land) calc(var(--_g) * 100%), color-mix(in oklab, var(--_ink) 2%, var(--_paper)));
+  fill: color-mix(
+    in oklab,
+    var(--light-night-land) calc(var(--_g) * 100%),
+    color-mix(in oklab, var(--_ink) 2%, var(--_paper))
+  );
 }
 
 home-map .home-map__lake {
-  fill: color-mix(in oklab, var(--light-night-lake) calc(var(--_g) * 100%), color-mix(in oklab, var(--_ink) 9%, var(--_paper)));
+  fill: color-mix(
+    in oklab,
+    var(--light-night-lake) calc(var(--_g) * 100%),
+    color-mix(in oklab, var(--_ink) 9%, var(--_paper))
+  );
 }
 
 home-map .home-map__lane {

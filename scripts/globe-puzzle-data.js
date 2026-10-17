@@ -22,6 +22,10 @@
  *   seen from outside (a lake is a ring inside another: the even-odd rule).
  * - BORDERS: the borders between countries (an arc used by two), encoded as
  *   ARCS; each is a cut of the puzzle, so every country is one piece.
+ * - COUNTRIES: the pieces, ";"-separated: a char, the country's tone (0 to
+ *   TONES - 1, never the tone of a neighbour), then its rings, ","-separated,
+ *   each a list of references (index * 2 + reversed) into the coast arcs then
+ *   the border arcs, counter-clockwise seen from outside like LAND.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { gzipSync } from "node:zlib";
@@ -204,6 +208,62 @@ const ARCS = encodeArcs(coast);
 const borders = [];
 uses.forEach((n, i) => n === 2 && arcs[i].length > 1 && borders.push(i));
 const BORDERS = encodeArcs(borders);
+
+/* ---- the countries: their rings over the coast and the border arcs, and a
+   tone each, greedy, the most neighbours first, so no two neighbours share one ---- */
+const TONES = 5;
+const piece = new Map([
+  ...coast.map((i, n) => [i, n]),
+  ...borders.map((i, n) => [i, coast.length + n]),
+]);
+const geoms = topo.objects.countries.geometries.map((g) =>
+  g.type === "Polygon" ? [g.arcs] : g.type === "MultiPolygon" ? g.arcs : []
+);
+const owners = new Map();
+geoms.forEach((polys, c) => {
+  for (const ref of polys.flat(2)) {
+    const i = ref < 0 ? ~ref : ref;
+    if (!owners.has(i)) owners.set(i, new Set());
+    owners.get(i).add(c);
+  }
+});
+const near = geoms.map(() => new Set());
+for (const set of owners.values())
+  for (const a of set) for (const b of set) if (a !== b) near[a].add(b);
+const tone = new Array(geoms.length).fill(-1);
+for (const c of geoms
+  .map((_, c) => c)
+  .sort((a, b) => near[b].size - near[a].size)) {
+  const taken = new Set([...near[c]].map((n) => tone[n]));
+  let t = 0;
+  while (taken.has(t) && t < TONES - 1) t++;
+  tone[c] = t;
+}
+const COUNTRIES = geoms
+  .map((polys, c) => {
+    const rings = polys
+      .flat(1)
+      .map((ring) =>
+        orientation(ringPoints(ring)) > 0
+          ? ring
+          : ring
+              .slice()
+              .reverse()
+              .map((ref) => ~ref)
+      )
+      .map((ring) =>
+        ring
+          .filter((ref) => piece.has(ref < 0 ? ~ref : ref))
+          .map((ref) =>
+            varint(ref < 0 ? piece.get(~ref) * 2 + 1 : piece.get(ref) * 2)
+          )
+          .join("")
+      )
+      .filter(Boolean);
+    return rings.length ? ALPHABET[tone[c]] + rings.join(",") : "";
+  })
+  .filter(Boolean)
+  .join(";");
 const LAND = land
   .map((ring) =>
     ring
@@ -220,7 +280,11 @@ console.log(
   `${coast.length} coast arcs of ${arcs.length}, ${npts} points, ${land.length} rings, grid ${QX}x${QY}, area ${AREA}`
 );
 console.log(
-  `${borders.length} border arcs; ARCS ${gz(ARCS)} gzip, LAND ${gz(LAND)} gzip, BORDERS ${gz(BORDERS)} gzip, all ${gz(ARCS + LAND + BORDERS)} gzip`
+  `${borders.length} border arcs; ARCS ${gz(ARCS)} gzip, LAND ${gz(
+    LAND
+  )} gzip, BORDERS ${gz(BORDERS)} gzip, COUNTRIES ${gz(
+    COUNTRIES
+  )} gzip, all ${gz(ARCS + LAND + BORDERS + COUNTRIES)} gzip`
 );
 
 if (write) {
@@ -231,7 +295,7 @@ if (write) {
   const a = source.indexOf(START),
     b = source.indexOf(END);
   if (a < 0 || b < 0) throw new Error("puzzle.js has no data markers");
-  const block = `${START}\nconst QX = ${QX}, QY = ${QY};\nconst ARCS = "${ARCS}";\nconst LAND = "${LAND}";\nconst BORDERS = "${BORDERS}";\n`;
+  const block = `${START}\nconst QX = ${QX}, QY = ${QY};\nconst ARCS = "${ARCS}";\nconst LAND = "${LAND}";\nconst BORDERS = "${BORDERS}";\nconst COUNTRIES = "${COUNTRIES}";\n`;
   writeFileSync(file, source.slice(0, a) + block + source.slice(b));
   console.log("written to apps/landing/light/puzzle.js");
 }

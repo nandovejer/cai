@@ -203,7 +203,7 @@ class LuzLight extends HTMLElement {
     const bar = (this._bar = h("div", { class: "home-light__bar", id: `${id}-bar`, hidden: "" }));
     const day = h("div", { class: "home-light__day" });
     day.append(h("label", { class: "home-light__sr", for: `${id}-scrub` }, this._text("scrub")));
-    // aria-valuetext carries the light and the hour; the output is not announced
+    // aria-valuetext carries the light and the hour, which the bar does not show
     this._scrub = h("input", { type: "range", id: `${id}-scrub`, min: 0, max: 1439, step: 1, value: 720 });
     this._scrub.addEventListener("input", () => this._preview(this._scrub.value / 60));
     this._live = h("button", { type: "button", class: "home-light__live", hidden: "" }, this._text("live"));
@@ -211,8 +211,7 @@ class LuzLight extends HTMLElement {
       this._preview(null);
       this._scrub.focus();
     });
-    this._out = h("output", { for: `${id}-scrub`, "aria-live": "off" });
-    day.append(this._scrub, this._live, this._out);
+    day.append(this._scrub, this._live);
     bar.append(day);
     this._line = h("button", { type: "button", class: "home-light__line", "aria-expanded": "false", "aria-controls": bar.id });
     // The phrase alone; the light and the hour are in the bar
@@ -276,7 +275,6 @@ class LuzLight extends HTMLElement {
     const light = root.getAttribute("data-light");
     const time = this._clock.format(new Date(t));
     this._scrub.value = p.hour * 60 + p.minute;
-    this._out.textContent = time;
     const say = this._text("say-globe");
     // A chosen mode pins a light that is not the hour's: the hour alone
     const phase = light && (mode()?.mode ?? "auto") === "auto" ? this._text(light) : "";
@@ -288,6 +286,8 @@ class LuzLight extends HTMLElement {
     this._scrub.setAttribute("aria-valuetext", (phase && phase + sep) + time);
 
     const { alt, az, vec } = this._sun(t);
+    // The slider's thumb: a sun while the sun is up at the scrubbed hour, a moon after (light.css)
+    this.dataset.sky = alt > -0.833 ? "day" : "night";
     rs.setProperty("--sun-alt", alt.toFixed(2));
     rs.setProperty("--sun-az", az.toFixed(2));
     if (!this._globe) this._setSunX(50 + 32 * Math.sin(az * DEG));

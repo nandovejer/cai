@@ -726,16 +726,26 @@ test.describe('review fixes', () => {
   test("the slider's thumb is a sun while the scrubbed hour is day, a moon while it is night", async ({ page }) => {
     await open(page, '/', { time: '14:00' });
     await openBar(page);
-    const thumb = () => slider(page).evaluate((input) => {
-      const t = getComputedStyle(input, '::-webkit-slider-thumb');
-      return `${t.backgroundColor} ${t.backgroundImage} ${t.boxShadow}`;
-    });
     await scrub(page, '12:00');
     await expect(page.locator('home-light')).toHaveAttribute('data-sky', 'day');
-    const sun = await thumb();
     await scrub(page, '23:30');
     await expect(page.locator('home-light')).toHaveAttribute('data-sky', 'night');
-    expect(await thumb(), 'the thumb is drawn differently at night').not.toBe(sun);
+    // Chromium's getComputedStyle does not reach the thumb: read the rules that draw it
+    const rules = await page.evaluate(() => {
+      const all = [...document.styleSheets].flatMap((sheet) => {
+        try {
+          return [...sheet.cssRules];
+        } catch {
+          return [];
+        }
+      });
+      const thumb = all.filter((r) => r.selectorText?.includes('::-webkit-slider-thumb') && r.selectorText.includes('home-light'));
+      const night = thumb.find((r) => r.selectorText.includes('[data-sky="night"]'));
+      const day = thumb.find((r) => !r.selectorText.includes('[data-sky'));
+      return { day: day?.style.background || day?.style.backgroundColor || '', night: night?.style.background || night?.style.backgroundColor || '' };
+    });
+    expect(rules.night, 'a rule draws the thumb at night').not.toBe('');
+    expect(rules.night, 'the night thumb is not the day thumb').not.toBe(rules.day);
   });
 
   /* -- 6d. The phrase sits 10 px lower than the light's box ---------------------- */

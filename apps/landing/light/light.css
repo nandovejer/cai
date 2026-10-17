@@ -19,6 +19,7 @@ home-light {
   /* The drawing's inks */
   --light-sun: #ffd27a;
   --light-glint: #fff;
+  --light-moon: #d9e6ff;
   --light-shade: #0b0d12;
   --light-shade-opacity: 0.2;
   --light-day: linear-gradient(
@@ -72,6 +73,7 @@ home-light[bleed]:not(.luz-landing-hero__media--bleed > *) {
 :root[data-theme="high-contrast"] home-light {
   --light-sun: var(--luz-text-primary);
   --light-glint: var(--luz-text-primary);
+  --light-moon: var(--luz-text-primary);
   --light-shade-opacity: 0;
 }
 
@@ -132,10 +134,11 @@ home-light .home-light__stage > home-globe {
    The foot: the line that opens the bar, and the bar above it
    -------------------------------------------------------------------------- */
 
+/* The phrase sits 10px below the light's box, closer to what follows */
 home-light .home-light__foot {
   position: absolute;
   inset-inline: 0;
-  inset-block-end: 0;
+  inset-block-end: -10px;
   z-index: 1;
   display: flex;
   justify-content: center;
@@ -278,13 +281,17 @@ home-light .home-light__day input::-moz-range-track {
   background: var(--light-day);
 }
 
+/* The thumb is the sky at the scrubbed hour (data-sky, written by light.js):
+   a sun with its glow by day, a crescent moon by night; its border keeps it
+   apart from the track in every mode */
 home-light .home-light__day input::-webkit-slider-thumb {
   inline-size: 18px;
   block-size: 18px;
   margin-block-start: -6px;
   border: 2px solid var(--luz-brand-primary);
   border-radius: 50%;
-  background: var(--_paper);
+  background: var(--light-sun);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--light-sun) 35%, transparent);
   appearance: none;
 }
 
@@ -293,19 +300,18 @@ home-light .home-light__day input::-moz-range-thumb {
   block-size: 14px;
   border: 2px solid var(--luz-brand-primary);
   border-radius: 50%;
-  background: var(--_paper);
+  background: var(--light-sun);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--light-sun) 35%, transparent);
 }
 
-/* The hour reads left to right in every language */
-home-light .home-light__day output {
-  min-inline-size: 5ch;
-  font-family: var(--luz-font-mono);
-  font-size: var(--luz-text-sm);
-  font-variant-numeric: tabular-nums;
-  text-align: end;
-  white-space: nowrap;
-  direction: ltr;
-  unicode-bidi: isolate;
+home-light[data-sky="night"] .home-light__day input::-webkit-slider-thumb {
+  background: var(--light-moon);
+  box-shadow: inset 5px -2px 0 0 var(--_paper);
+}
+
+home-light[data-sky="night"] .home-light__day input::-moz-range-thumb {
+  background: var(--light-moon);
+  box-shadow: inset 4px -2px 0 0 var(--_paper);
 }
 
 home-light .home-light__live {
@@ -524,6 +530,7 @@ home-globe .home-globe__here {
   home-light {
     --light-sun: CanvasText;
     --light-glint: CanvasText;
+    --light-moon: CanvasText;
     --light-shade-opacity: 0;
     --_ink: CanvasText;
     --_paper: Canvas;

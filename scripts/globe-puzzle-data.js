@@ -2,7 +2,7 @@
  * The data of the home's puzzle globe (apps/landing/light/puzzle.js): the
  * land, from Natural Earth 1:110m admin-0 countries (public domain,
  * naturalearthdata.com) read as the TopoJSON of the world-atlas package
- * (countries-110m.json), with the borders between countries dissolved.
+ * (countries-110m.json): the coast, the borders and the countries.
  *
  *   node scripts/globe-puzzle-data.js <countries-110m.json> [--area=<deg2>] [--write]
  *
@@ -17,15 +17,15 @@
  *   longitude and latitude from the point before (the first point: from the
  *   last point of the arc before). Antarctica's southern cut (-85.6°) is
  *   pushed to the pole.
- * - LAND: the rings of the land, ";"-separated, each a list of arc references
- *   (index * 2 + reversed) chained end to end, every one counter-clockwise
- *   seen from outside (a lake is a ring inside another: the even-odd rule).
  * - BORDERS: the borders between countries (an arc used by two), encoded as
  *   ARCS; each is a cut of the puzzle, so every country is one piece.
  * - COUNTRIES: the pieces, ";"-separated: a char, the country's tone (0 to
  *   TONES - 1, never the tone of a neighbour), then its rings, ","-separated,
- *   each a list of references (index * 2 + reversed) into the coast arcs then
- *   the border arcs, counter-clockwise seen from outside like LAND.
+ *   each a list of references into the coast arcs then the border arcs, every
+ *   one counter-clockwise seen from outside (a lake is a ring inside another:
+ *   the even-odd rule): per arc, the zigzag of its index minus the index of
+ *   the arc before in the ring (the first: minus 0), times 2, plus reversed.
+ *   The land is the union of the countries.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { gzipSync } from "node:zlib";
@@ -90,45 +90,13 @@ const arcs = topo.arcs.map((arc) => {
   return out;
 });
 
-/* ---- the coast: every arc one country uses, chained into the rings of the land ---- */
+/* ---- the coast: every arc one country uses ---- */
 const uses = new Uint8Array(arcs.length);
 for (const g of topo.objects.countries.geometries)
   for (const ref of (g.type === "Polygon" ? [g.arcs] : g.arcs).flat(2))
     uses[ref < 0 ? ~ref : ref]++;
 const coast = [];
 uses.forEach((n, i) => n === 1 && coast.push(i));
-const key = ([x, y]) => x + "," + y;
-const atPoint = new Map();
-for (const i of coast) {
-  const a = arcs[i];
-  for (const [k, atStart] of [
-    [key(a[0]), true],
-    [key(a[a.length - 1]), false],
-  ]) {
-    if (!atPoint.has(k)) atPoint.set(k, []);
-    atPoint.get(k).push([i, atStart]);
-  }
-}
-const taken = new Set(),
-  rings = [];
-for (const first of coast) {
-  if (taken.has(first)) continue;
-  const ring = [first];
-  taken.add(first);
-  const begin = key(arcs[first][0]);
-  let end = key(arcs[first][arcs[first].length - 1]);
-  while (end !== begin) {
-    const next = (atPoint.get(end) ?? []).find(([i]) => !taken.has(i));
-    if (!next) break;
-    const [i, atStart] = next;
-    taken.add(i);
-    ring.push(atStart ? i : ~i);
-    const a = arcs[i];
-    end = key(atStart ? a[a.length - 1] : a[0]);
-  }
-  rings.push(ring);
-}
-
 /* ---- orientation: every ring counter-clockwise seen from outside. A lake is
    a ring inside another; the globe fills with the even-odd rule, so it needs
    no orientation of its own, and the horizon stitching wants every ring the
@@ -169,17 +137,7 @@ const orientation = (pts) => {
   }
   return s;
 };
-const land = rings.map((ring) =>
-  orientation(ringPoints(ring)) > 0
-    ? ring
-    : ring
-        .slice()
-        .reverse()
-        .map((ref) => ~ref)
-);
-
 /* ---- encode ---- */
-const index = new Map(coast.map((i, n) => [i, n]));
 const varint = (n) => {
   let s = "";
   do {
@@ -251,40 +209,35 @@ const COUNTRIES = geoms
               .reverse()
               .map((ref) => ~ref)
       )
-      .map((ring) =>
-        ring
+      .map((ring) => {
+        let prev = 0;
+        return ring
           .filter((ref) => piece.has(ref < 0 ? ~ref : ref))
-          .map((ref) =>
-            varint(ref < 0 ? piece.get(~ref) * 2 + 1 : piece.get(ref) * 2)
-          )
-          .join("")
-      )
+          .map((ref) => {
+            const i = piece.get(ref < 0 ? ~ref : ref),
+              d = i - prev;
+            prev = i;
+            return varint((d < 0 ? -2 * d - 1 : 2 * d) * 2 + (ref < 0 ? 1 : 0));
+          })
+          .join("");
+      })
       .filter(Boolean);
     return rings.length ? ALPHABET[tone[c]] + rings.join(",") : "";
   })
   .filter(Boolean)
   .join(";");
-const LAND = land
-  .map((ring) =>
-    ring
-      .map((ref) =>
-        varint(ref < 0 ? index.get(~ref) * 2 + 1 : index.get(ref) * 2)
-      )
-      .join("")
-  )
-  .join(";");
 
 const gz = (s) => gzipSync(Buffer.from(s)).length;
 const npts = coast.reduce((n, i) => n + arcs[i].length, 0);
 console.log(
-  `${coast.length} coast arcs of ${arcs.length}, ${npts} points, ${land.length} rings, grid ${QX}x${QY}, area ${AREA}`
+  `${coast.length} coast arcs of ${arcs.length}, ${npts} points, grid ${QX}x${QY}, area ${AREA}`
 );
 console.log(
-  `${borders.length} border arcs; ARCS ${gz(ARCS)} gzip, LAND ${gz(
-    LAND
-  )} gzip, BORDERS ${gz(BORDERS)} gzip, COUNTRIES ${gz(
-    COUNTRIES
-  )} gzip, all ${gz(ARCS + LAND + BORDERS + COUNTRIES)} gzip`
+  `${borders.length} border arcs; ARCS ${gz(ARCS)} gzip, BORDERS ${gz(
+    BORDERS
+  )} gzip, COUNTRIES ${gz(COUNTRIES)} gzip, all ${gz(
+    ARCS + BORDERS + COUNTRIES
+  )} gzip`
 );
 
 if (write) {
@@ -295,7 +248,7 @@ if (write) {
   const a = source.indexOf(START),
     b = source.indexOf(END);
   if (a < 0 || b < 0) throw new Error("puzzle.js has no data markers");
-  const block = `${START}\nconst QX = ${QX}, QY = ${QY};\nconst ARCS = "${ARCS}";\nconst LAND = "${LAND}";\nconst BORDERS = "${BORDERS}";\nconst COUNTRIES = "${COUNTRIES}";\n`;
+  const block = `${START}\nconst QX = ${QX}, QY = ${QY};\nconst ARCS = "${ARCS}";\nconst BORDERS = "${BORDERS}";\nconst COUNTRIES = "${COUNTRIES}";\n`;
   writeFileSync(file, source.slice(0, a) + block + source.slice(b));
   console.log("written to apps/landing/light/puzzle.js");
 }

@@ -1,328 +1,267 @@
-# Testing Guide — LUZ Design System
+# Testing
 
-This guide covers how to run tests locally and understand the testing setup.
+How to write and run the tests of LUZ. The rules they enforce are in [PRINCIPLES.md](../PRINCIPLES.md). [How LUZ is built](https://nandovejer.github.io/luz/docs/get-started/how-luz-is-built/#tests-first) says why the test comes first.
 
-## Quick Start
+## Quick start
 
 ```bash
-# Install dependencies
 pnpm install
-
-# Run unit tests
-pnpm test:unit
-
-# Run UI/E2E tests
-pnpm test:ui
-
-# Run all linting
-pnpm lint:css && pnpm lint:js
-
-# Full CI simulation
-pnpm lint:css && pnpm lint:js && pnpm build && pnpm test:unit
+pnpm build                  # dist/ is generated, and the dev server needs it
+pnpm test:unit              # Vitest
+pnpm exec playwright test --project=chromium --project=chromium-nojs
+pnpm check:all              # everything, in order
 ```
 
----
+Install the browser once with `pnpm test:ui:install`.
 
-## Unit Tests (Vitest)
-
-Unit tests validate pure functions and utilities in isolation.
-
-### Run
+`pnpm check:all` runs `scripts/qa-release.js`. It writes a report to `test-results/qa-release/`. Two flags make it faster:
 
 ```bash
-pnpm test:unit
+pnpm check:all -- --skip-ui   # no Playwright
+pnpm check:all -- --fast      # no build and no check:generated (not for a release)
 ```
 
-### What's Tested
+## Tests first
 
-- **formatTime(seconds)** — Time formatting (MM:SS)
-- **isCustomTheme(theme)** — Theme validation
-- **isValidMode(mode)** — Color mode validation
-- **calculateProgress(current, duration)** — Progress calculation
-- **escapeHtml(str)** — HTML escaping
+Every change to `packages/`, `apps/` or `scripts/` starts with a test that fails without it (PRINCIPLES.md SR-9).
 
-### Files
+1. Write the test.
+2. Run it and see it fail. Read the failure.
+3. Commit it on its own: `test: what the change must do`.
+4. Write the change. Do not edit the test to get it green.
+5. Commit the change.
 
-- **tests/unit.test.js** — All unit tests (20 tests)
-- **packages/core/src/utils.js** — Testable utilities
-- **vitest.config.js** — Vitest configuration
+A bug fix starts with the test that reproduces the bug. In a pull request, CI checks the `test:` commit alone on top of the base and expects it to fail (`scripts/check-red-commit.js`). A change that no machine can check, such as the wording of a page, says so in its pull request.
 
-### Coverage
+### Prove the test is red for the right reason
 
-Run with coverage:
+A red test is only useful when it is red because the behaviour is missing. Check the failure message:
+
+- It names the missing behaviour: a value that is not there yet, an element that does not exist yet, a rule that is not enforced yet.
+- It is not an import error, a typo in a selector, a wrong URL or a timeout on a page that never loaded.
+- It fails in the projects you expect. A no-JS test must fail with JavaScript off.
+
+Then make the check go the other way. Write the smallest version of the change, or the expected value by hand, and see the test turn green. A test that passed before the change tests nothing: tighten it.
+
+Never use `git stash`, `git checkout` or `git clean` to compare with the base in the shared tree. Use `git worktree` or `git show`.
+
+## Which kind of test goes where
+
+| You are testing | Write | File |
+| --- | --- | --- |
+| Logic, values, a generator, a build script, a page's structure or text read from source | A unit test (Vitest, Node, no browser) | `tests/<name>.test.js` |
+| What a browser renders or does: layout, the keyboard, focus, a script, a theme, a viewport | A spec (Playwright) | `tests/<name>.spec.js` |
+| The page with JavaScript off | A spec in the no-JS project | see [Without JavaScript](#without-javascript) |
+| A page of the docs | A unit test of its structure and figures, and a spec if it behaves | `tests/docs-*.test.js`, `tests/docs-*.spec.js` |
+| The look of a component demo | A visual spec | `tests/visual.spec.js` |
+| A fixed page to load | A fixture | `tests/fixtures/` |
+| A reader shared by several tests | A helper | `tests/helpers/` |
+
+Vitest runs `tests/**/*.test.js`. Playwright runs `tests/**/*.spec.js`. A file with the wrong suffix is not run.
+
+A component or pattern has both: a `.spec.js` for what it renders, the keyboard, the no-JS state and axe, and a `.test.js` for its values. Build the page of the test from a fixture in `tests/fixtures/` or from the docs page's demo. Docs pages and routes are found by `tests/helpers/docs-site.js`, so a new page is tested without editing a list.
+
+The helpers you will meet:
+
+| Helper | What it gives you |
+| --- | --- |
+| `design-tokens.js` | `contrast`, `formatRatio`, `resolveColor`, `tokensUsedBy`, `familyOf`, `evalLength`: figures computed from the sources |
+| `html-dom.js` | A small element tree of a page, for unit tests of generated HTML (no jsdom) |
+| `page-facts.js` | A docs page without its front matter: sections, tables, links |
+| `docs-site.js` | The docs routes, and `routeOf(id)` to find a page by an id on it |
+| `package-areas.js` | The docs area of each package of patterns |
+| `known-tokens.js` | Every `--luz-*` token the sources declare |
+| `scale-golden.js` | The type and space scales as literals. A deliberate change edits it and carries a changeset |
+| `obscured.js` | `focusAndHitTest` and `ringBeyondInlineStart` |
+| `settle.js` | `settled` and `faded`: wait until the page has stopped animating |
+| `pixels.js` | Pixels of a screenshot, read in the page |
+| `site-lights.js`, `site-loader.js` | The six lights of the site, and the loader's idle and network triggers |
+| `check-*.js` | The harness for the rules of `@luz-ds/check` |
+
+Read the head of a helper before you write another one.
+
+## Run the tests
+
+Run one file, then one test, then both projects:
 
 ```bash
-pnpm test:unit -- --coverage
+pnpm test:unit tests/docs-design.test.js
+pnpm test:unit tests/docs-design.test.js -t "covers the 57 pages"
+
+pnpm exec playwright test tests/navbar.spec.js --project=chromium
+pnpm exec playwright test tests/navbar.spec.js -g "Escape" --project=chromium
+pnpm exec playwright test tests/navbar.spec.js --project=chromium --project=chromium-nojs
 ```
 
-Coverage reports are generated in `.nyc_output/` and can be viewed as HTML.
+Playwright starts the dev server itself (`pnpm dev`) and reuses one that is already running on port 5173. Run `pnpm build` first. `pnpm dev` builds `dist/` when a package has none, but it does not notice a stale one.
 
----
-
-## UI Tests (Playwright)
-
-UI tests validate keyboard navigation, theme switching, modal behavior, and responsive layouts using Playwright.
-
-### Run
+To see what happened:
 
 ```bash
-# Starts dev server automatically, runs tests, generates report
-pnpm test:ui
+pnpm exec playwright test tests/navbar.spec.js --project=chromium --headed
+pnpm exec playwright test tests/navbar.spec.js --project=chromium --ui
+pnpm exec playwright show-report
 ```
 
-### What's Tested
+Always pass `--project=chromium --project=chromium-nojs` (or one of them). Without `--project`, `pnpm test:ui` also runs the `firefox` and `webkit` projects, which are not for everyday work: see [What is not in check:all](#what-is-not-in-checkall).
 
-- **Theme System**: Switching themes, persistence in localStorage
-- **Sidebar Navigation**: Mobile toggle, Escape key, aria-expanded
-- **Modal Keyboard & Focus**: Open/close, Escape key, focus trap, aria-dialog
-- **Keyboard Navigation**: Tab order, focus indicators, accessibility attributes
-- **Responsive Behavior**: Layouts at 480px, 768px, 1024px viewports
+## Without JavaScript
 
-### Files
+PRINCIPLES.md red line 2: every page is usable with JavaScript off. The `chromium-nojs` project in `playwright.config.js` runs with `javaScriptEnabled: false`. It runs only the files in its `testMatch` list.
 
-- **tests/ui.spec.js** — All UI smoke tests (14 test groups)
-- **playwright.config.js** — Playwright configuration
-- **playwright-report/** — Generated test report (after running tests)
+- `tests/nojs.spec.js` runs only in `chromium-nojs`. It visits every page and says what must still work.
+- To run your spec in both projects, add `'**/<name>.spec.js'` to the `testMatch` of `chromium-nojs`. The `chromium` project runs the same file with JavaScript on.
+- A spec in both projects that needs JavaScript skips itself:
 
-### Debugging
-
-View the HTML report after tests run:
-
-```bash
-# After running pnpm test:ui, open the report:
-open playwright-report/index.html
+```js
+test.skip(({ javaScriptEnabled }) => javaScriptEnabled === false, 'needs JavaScript');
 ```
 
-Or run tests in headed mode to see the browser:
+- A spec that is not in the list runs in `chromium` only. When it has a no-JS part, set it in the file, for one `describe`:
 
-```bash
-node_modules/.bin/playwright test --headed
+```js
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+  // …
+});
 ```
 
-Or run a specific test:
+## Accessibility
 
-```bash
-node_modules/.bin/playwright test tests/ui.spec.js -g "Theme System"
+`tests/a11y.spec.js` runs axe on every page of the docs, the home page in each language and the 404 page, in three modes: `light`, `dark` and `high-contrast`. The component pages run again with the Design tab open, because axe skips hidden content. A serious or critical violation fails the test. Moderate and minor ones are attached to the report.
+
+A spec that scans one fixture does the same:
+
+```js
+import AxeBuilder from '@axe-core/playwright';
+import { faded } from './helpers/settle.js';
+
+await page.evaluate((t) => { document.documentElement.dataset.theme = t; }, mode);
+await faded(page);   // the page fades between modes; axe would read a colour half way
+const { violations } = await new AxeBuilder({ page })
+  .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+  .analyze();
 ```
 
----
+Axe finds about a third of the problems. Test the rest yourself in the spec: the keyboard (Tab order, Escape, Enter, Space, arrow keys), the focus ring, a viewport of 320 px with no sideways scroll, forced colours (`page.emulateMedia({ forcedColors: 'active' })`) and reduced motion.
 
-## Linting
+### Hit test and obscured focus
 
-### CSS
+WCAG 2.4.11: a focused control is not hidden by a sticky bar or rail. `tests/helpers/obscured.js` makes the test a pointer would make:
 
-```bash
-pnpm lint:css
+```js
+import { focusAndHitTest, ringBeyondInlineStart } from './helpers/obscured.js';
+
+const result = await focusAndHitTest(page.locator('.luz-copy-btn'));
+expect(result.focused).toBe(true);
+expect(result.covered, 'what is drawn over the control').toEqual([]);
 ```
 
-Validates CSS in `packages/**/*.css` using Stylelint.
+- `focusAndHitTest(locator, { ends })` focuses the element, then asks `elementFromPoint` at its centre and 3 px inside both ends. `{ ends: false }` tests the centre only.
+- `ringBeyondInlineStart(page)` reports how much of the focus ring a clipping ancestor hides. Focus the element with the keyboard first, then expect `hidden` to be 0 or less.
 
-### JavaScript
+### Reduced motion and scroll checks
 
-```bash
-pnpm lint:js
+Core sets `scroll-behavior: smooth`, except under `prefers-reduced-motion`. A test that scrolls and then reads a position can read it half way. Do one of these:
+
+```js
+await page.emulateMedia({ reducedMotion: 'reduce' });   // before the check
+await page.evaluate(() => window.scrollTo({ top: 600, behavior: 'instant' }));
 ```
 
-Validates JavaScript in `packages/**/*.js` and `scripts/**/*.js` using ESLint.
+Then wait for the page to stop moving with `settled(page)` or `faded(page)`. Do not use `waitForTimeout` as the wait.
 
----
+## Docs tests: never type a ratio
 
-## Build
+The pages of the docs state ratios, values and token lists. A test recomputes each one from the source and fails on drift. When you write a page, compute the figure with `tests/helpers/design-tokens.js`; never type it.
 
-### Tokens
+```js
+import { contrast, formatRatio, tokensUsedBy, familyOf } from './helpers/design-tokens.js';
 
-```bash
-pnpm tokens:build
+formatRatio(contrast('dark', 'text-muted', 'surface'));   // a mode, a colour and what it sits on
+tokensUsedBy(page);          // the --luz-* tokens a component's own CSS reads, for a docs page
+familyOf('--luz-text-muted'); // [label, route] of the token page that documents it
 ```
 
-Regenerates `packages/tokens/dist/luz-tokens.css` primitives from `tokens.json`.
+`tests/docs-design.test.js` checks the Design tab of every component and pattern page. `tests/docs-site.test.js` checks the structure of the page. If a token changes, the page that states it fails with the page and the row: update the page, not the test.
 
-### Core
+## Size budgets
 
-```bash
-pnpm core:build
-```
-
-Regenerates:
-- `packages/core/dist/luz.css` (from `src/`)
-- `packages/core/dist/luz.js` (copy of `src/luz.js`)
-- `packages/core/dist/midi.js` (copy of `src/midi.js`)
-- Theme CSS files in `packages/core/dist/themes/`
-
-### Site
-
-```bash
-pnpm site:build
-```
-
-Regenerates:
-- `packages/site/dist/site.css` (from `src/`)
-- `packages/site/dist/site.js` (copy of `src/site.js`)
-
-### Full Build
+`budgets.json` holds the ceiling of every built file (minified, then gzipped). It is a red line: never raise a ceiling. If a file does not fit, make it smaller or remove something.
 
 ```bash
 pnpm build
+pnpm check:size
 ```
 
-Runs `tokens:build`, `core:build`, and `site:build` in sequence.
+`check:size` also fails when `budgets.json` and the table in PRINCIPLES.md §8 disagree. A new file gets a new row in both, never a higher number.
 
----
+## The generated site
 
-## CI/GitHub Actions
-
-Tests run automatically on:
-- Push to `main` or `develop`
-- Pull requests against `main` or `develop`
-- Manual trigger via workflow dispatch
-
-### CI Jobs
-
-1. **test** (Node 18.x and 20.x)
-   - Install dependencies
-   - Lint CSS
-   - Lint JS
-   - Build tokens
-   - Build core
-   - Build site
-   - Run unit tests
-
-2. **e2e** (Node 20.x)
-   - Install dependencies
-   - Install Playwright browsers
-   - Run UI tests
-   - Upload Playwright report as artifact
-
----
-
-## Workflow for Contributors
-
-### Before opening a PR
+Some files are made by a build and are never edited by hand. Two checks keep them honest. Run `pnpm build` first.
 
 ```bash
-# Install latest dependencies
-pnpm install
-
-# Lint everything
-pnpm lint:css && pnpm lint:js
-
-# Build
-pnpm build
-
-# Run unit tests
-pnpm test:unit
-
-# Optionally, run UI tests (slower, takes ~2-3 min)
-pnpm test:ui
+pnpm check:generated   # docs/ (the Pages site) against a fresh build
+pnpm check:ai          # manifests, llms.txt, examples and READMEs against their generators
 ```
 
-### Pre-commit checklist
+- `check:generated` builds the site again into a temporary folder and compares it, file by file, with `docs/`. It fails on a hand edit, or on a change to `apps/` or `packages/` that was not followed by a rebuild. Fix it with `pnpm pages:build`, then commit `docs/`.
+- `check:ai` regenerates the files for AI agents in memory and compares bytes. It fails with one line per stale file and what to run.
 
-- [ ] Linting passes: `pnpm lint:css && pnpm lint:js`
-- [ ] Build succeeds: `pnpm build`
-- [ ] Unit tests pass: `pnpm test:unit`
-- [ ] No new `node_modules` files committed
-- [ ] Meaningful commit message
+`dist/` is not committed; do not edit it.
 
-### If tests fail in CI
+## Flaky or real
 
-1. **Check the GitHub Actions log** for the specific failure
-2. **Reproduce locally**: Run the same test command
-3. **Fix the issue** in the code
-4. **Re-run tests** before pushing again
-
----
-
-## Test Organization
-
-```
-tests/
-├── unit.test.js       # Vitest unit tests (20 tests)
-├── ui.spec.js         # Playwright UI tests (14 test groups)
-└── setup.js           # Vitest global setup (localStorage mock)
-
-vitest.config.js       # Vitest configuration
-playwright.config.js   # Playwright configuration
-```
-
----
-
-## Testing and accessibility checks
-
-What to cover when you change a component, and what to look at by hand. The first change is always a failing test (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
-
-### Minimum Automated Baseline (Recommended)
-
-To keep releases stable without heavy maintenance, use this minimum baseline:
-
-- Unit tests for behavior in `packages/core/src/luz.js` and `packages/core/src/midi.js`
-- UI smoke tests for critical flows in the documentation (`/docs/`, source in `apps/docs/pages/`)
-- Automated a11y smoke on key pages/components
-
-If you touch `packages/site/src/`, rebuild Site and verify the consuming apps still render correctly:
+A test that fails is real until you show it is not. Run it alone, on one worker:
 
 ```bash
-pnpm site:build
-pnpm build
+pnpm exec playwright test tests/navbar.spec.js -g "Escape" --project=chromium --workers=1 --repeat-each=5
 ```
 
-Suggested commands:
+- It fails every time: the failure is real. Fix the code or the test.
+- It passes alone and fails in the full run: look for shared state, a timing assumption (an animation, a theme fade, a lazy chunk) or a port. Wait for the state you need (`settled`, `faded`, `expect(…).toBeVisible()`), not for time.
+- Do not add retries, widen a tolerance or skip the test to hide it. CI retries twice only so that a bad run shows up as flaky in the report.
+
+Visual snapshots (`tests/visual.spec.js`) are Chromium on Linux only. Look at each changed PNG before you commit it. Make new ones with `--update-snapshots`.
+
+## Linting and builds
 
 ```bash
-pnpm test:unit
-pnpm test:ui
+pnpm lint:css     # stylelint: packages/ and apps/
+pnpm lint:js      # ESLint: packages/, apps/, scripts/ and tests/
+pnpm build        # tokens, core, site, landing, cms, app, docs and check
+pnpm pages:build  # build, then the Pages site into docs/
 ```
 
-Suggested scope for UI smoke:
+## What `check:all` runs
 
-- Theme switch and persistence
-- Sidebar open/close on mobile
-- Modal open/close, Escape, focus trap/restore
-- Keyboard navigation in tabs and player controls
-- Core responsive checks at 480px, 768px, 1024px
+In this order. A failed step does not stop the next one.
 
-Notes:
+1. `pnpm build` (not with `--fast`)
+2. `pnpm lint:css`
+3. `pnpm lint:js`
+4. `pnpm check:size`
+5. `pnpm check:strings`
+6. `pnpm check:exceptions`
+7. `pnpm check:license`
+8. `pnpm check:pack`
+9. `pnpm check:contrast`
+10. `pnpm check:generated` (not with `--fast`)
+11. `pnpm check:ai`
+12. `pnpm test:unit`
+13. Playwright, `chromium` and `chromium-nojs` (not with `--skip-ui`)
 
-- These tools are development-only dependencies (not runtime dependencies).
-- Keep UI tests small and high-value; do not enforce full pixel-perfect snapshots.
+After a deliberate change to what a package ships, run `node scripts/check-pack.js --update`.
 
-### Keyboard Testing
+## What is not in check:all
 
-- Tab through all interactive elements
-- Escape closes modals/details
-- Enter/Space activate buttons
-- Arrow keys work in tabs/similar components
-- Focus always visible
+- **The `firefox` and `webkit` Playwright projects.** The maintainer runs them before a release, through the `firefox-reviewer` and `safari-reviewer` agents. Do not run them for everyday work.
+- **The Safari and Firefox reviews.** What has not been reviewed yet is in the "Open" section of [BROWSER-REVIEWS.md](./BROWSER-REVIEWS.md), one row for each `needs-browser-review` issue. When you change CSS, HTML or JS that those browsers have not seen, add a row. To help, pick an issue with that label, test the files it names and write what you see. A row is closed only when both browsers have reviewed it.
+- **Assistive technology.** NVDA, VoiceOver, TalkBack and Orca are tested by hand before a release (SR-6). Use `tests/manual/SR-6-evidence-template.md`, and state only the combinations you tested.
 
-### Focus Testing
+## A native dialog
 
-- All focusable elements have `:focus-visible` styles
-- Focus order matches visual/logical order
-- No focus traps (unless intended)
-
-### Visual Testing
-
-- Dark mode looks correct
-- High contrast mode readable
-- Responsive at 480px, 768px, 1024px
-
-### A11y Checklist
-
-Before submitting a component:
-
-- [ ] Semantic HTML (no div abuse)
-- [ ] Keyboard accessible
-- [ ] Focus indicators visible (2px outline minimum)
-- [ ] Color contrast ≥4.5:1
-- [ ] ARIA labels/roles where needed
-- [ ] Animations respect `prefers-reduced-motion`
-- [ ] No flashing >3/second
-
-### Modals and dialogs
-
-Use a native `<dialog>` opened with `showModal()`. The browser traps focus, closes on Escape, makes the page behind inert and returns focus to the opener. Do not write a focus trap.
-
-Open and close it declaratively, with no JavaScript:
+Use a native `<dialog>` opened with `showModal()`. The browser traps focus, closes on Escape, makes the page behind inert and returns focus to the opener. Do not write a focus trap, and do not test the browser: test that your markup opens and closes it.
 
 ```html
 <button type="button" commandfor="my-dialog" command="show-modal">Open dialog</button>
@@ -335,29 +274,11 @@ Open and close it declaratively, with no JavaScript:
 </dialog>
 ```
 
-`initModals()` (called by `luz.js`) only supplies the two commands in browsers that do not implement them yet.
-
----
+`initModals()` only supplies the two commands in browsers that do not implement them yet.
 
 ## Troubleshooting
 
-### "Cannot find module 'vitest'"
-Run `pnpm install` again to ensure dev dependencies are installed.
-
-### "Port 5173 is already in use"
-Another dev server is running. Kill it or use a different port in `playwright.config.js`.
-
-### Playwright tests timeout
-Ensure your machine can reach localhost:5173. Check that `pnpm dev` starts the Vite server.
-
-### "Tests failed with: ENOENT node_modules/.bin/playwright"
-Run `pnpm install` to install Playwright.
-
----
-
-## Resources
-
-- [Vitest Documentation](https://vitest.dev/)
-- [Playwright Documentation](https://playwright.dev/)
-- [LUZ Design System Architecture](../AGENTS.md)
-- [Contributing Guide](../CONTRIBUTING.md)
+- **The dev server starts slowly, or serves old code.** `pnpm dev` runs `scripts/check-dist.js`, which builds only when a `dist/` is missing. Run `pnpm build` after you change a package.
+- **Port 5173 is in use.** Stop the other server. Playwright reuses one that is already running.
+- **`Cannot find module` or `ENOENT … playwright`.** Run `pnpm install`.
+- **A browser is missing.** Run `pnpm test:ui:install`.

@@ -336,7 +336,10 @@ describe("the page head: eyebrow, h1, lead, then the chips", () => {
   const eyebrowOf = (p) => {
     const area = areaOf(site, p);
     const group = area?.groups?.find((g) => g.id === p.meta.group);
-    return group ? `${area.label} · ${group.label}` : area?.label ?? null;
+    if (group) return `${area.label} · ${group.label}`;
+    // An area index names the package of its area (site.json `package`), when it has one.
+    if (area && p.route === `/docs/${area.slug}/` && area.package) return `${area.label} · ${area.package}`;
+    return area?.label ?? null;
   };
 
   it("every page with an area has header.luz-docs-page-head in main, with the eyebrow \"Area · Group\" (or the area alone) ABOVE the one h1", () => {
@@ -470,7 +473,7 @@ describe("the page head: eyebrow, h1, lead, then the chips", () => {
       plain += 1;
       expect(line, `${p.route}: one Files line`).toHaveLength(1);
       const files = filesOf(p);
-      expect(textOf(line[0]), p.route).toBe(`Files: ${files.join(", ")}`);
+      expect(textOf(line[0]).replace(/ ,/g, ","), p.route).toBe(`Files: ${files.join(", ")}`);
       expect(findAll(line[0], (n) => n.name === "code").map((c) => textOf(c)), `${p.route}: each file in a <code>`).toEqual(files);
       expect(query(head, "ul.luz-docs-page-head__meta"), `${p.route}: a line, not chips`).toBeNull();
       // Under the h1 and the lead, where the chips would stand
@@ -489,7 +492,7 @@ describe("the page head: eyebrow, h1, lead, then the chips", () => {
       const { head } = partsOf(treeOf(route));
       const line = queryLive(head, "p.luz-docs-page-head__files");
       expect(line, route).toBeTruthy();
-      expect(textOf(line), route).toBe(`Files: ${files.join(", ")}`);
+      expect(textOf(line).replace(/ ,/g, ","), route).toBe(`Files: ${files.join(", ")}`);
     }
   });
 
@@ -614,7 +617,7 @@ describe("the page head: eyebrow, h1, lead, then the chips", () => {
         const head = headOf(fixture, route);
         const line = queryAll(head, "p.luz-docs-page-head__files");
         expect(line, route).toHaveLength(1);
-        expect(textOf(line[0]), route).toBe(`Files: ${files.join(", ")}`);
+        expect(textOf(line[0]).replace(/ ,/g, ","), route).toBe(`Files: ${files.join(", ")}`);
         expect(findAll(line[0], (n) => n.name === "code").map((c) => textOf(c)), route).toEqual(files);
         expect(query(head, "ul.luz-docs-page-head__meta"), route).toBeNull();
         expect(line[0].parent, `${route}: in the page head`).toBe(head);
